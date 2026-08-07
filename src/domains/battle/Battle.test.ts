@@ -38,16 +38,11 @@ describe('Battle', () => {
     if (!firstRound || !secondRound) {
       throw new Error('Fixture must contain two rounds.');
     }
-    const skippedRound = Object.create(Object.getPrototypeOf(secondRound)) as {
-      number: number;
-    };
-    Object.assign(skippedRound, secondRound, { number: 3 });
-
     expect(() =>
       Battle.create({
         fighters: valid.fighters,
         attackOrder: valid.attackOrder,
-        rounds: [firstRound, skippedRound as never],
+        rounds: [secondRound, firstRound],
         result: valid.result
       })
     ).toThrow(InvalidBattleSequenceError);

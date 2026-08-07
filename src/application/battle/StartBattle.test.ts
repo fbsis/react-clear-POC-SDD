@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { ApplicationError } from '@application/shared/errors/ApplicationError';
+import type { ApplicationError } from '@application/shared/errors/ApplicationError';
 import { Monster } from '@domains/monster/Monster';
 import { MonsterId } from '@domains/monster/MonsterId';
 import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
@@ -8,12 +8,17 @@ import { StartBattle } from './StartBattle';
 
 describe('StartBattle', () => {
   it('rejects equal fighter IDs before consulting the repository', async () => {
-    const repository = repositoryWith([]);
+    const findById = vi.fn<MonsterRepository['findById']>();
+    const repository = {
+      add: vi.fn(),
+      list: vi.fn().mockResolvedValue([]),
+      findById
+    } satisfies MonsterRepository;
 
     await expect(
       new StartBattle(repository).execute({ firstMonsterId: 'same', secondMonsterId: 'same' })
     ).rejects.toMatchObject({ code: 'BATTLE_INVALID' } satisfies Partial<ApplicationError>);
-    expect(repository.findById).not.toHaveBeenCalled();
+    expect(findById).not.toHaveBeenCalled();
   });
 
   it('reports a missing selected monster', async () => {
