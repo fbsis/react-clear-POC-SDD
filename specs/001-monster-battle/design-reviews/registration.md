@@ -1,7 +1,7 @@
 # Registration visual checkpoint
 
 Date: 2026-08-07  
-Status: awaiting product-owner review
+Status: approved
 
 The responsive registration milestone was captured with Chromium in Docker using the deterministic
 Pyraxis fixture. Screenshots use full-page capture at each required viewport so the form and persisted
@@ -23,4 +23,5 @@ collection can be reviewed together.
 
 ## Decision
 
-Awaiting approval or requested adjustments. T046 remains open until that decision is recorded here.
+Approved by the product owner on 2026-08-07 without requested adjustments. The responsive registration
+and collection visual direction is accepted as the baseline for the next interface milestone.

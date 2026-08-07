@@ -95,7 +95,7 @@ origin and confirm every field and image remains available.
 - [X] T043 [US1] Implement responsive parchment-and-brass monster collection cards consuming MonsterCollectionContext plus empty/loading/error states in src/presentation/monster-registration/MonsterCollection.tsx and src/presentation/monster-registration/MonsterCollection.module.css
 - [X] T044 [US1] Wire ApplicationProvider and MonsterCollectionProvider to registration use cases, IndexedDB hydration and first-upload persistence through src/app/composition-root/createApplication.ts and src/app/App.tsx
 - [X] T045 [US1] Make all US1 tests pass and record the Docker validation commands in specs/001-monster-battle/quickstart.md
-- [ ] T046 [US1] Capture registration and collection at 375x812, 768x1024 and 1440x900, verify no page overflow, present the checkpoint and record approval or requested adjustments in specs/001-monster-battle/design-reviews/registration.md with screenshots in specs/001-monster-battle/design-reviews/screenshots/registration-mobile.png, registration-tablet.png and registration-desktop.png
+- [X] T046 [US1] Capture registration and collection at 375x812, 768x1024 and 1440x900, verify no page overflow, present the checkpoint and record approval or requested adjustments in specs/001-monster-battle/design-reviews/registration.md with screenshots in specs/001-monster-battle/design-reviews/screenshots/registration-mobile.png, registration-tablet.png and registration-desktop.png
 
 **Checkpoint**: US1 is complete, independently demonstrable and survives a browser reload without a
 network upload.
