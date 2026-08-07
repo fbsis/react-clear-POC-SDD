@@ -219,7 +219,7 @@ builds do not deploy and the live site passes its smoke test.
 
 **Purpose**: Complete documentation, security, accessibility, browser coverage and final verification.
 
-- [ ] T091 [P] Add automated axe checks for registration, selection and playback in tests/e2e/accessibility.spec.ts
+- [X] T091 [P] Add automated axe checks for registration, selection and playback in tests/e2e/accessibility.spec.ts
 - [ ] T092 [P] Add Chromium, Firefox and WebKit persistence/keyboard coverage and isolated browser contexts in playwright.config.ts and tests/e2e/
 - [ ] T093 [P] Add bundle-size, 100-monster, maximum-round and Context render-isolation performance assertions in tests/performance/budgets.test.ts and tests/performance/context-renders.test.tsx
 - [ ] T094 Review all exported names, one-declaration-per-file contracts, readonly DTOs, exhaustive unions, React state ownership and decision-focused documentation for Clean Code compliance across src/domains/, src/application/ and src/app/
