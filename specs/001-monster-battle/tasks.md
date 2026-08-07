@@ -171,11 +171,11 @@ event zero, verify 2,999/3,000 ms behavior, interrupt/restart and reach the winn
 
 ### Tests for User Story 4
 
-- [ ] T069 [P] [US4] Write failing exhaustive playback reducer tests for load, play, stale ticks, restart, manual pause and completion in src/presentation/battle-playback/playbackReducer.test.ts
-- [ ] T070 [P] [US4] Write failing fake-timer hook tests for immediate event zero, 2,999/3,000 ms, cleanup and unmount in src/presentation/battle-playback/useBattlePlayback.test.ts
-- [ ] T071 [P] [US4] Write failing marker-window tests for limits, 9,999 rounds and direct selection in src/presentation/battle-playback/roundWindow.test.ts
-- [ ] T072 [P] [US4] Write failing semantic card, timeline, live-region and reduced-motion tests in src/presentation/battle-playback/BattlePlaybackPage.test.tsx
-- [ ] T073 [P] [US4] Write the failing navigation, autoplay, restart, effects and result E2E journey in tests/e2e/battle-playback.spec.ts
+- [X] T069 [P] [US4] Write failing exhaustive playback reducer tests for load, play, stale ticks, restart, manual pause and completion in src/presentation/battle-playback/playbackReducer.test.ts
+- [X] T070 [P] [US4] Write failing fake-timer hook tests for immediate event zero, 2,999/3,000 ms, cleanup and unmount in src/presentation/battle-playback/useBattlePlayback.test.ts
+- [X] T071 [P] [US4] Write failing marker-window tests for limits, 9,999 rounds and direct selection in src/presentation/battle-playback/roundWindow.test.ts
+- [X] T072 [P] [US4] Write failing semantic card, timeline, live-region and reduced-motion tests in src/presentation/battle-playback/BattlePlaybackPage.test.tsx
+- [X] T073 [P] [US4] Write the failing navigation, autoplay, restart, effects and result E2E journey in tests/e2e/battle-playback.spec.ts
 
 ### Implementation for User Story 4
 
