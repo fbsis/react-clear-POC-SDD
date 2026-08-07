@@ -110,6 +110,7 @@
 .cardPortrait {
   position: relative;
   overflow: hidden;
+  min-width: 0;
   aspect-ratio: 4 / 5;
   background: var(--color-night-950);
 }
@@ -154,6 +155,7 @@
 
 .cardBody {
   display: grid;
+  min-width: 0;
   gap: var(--space-4);
   padding: var(--space-5);
 }
@@ -370,12 +372,13 @@
 
   .battleCard {
     display: grid;
-    grid-template-columns: minmax(7.5rem, 0.72fr) minmax(0, 1fr);
+    grid-template-columns: 7.5rem minmax(0, 1fr);
   }
 
   .cardPortrait {
     height: 100%;
     min-height: 13rem;
+    aspect-ratio: auto;
   }
 
   .timelineControls {
