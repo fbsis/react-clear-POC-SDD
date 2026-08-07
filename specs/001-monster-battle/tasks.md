@@ -81,8 +81,8 @@ origin and confirm every field and image remains available.
 
 ### Implementation for User Story 1
 
-- [X] T032 [P] [US1] Implement validated immutable MonsterId and CombatStats value objects in separate files in src/domains/monster/MonsterId.ts and src/domains/monster/CombatStats.ts
-- [X] T033 [P] [US1] Implement catalog/upload discriminated MonsterImageRef value object in src/domains/monster/MonsterImageRef.ts
+- [X] T032 [P] [US1] Implement validated immutable MonsterId and CombatStats value objects in separate files under src/domains/monster/value-objects/ with dedicated functions under src/domains/monster/validations/
+- [X] T033 [P] [US1] Implement catalog/upload discriminated MonsterImageRef value object under src/domains/monster/value-objects/ with dedicated validation under src/domains/monster/validations/
 - [X] T034 [US1] Implement Monster aggregate with each domain error in its own file and public re-exports in src/domains/monster/Monster.ts, src/domains/monster/errors/InvalidMonsterNameError.ts, src/domains/monster/errors/InvalidMonsterImageReferenceError.ts and src/domains/monster/index.ts
 - [X] T035 [P] [US1] Define one interface or type per file for monster use-case contracts, DTOs and ports in src/application/monster/contracts/RegisterMonsterUseCase.ts, src/application/monster/contracts/ListMonstersUseCase.ts, src/application/monster/contracts/ListMonsterImagesUseCase.ts, src/application/monster/contracts/LoadMonsterImageUseCase.ts, src/application/monster/dtos/RegisterMonsterInput.ts, src/application/monster/dtos/MonsterDto.ts, src/application/monster/dtos/CatalogImageDto.ts, src/application/monster/dtos/MonsterImageReferenceDto.ts, src/application/monster/dtos/ImageContentDto.ts, src/application/monster/ports/CatalogImage.ts, src/application/monster/ports/UploadedImageContent.ts, src/application/monster/ports/ImageBinary.ts, src/application/monster/ports/ImageValidationResult.ts, src/application/monster/ports/MonsterRepository.ts, src/application/monster/ports/MonsterImageCatalog.ts, src/application/monster/ports/MonsterImageReader.ts and src/application/monster/ports/ImageValidator.ts
 - [X] T036 [P] [US1] Generate at least six original, non-violent AI monster artworks for public/monster-catalog/*.webp and create stable IDs, alt text and dimensions in public/monster-catalog/catalog.json
@@ -119,8 +119,8 @@ damage/HP transition, missing counterattack after defeat and final winner.
 
 ### Implementation for User Story 2
 
-- [X] T051 [P] [US2] Implement immutable AttackEvent and Round values in src/domains/battle/AttackEvent.ts and src/domains/battle/Round.ts
-- [X] T052 [P] [US2] Implement BattleResult and each battle-specific domain error in its own file in src/domains/battle/BattleResult.ts, src/domains/battle/errors/InvalidBattleError.ts and src/domains/battle/errors/InvalidBattleSequenceError.ts
+- [X] T051 [P] [US2] Implement immutable AttackEvent and Round values under src/domains/battle/value-objects/ with dedicated functions under src/domains/battle/validations/
+- [X] T052 [P] [US2] Implement BattleResult under src/domains/battle/value-objects/, its dedicated validation under src/domains/battle/validations/ and each battle-specific domain error in its own file under src/domains/battle/errors/
 - [X] T053 [US2] Implement Battle aggregate with fighter snapshots and invariant validation in src/domains/battle/Battle.ts
 - [X] T054 [US2] Implement the pure complete battle resolver and fixed order rules in src/domains/battle/resolveBattle.ts and src/domains/battle/index.ts
 - [X] T055 [US2] Define immutable battle contracts one per file and implement StartBattleUseCase with MonsterRepository constructor injection in src/application/battle/contracts/StartBattleUseCase.ts, src/application/battle/dtos/StartBattleInput.ts, src/application/battle/dtos/BattleDto.ts, src/application/battle/dtos/BattleRoundDto.ts, src/application/battle/dtos/BattleEventDto.ts and src/application/battle/StartBattle.ts

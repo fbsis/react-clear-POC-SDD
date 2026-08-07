@@ -5,6 +5,8 @@
 - Domínio é TypeScript puro e imutável; não conhece React, DOM, `Blob`, IndexedDB ou records persistidos.
 - `Monster` e `Battle` possuem identidade. `Round` e `AttackEvent` são values internos à batalha.
 - Invariantes são garantidas ao criar objetos; estados inválidos não atravessam o domínio.
+- Value objects ficam em `value-objects/` e delegam suas invariantes a funções puras dedicadas em
+  `validations/`; aggregates permanecem na raiz de cada módulo de domínio.
 - DTOs e mappers traduzem dados nas fronteiras. Persistência nunca reidrata entidade sem validação.
 
 ## Monster aggregate

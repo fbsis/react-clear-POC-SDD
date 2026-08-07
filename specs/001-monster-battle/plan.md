@@ -91,19 +91,34 @@ src/
 ├── domains/
 │   ├── monster/
 │   │   ├── Monster.ts
-│   │   ├── MonsterId.ts
-│   │   ├── CombatStats.ts
-│   │   ├── MonsterImageRef.ts
+│   │   ├── value-objects/
+│   │   │   ├── MonsterId.ts
+│   │   │   ├── MonsterName.ts
+│   │   │   ├── CombatStats.ts
+│   │   │   └── MonsterImageRef.ts
+│   │   ├── validations/
+│   │   │   ├── validateMonsterId.ts
+│   │   │   ├── validateMonsterName.ts
+│   │   │   ├── validateCombatStats.ts
+│   │   │   └── validateMonsterImageReference.ts
 │   │   ├── errors/
+│   │   │   ├── InvalidMonsterIdError.ts
 │   │   │   ├── InvalidMonsterNameError.ts
 │   │   │   └── InvalidMonsterImageReferenceError.ts
 │   │   └── index.ts
 │   └── battle/
 │       ├── Battle.ts
-│       ├── Round.ts
-│       ├── AttackEvent.ts
-│       ├── BattleResult.ts
 │       ├── resolveBattle.ts
+│       ├── value-objects/
+│       │   ├── Round.ts
+│       │   ├── AttackEvent.ts
+│       │   ├── BattleResult.ts
+│       │   └── MonsterSnapshot.ts
+│       ├── validations/
+│       │   ├── validateBattle.ts
+│       │   ├── validateRound.ts
+│       │   ├── validateAttackEvent.ts
+│       │   └── validateBattleResult.ts
 │       ├── errors/
 │       │   ├── InvalidBattleError.ts
 │       │   └── InvalidBattleSequenceError.ts
@@ -243,8 +258,11 @@ ou arquivos genéricos como `types.ts`, `dto.ts` e `errors.ts`.
 
 ### Domain and use cases
 
-- `Monster` é aggregate root imutável nesta versão; `CombatStats` e `MonsterImageRef` garantem invariantes.
+- `Monster` é aggregate root imutável nesta versão; `MonsterId`, `MonsterName`, `CombatStats` e
+  `MonsterImageRef` são value objects imutáveis, com comparação por valor quando aplicável.
 - `Battle` é um resultado imutável composto por snapshots, rounds e ataques; não é persistido nesta fase.
+- Value objects ficam em `value-objects/` e delegam invariantes a funções puras de `validations/`;
+  aggregates coordenam comportamento e não acumulam validações de campos.
 - `resolveBattle` é função/serviço puro e síncrono. Timers e animações nunca participam do cálculo.
 - Casos de uso recebem dependências por construtor: `RegisterMonster`, `ListMonsters`,
   `ListMonsterImages`, `LoadMonsterImage` e `StartBattle`.

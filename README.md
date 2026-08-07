@@ -41,7 +41,7 @@ docker compose down --volumes
 
 ## Arquitetura
 
-- `src/domains`: entidades, value objects, invariantes e regras puras.
+- `src/domains`: aggregates na raiz de cada módulo, `value-objects/`, `validations/`, erros e regras puras.
 - `src/application`: casos de uso, DTOs e interfaces consumidoras.
 - `src/infrastructure`: IndexedDB, catálogo, imagens, identidade e APIs do navegador.
 - `src/presentation`: componentes, páginas, hooks visuais e estilos responsivos.
@@ -50,6 +50,8 @@ docker compose down --volumes
 As dependências concretas são criadas somente no composition root. Estado local simples usa `useState`;
 estado compartilhado é exposto por Context API através de métodos de intenção, sem setters públicos.
 Tipos e interfaces nomeados permanecem em arquivos separados.
+Cada value object é imutável e delega suas invariantes a uma validação dedicada, mantendo criação,
+comparação por valor e regras de entrada com responsabilidades explícitas.
 
 ## Persistência local
 
