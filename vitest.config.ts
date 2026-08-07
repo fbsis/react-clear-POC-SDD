@@ -9,7 +9,8 @@ export default defineConfig({
       '@application': '/src/application',
       '@infrastructure': '/src/infrastructure',
       '@presentation': '/src/presentation',
-      '@app': '/src/app'
+      '@app': '/src/app',
+      '@tests': '/tests'
     }
   },
   test: {

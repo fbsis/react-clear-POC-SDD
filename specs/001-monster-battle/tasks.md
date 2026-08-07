@@ -43,17 +43,17 @@ required on the host.
 
 **⚠️ CRITICAL**: No user story implementation begins until this phase passes its checks.
 
-- [ ] T013 [P] Define medieval castle-arena color, stone, parchment, brass, typography, spacing, focus and motion tokens in src/presentation/shared/styles/tokens.css
-- [ ] T014 [P] Define reset, responsive canvas, typography, focus-visible and reduced-motion defaults in src/presentation/shared/styles/globals.css
-- [ ] T015 [P] Define stable application errors as one declaration per file in src/application/shared/errors/ApplicationErrorCode.ts, src/application/shared/errors/ApplicationError.ts and src/application/shared/errors/mapApplicationError.ts
-- [ ] T016 [P] Define the IdGenerator and StorageStatus consumer-owned ports in src/application/shared/ports/IdGenerator.ts and src/application/shared/ports/StorageStatus.ts
-- [ ] T017 [P] Implement IdGenerator and StorageStatus interfaces with cryptographic UUID and browser quota/persistence adapters in src/infrastructure/identity/CryptoIdGenerator.ts and src/infrastructure/storage/BrowserStorageStatus.ts
-- [ ] T018 Define the IndexedDB schema types one per file plus database lifecycle and cumulative migrations in src/infrastructure/persistence/indexeddb/ReviDatabaseSchema.ts, src/infrastructure/persistence/indexeddb/MonsterRecord.ts, src/infrastructure/persistence/indexeddb/ImageAssetRecord.ts, src/infrastructure/persistence/indexeddb/ReviDatabase.ts and src/infrastructure/persistence/indexeddb/migrations.ts
-- [ ] T019 [P] Add migration and blocked-connection integration tests using fake IndexedDB in src/infrastructure/persistence/indexeddb/ReviDatabase.test.ts
+- [X] T013 [P] Define medieval castle-arena color, stone, parchment, brass, typography, spacing, focus and motion tokens in src/presentation/shared/styles/tokens.css
+- [X] T014 [P] Define reset, responsive canvas, typography, focus-visible and reduced-motion defaults in src/presentation/shared/styles/globals.css
+- [X] T015 [P] Define stable application errors as one declaration per file in src/application/shared/errors/ApplicationErrorCode.ts, src/application/shared/errors/ApplicationError.ts and src/application/shared/errors/mapApplicationError.ts
+- [X] T016 [P] Define the IdGenerator and StorageStatus consumer-owned ports in src/application/shared/ports/IdGenerator.ts and src/application/shared/ports/StorageStatus.ts
+- [X] T017 [P] Implement IdGenerator and StorageStatus interfaces with cryptographic UUID and browser quota/persistence adapters in src/infrastructure/identity/CryptoIdGenerator.ts and src/infrastructure/storage/BrowserStorageStatus.ts
+- [X] T018 Define the IndexedDB schema types one per file plus database lifecycle and cumulative migrations in src/infrastructure/persistence/indexeddb/ReviDatabaseSchema.ts, src/infrastructure/persistence/indexeddb/MonsterRecord.ts, src/infrastructure/persistence/indexeddb/ImageAssetRecord.ts, src/infrastructure/persistence/indexeddb/ReviDatabase.ts and src/infrastructure/persistence/indexeddb/migrations.ts
+- [X] T019 [P] Add migration and blocked-connection integration tests using fake IndexedDB in src/infrastructure/persistence/indexeddb/ReviDatabase.test.ts
 - [ ] T020 Define the immutable Application interface and expose the manual composition root through Context API in src/application/Application.ts, src/app/composition-root/createApplication.ts, src/app/contexts/ApplicationContext.ts, src/app/providers/ApplicationProvider.tsx and src/app/hooks/useApplication.ts
 - [ ] T021 Implement useState-backed collection and game-session contexts with separate value types, intent methods and the accessible application shell in src/app/contexts/MonsterCollectionContext.ts, src/app/contexts/MonsterCollectionContextValue.ts, src/app/contexts/GameSessionContext.ts, src/app/contexts/GameSessionContextValue.ts, src/app/providers/MonsterCollectionProvider.tsx, src/app/providers/GameSessionProvider.tsx, src/app/hooks/useMonsterCollection.ts, src/app/hooks/useGameSession.ts, src/app/AppScreen.ts and src/app/App.tsx
-- [ ] T022 Create reusable Button, FieldError, StatusMessage, ProgressBar and VisuallyHidden components in src/presentation/shared/components/
-- [ ] T023 [P] Define deterministic mobile, tablet and desktop screenshot fixtures plus visual review conventions in tests/e2e/support/designReview.ts and specs/001-monster-battle/design-reviews/README.md
+- [X] T022 Create reusable Button, FieldError, StatusMessage, ProgressBar and VisuallyHidden components in src/presentation/shared/components/
+- [X] T023 [P] Define deterministic mobile, tablet and desktop screenshot fixtures plus visual review conventions in tests/e2e/support/designReview.ts and specs/001-monster-battle/design-reviews/README.md
 - [ ] T024 Add tests that enforce layer/type-file rules, reject concrete adapters outside the composition root and verify Context hooks fail clearly outside providers without leaking mutable setters in tests/architecture/layer-boundaries.test.ts, tests/architecture/type-file-conventions.test.ts and tests/app/context-contracts.test.tsx
 
 **Checkpoint**: Foundation passes typecheck, lint and tests; dependencies point toward the domain and the
