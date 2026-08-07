@@ -141,9 +141,9 @@ a duplicate and confirm the battle.
 
 ### Tests for User Story 3
 
-- [ ] T058 [P] [US3] Write failing reducer tests for focus, active side, selection, removal and duplicate rejection in src/presentation/fighter-selection/fighterSelectionReducer.test.ts
-- [ ] T059 [P] [US3] Write failing grid keyboard, roving tabindex, preview, slot and GameSessionContext handoff tests in src/presentation/fighter-selection/FighterSelectionPage.test.tsx and src/app/providers/GameSessionProvider.test.tsx
-- [ ] T060 [P] [US3] Write the failing keyboard-only selection and battle-confirmation journey in tests/e2e/fighter-selection.spec.ts
+- [X] T058 [P] [US3] Write failing reducer tests for focus, active side, selection, removal and duplicate rejection in src/presentation/fighter-selection/fighterSelectionReducer.test.ts
+- [X] T059 [P] [US3] Write failing grid keyboard, roving tabindex, preview, slot and GameSessionContext handoff tests in src/presentation/fighter-selection/FighterSelectionPage.test.tsx and src/app/providers/GameSessionProvider.test.tsx
+- [X] T060 [P] [US3] Write the failing keyboard-only selection and battle-confirmation journey in tests/e2e/fighter-selection.spec.ts
 
 ### Implementation for User Story 3
 
