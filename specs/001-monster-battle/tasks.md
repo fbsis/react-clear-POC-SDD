@@ -189,6 +189,7 @@ event zero, verify 2,999/3,000 ms behavior, interrupt/restart and reach the winn
 - [X] T081 [US4] Make all US4 unit, component and E2E tests pass via the Docker test gate
 - [ ] T082 [US4] Capture ready, attack and victory battle states at 375x812, 768x1024 and 1440x900, verify cards, event panel, controls and timeline without page overflow, present the checkpoint and record approval or requested adjustments in specs/001-monster-battle/design-reviews/battle-playback.md with screenshots in specs/001-monster-battle/design-reviews/screenshots/battle-mobile.png, battle-tablet.png and battle-desktop.png
 - [X] T099 [US4] Clarify attack order with `Action X of Y` context and an ordered current-round battle log with completed, current and upcoming states in src/presentation/battle-playback/RoundBattleLog.tsx, src/presentation/battle-playback/BattleEventSummary.tsx, src/presentation/battle-playback/BattlePlaybackPage.tsx and their component/E2E tests
+- [X] T100 [US4] Replace the lower round markers with a responsive YouTube-style progress scrubber whose segmented points and range input support direct mouse, touch and keyboard navigation in src/presentation/battle-playback/RoundTimeline.tsx and its component/E2E tests
 
 **Checkpoint**: The full product journey is functional and every battle event can be inspected or played
 without stale timers or inaccessible state.

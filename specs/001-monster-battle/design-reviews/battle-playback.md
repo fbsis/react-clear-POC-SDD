@@ -19,6 +19,7 @@ not color alone, and each entry exposes attacker, defender, damage and HP transi
 - both named fighter cards, semantic HP progress and timeline controls remain visible
 - attack, damage, defeat and victory always include text in addition to color or motion
 - each round shows `Ação X de Y` and its complete attack order without rendering the full battle history
+- the lower timeline uses a progress scrubber with clickable round points, filled progress and native keyboard navigation
 - reduced-motion CSS removes translation and impact animation while preserving every status change
 
 ## Evidence
