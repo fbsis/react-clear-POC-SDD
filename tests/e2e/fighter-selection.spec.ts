@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 test('selects two fighters and confirms battle using the keyboard', async ({ page }) => {
   await page.goto('/');
@@ -18,7 +19,7 @@ test('selects two fighters and confirms battle using the keyboard', async ({ pag
 });
 
 async function registerMonster(
-  page: import('@playwright/test').Page,
+  page: Page,
   name: string,
   imageName: RegExp
 ) {
