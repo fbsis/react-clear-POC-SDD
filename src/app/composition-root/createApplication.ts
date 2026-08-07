@@ -1,0 +1,30 @@
+import type { Application } from '@application/Application';
+import { ListMonsterImages } from '@application/monster/ListMonsterImages';
+import { ListMonsters } from '@application/monster/ListMonsters';
+import { LoadMonsterImage } from '@application/monster/LoadMonsterImage';
+import { RegisterMonster } from '@application/monster/RegisterMonster';
+import { CryptoIdGenerator } from '@infrastructure/identity/CryptoIdGenerator';
+import { BrowserImageValidator } from '@infrastructure/images/BrowserImageValidator';
+import { BundledMonsterImageCatalog } from '@infrastructure/images/BundledMonsterImageCatalog';
+import { IndexedDbMonsterImageReader } from '@infrastructure/persistence/indexeddb/IndexedDbMonsterImageReader';
+import { IndexedDbMonsterRepository } from '@infrastructure/persistence/indexeddb/IndexedDbMonsterRepository';
+import { ReviDatabase } from '@infrastructure/persistence/indexeddb/ReviDatabase';
+import { BrowserStorageStatus } from '@infrastructure/storage/BrowserStorageStatus';
+
+export function createApplication(): Application {
+  const database = new ReviDatabase();
+  const catalog = new BundledMonsterImageCatalog(import.meta.env.BASE_URL);
+  const repository = new IndexedDbMonsterRepository(database);
+
+  return Object.freeze({
+    registerMonster: new RegisterMonster(
+      repository,
+      new CryptoIdGenerator(),
+      new BrowserImageValidator()
+    ),
+    listMonsters: new ListMonsters(repository),
+    listMonsterImages: new ListMonsterImages(catalog),
+    loadMonsterImage: new LoadMonsterImage(new IndexedDbMonsterImageReader(database, catalog)),
+    storageStatus: new BrowserStorageStatus()
+  });
+}
