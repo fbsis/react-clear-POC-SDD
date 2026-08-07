@@ -62,6 +62,16 @@ The GitHub Pages delivery contract was also validated locally in Docker: the Bui
 only the static site, `index.html` referenced scripts and styles below `/react-clear-POC-SDD/`, all six
 catalog images were present and the complete Playwright suite passed before publication.
 
+Validated for the battle-engine milestone on 2026-08-07:
+
+```bash
+docker compose run --rm app pnpm check
+```
+
+Result: 24 test files and 59 tests passed with zero lint or type warnings. The deterministic worst-case
+battle produced 9,999 rounds and 19,997 events within the one-second budget; the measured isolated test
+completed in tens of milliseconds. The production bundle remained below the 250 KB gzip budget.
+
 ## Browser tests
 
 ```bash
