@@ -54,6 +54,7 @@ function createApplicationFake(overrides: Partial<Application> = {}): Applicatio
       ])
     },
     loadMonsterImage: { execute: vi.fn() },
+    startBattle: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() },
     ...overrides
   };

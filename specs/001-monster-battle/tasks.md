@@ -124,7 +124,7 @@ damage/HP transition, missing counterattack after defeat and final winner.
 - [X] T053 [US2] Implement Battle aggregate with fighter snapshots and invariant validation in src/domains/battle/Battle.ts
 - [X] T054 [US2] Implement the pure complete battle resolver and fixed order rules in src/domains/battle/resolveBattle.ts and src/domains/battle/index.ts
 - [X] T055 [US2] Define immutable battle contracts one per file and implement StartBattleUseCase with MonsterRepository constructor injection in src/application/battle/contracts/StartBattleUseCase.ts, src/application/battle/dtos/StartBattleInput.ts, src/application/battle/dtos/BattleDto.ts, src/application/battle/dtos/BattleRoundDto.ts, src/application/battle/dtos/BattleEventDto.ts and src/application/battle/StartBattle.ts
-- [ ] T056 [US2] Register StartBattle in the composition root and expose the completed BattleDto through GameSessionContext intent methods in src/app/composition-root/createApplication.ts and src/app/providers/GameSessionProvider.tsx
+- [X] T056 [US2] Register StartBattle in the composition root and expose the completed BattleDto through GameSessionContext intent methods in src/app/composition-root/createApplication.ts and src/app/providers/GameSessionProvider.tsx
 - [ ] T057 [US2] Make all US2 domain/application/performance tests pass via the Docker test gate
 
 **Checkpoint**: Battle rules are pure, deterministic, fast and testable without React or a real browser.

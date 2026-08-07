@@ -68,6 +68,7 @@ function applicationFake(): Application {
         alt: 'Wyvern vermelho'
       })
     },
+    startBattle: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() }
   };
 }

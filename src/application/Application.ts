@@ -1,3 +1,4 @@
+import type { StartBattleUseCase } from './battle/contracts/StartBattleUseCase';
 import type { ListMonsterImagesUseCase } from './monster/contracts/ListMonsterImagesUseCase';
 import type { ListMonstersUseCase } from './monster/contracts/ListMonstersUseCase';
 import type { LoadMonsterImageUseCase } from './monster/contracts/LoadMonsterImageUseCase';
@@ -9,5 +10,6 @@ export interface Application {
   readonly listMonsters: ListMonstersUseCase;
   readonly listMonsterImages: ListMonsterImagesUseCase;
   readonly loadMonsterImage: LoadMonsterImageUseCase;
+  readonly startBattle: StartBattleUseCase;
   readonly storageStatus: StorageStatus;
 }

@@ -1,4 +1,5 @@
 import type { Application } from '@application/Application';
+import { StartBattle } from '@application/battle/StartBattle';
 import { ListMonsterImages } from '@application/monster/ListMonsterImages';
 import { ListMonsters } from '@application/monster/ListMonsters';
 import { LoadMonsterImage } from '@application/monster/LoadMonsterImage';
@@ -25,6 +26,7 @@ export function createApplication(): Application {
     listMonsters: new ListMonsters(repository),
     listMonsterImages: new ListMonsterImages(catalog),
     loadMonsterImage: new LoadMonsterImage(new IndexedDbMonsterImageReader(database, catalog)),
+    startBattle: new StartBattle(repository),
     storageStatus: new BrowserStorageStatus()
   });
 }
