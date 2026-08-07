@@ -1,8 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { ApplicationError } from '@application/shared/errors/ApplicationError';
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import type { MonsterRepository } from '@application/monster/ports/MonsterRepository';
 import { StartBattle } from './StartBattle';
 

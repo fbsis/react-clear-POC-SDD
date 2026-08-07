@@ -1,4 +1,4 @@
-import type { Monster } from '@domains/monster/Monster';
+import type { Monster } from '@domains/monster';
 
 export type MonsterSnapshot = Readonly<{
   id: string;
@@ -18,7 +18,7 @@ export type MonsterSnapshot = Readonly<{
 export function snapshotMonster(monster: Monster): MonsterSnapshot {
   return Object.freeze({
     id: monster.id.value,
-    name: monster.name,
+    name: monster.name.value,
     stats: Object.freeze(monster.stats.toSnapshot()),
     image: Object.freeze({ kind: monster.image.kind, reference: monster.image.reference })
   });

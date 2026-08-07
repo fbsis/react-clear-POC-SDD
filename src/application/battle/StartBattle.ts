@@ -1,6 +1,6 @@
 import { ApplicationError } from '@application/shared/errors/ApplicationError';
 import { resolveBattle } from '@domains/battle/resolveBattle';
-import { MonsterId } from '@domains/monster/MonsterId';
+import { MonsterId } from '@domains/monster';
 import type { MonsterRepository } from '../monster/ports/MonsterRepository';
 import type { StartBattleUseCase } from './contracts/StartBattleUseCase';
 import type { BattleDto } from './dtos/BattleDto';

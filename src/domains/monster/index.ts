@@ -1,4 +1,5 @@
-export { CombatStats } from './CombatStats';
 export { Monster } from './Monster';
-export { MonsterId } from './MonsterId';
-export { MonsterImageRef } from './MonsterImageRef';
+export { CombatStats } from './value-objects/CombatStats';
+export { MonsterId } from './value-objects/MonsterId';
+export { MonsterImageRef } from './value-objects/MonsterImageRef';
+export { MonsterName } from './value-objects/MonsterName';

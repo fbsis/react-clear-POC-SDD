@@ -1,4 +1,4 @@
-import type { Monster } from '@domains/monster/Monster';
+import type { Monster } from '@domains/monster';
 import { AttackEvent } from './AttackEvent';
 import { Battle } from './Battle';
 import { BattleResult } from './BattleResult';

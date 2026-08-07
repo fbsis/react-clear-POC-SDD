@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { InvalidCombatStatsError } from '../errors/InvalidCombatStatsError';
 import { CombatStats } from './CombatStats';
-import { InvalidCombatStatsError } from './errors/InvalidCombatStatsError';
 
 describe('CombatStats', () => {
   it.each([
@@ -16,9 +16,12 @@ describe('CombatStats', () => {
     );
   });
 
-  it('accepts combat limits and exposes immutable values', () => {
+  it('accepts combat limits and compares values by their attributes', () => {
     const stats = CombatStats.create({ attack: 0, defense: 9_999, speed: 0, hp: 1 });
+    const sameStats = CombatStats.create({ attack: 0, defense: 9_999, speed: 0, hp: 1 });
 
     expect(stats.toSnapshot()).toEqual({ attack: 0, defense: 9_999, speed: 0, hp: 1 });
+    expect(stats.equals(sameStats)).toBe(true);
+    expect(Object.isFrozen(stats)).toBe(true);
   });
 });

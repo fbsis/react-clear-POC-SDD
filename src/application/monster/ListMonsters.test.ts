@@ -1,7 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import { ListMonsters } from './ListMonsters';
 import type { MonsterRepository } from './ports/MonsterRepository';
 

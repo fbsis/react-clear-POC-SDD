@@ -1,7 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import type { MonsterRepositoryFactory } from './MonsterRepositoryFactory';
 
 export function runMonsterRepositoryContract(factory: MonsterRepositoryFactory): void {

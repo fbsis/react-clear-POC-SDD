@@ -1,18 +1,18 @@
-import { CombatStats } from './CombatStats';
-import { InvalidMonsterNameError } from './errors/InvalidMonsterNameError';
-import type { MonsterId } from './MonsterId';
-import type { MonsterImageRef } from './MonsterImageRef';
+import { CombatStats } from './value-objects/CombatStats';
+import type { MonsterId } from './value-objects/MonsterId';
+import type { MonsterImageRef } from './value-objects/MonsterImageRef';
+import { MonsterName } from './value-objects/MonsterName';
 
 export class Monster {
   public readonly id: MonsterId;
-  public readonly name: string;
+  public readonly name: MonsterName;
   public readonly stats: CombatStats;
   public readonly image: MonsterImageRef;
   public readonly createdAt: Date;
 
   private constructor(
     id: MonsterId,
-    name: string,
+    name: MonsterName,
     stats: CombatStats,
     image: MonsterImageRef,
     createdAt: Date
@@ -36,14 +36,9 @@ export class Monster {
       createdAt: Date;
     }>
   ): Monster {
-    const name = input.name.trim();
-    if (name.length < 1 || name.length > 80) {
-      throw new InvalidMonsterNameError();
-    }
-
     return new Monster(
       input.id,
-      name,
+      MonsterName.create(input.name),
       CombatStats.create(input),
       input.image,
       new Date(input.createdAt)

@@ -1,7 +1,6 @@
 import type { MonsterRepository } from '@application/monster/ports/MonsterRepository';
 import type { PersistedUploadedImageContent } from '@application/monster/ports/PersistedUploadedImageContent';
-import type { Monster } from '@domains/monster/Monster';
-import type { MonsterId } from '@domains/monster/MonsterId';
+import type { Monster, MonsterId } from '@domains/monster';
 import type { ImageAssetRecord } from './ImageAssetRecord';
 import { MonsterRecordMapper } from './MonsterRecordMapper';
 import type { ReviDatabase } from './ReviDatabase';

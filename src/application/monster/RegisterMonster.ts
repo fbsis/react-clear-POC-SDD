@@ -1,8 +1,6 @@
 import { ApplicationError } from '@application/shared/errors/ApplicationError';
 import type { IdGenerator } from '@application/shared/ports/IdGenerator';
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import type { RegisterMonsterUseCase } from './contracts/RegisterMonsterUseCase';
 import type { MonsterDto } from './dtos/MonsterDto';
 import type { RegisterMonsterInput } from './dtos/RegisterMonsterInput';

@@ -3,9 +3,7 @@
 import { deleteDB } from 'idb';
 import { describe, expect, it, vi } from 'vitest';
 import type { MonsterImageCatalog } from '@application/monster/ports/MonsterImageCatalog';
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import { runMonsterRepositoryContract } from '@tests/contracts/monsterRepositoryContract';
 import { IndexedDbMonsterImageReader } from './IndexedDbMonsterImageReader';
 import { IndexedDbMonsterRepository } from './IndexedDbMonsterRepository';

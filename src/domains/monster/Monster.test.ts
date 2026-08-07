@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { Monster } from './Monster';
-import { MonsterId } from './MonsterId';
-import { MonsterImageRef } from './MonsterImageRef';
 import { InvalidMonsterNameError } from './errors/InvalidMonsterNameError';
+import { Monster } from './Monster';
+import { MonsterId } from './value-objects/MonsterId';
+import { MonsterImageRef } from './value-objects/MonsterImageRef';
 
 describe('Monster', () => {
   it.each(['', '   ', 'x'.repeat(81)])('rejects invalid name %j', (name) => {
@@ -32,7 +32,7 @@ describe('Monster', () => {
       createdAt: new Date('2026-08-07T12:00:00.000Z')
     });
 
-    expect(monster.name).toBe('Pyraxis');
+    expect(monster.name.value).toBe('Pyraxis');
     expect(monster.stats.toSnapshot()).toEqual({ attack: 86, defense: 68, speed: 72, hp: 180 });
   });
 

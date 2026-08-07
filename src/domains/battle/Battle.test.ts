@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import { Battle } from './Battle';
 import { InvalidBattleSequenceError } from './errors/InvalidBattleSequenceError';
 import { resolveBattle } from './resolveBattle';

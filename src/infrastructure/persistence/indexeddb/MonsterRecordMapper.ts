@@ -1,14 +1,12 @@
-import { Monster } from '@domains/monster/Monster';
-import { MonsterId } from '@domains/monster/MonsterId';
-import { MonsterImageRef } from '@domains/monster/MonsterImageRef';
+import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import type { MonsterRecord } from './MonsterRecord';
 
 export class MonsterRecordMapper {
   public toRecord(monster: Monster): MonsterRecord {
     return {
       id: monster.id.value,
-      name: monster.name,
-      normalizedName: monster.name.toLocaleLowerCase('pt-BR'),
+      name: monster.name.value,
+      normalizedName: monster.name.value.toLocaleLowerCase('pt-BR'),
       attack: monster.stats.attack,
       defense: monster.stats.defense,
       speed: monster.stats.speed,

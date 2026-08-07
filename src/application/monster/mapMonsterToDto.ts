@@ -1,10 +1,10 @@
-import type { Monster } from '@domains/monster/Monster';
+import type { Monster } from '@domains/monster';
 import type { MonsterDto } from './dtos/MonsterDto';
 
 export function mapMonsterToDto(monster: Monster): MonsterDto {
   return {
     id: monster.id.value,
-    name: monster.name,
+    name: monster.name.value,
     attack: monster.stats.attack,
     defense: monster.stats.defense,
     speed: monster.stats.speed,
