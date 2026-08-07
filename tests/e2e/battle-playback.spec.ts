@@ -4,7 +4,7 @@ import type { Page } from '@playwright/test';
 test('navigates, plays, restarts and reveals the battle result', async ({ page }) => {
   await page.goto('/');
   await registerMonster(page, 'Pyraxis', 'Pyraxis', 90, 40, 80, 100);
-  await registerMonster(page, 'Aeralune', 'Aeralune', 60, 60, 65, 70);
+  await registerMonster(page, 'Aeralune', 'Aeralune', 60, 60, 65, 60);
   await page.getByRole('button', { name: 'Escolher lutadores' }).click();
   const portraits = page.getByRole('grid', { name: 'Selecionar lutadores' }).getByRole('button');
   await portraits.first().focus();

@@ -186,7 +186,7 @@ event zero, verify 2,999/3,000 ms behavior, interrupt/restart and reach the winn
 - [X] T078 [US4] Implement the responsive castle-arena composition using the BattleDto from GameSessionContext while keeping Play/Restart, previous/next, marker selection, live announcements and high-frequency playback state local in src/presentation/battle-playback/BattlePlaybackPage.tsx
 - [X] T079 [US4] Implement non-violent medieval magic attack, impact, damage, HP, defeat and victory effects with reduced-motion alternatives in src/presentation/battle-playback/BattlePlaybackPage.module.css
 - [X] T080 [US4] Integrate GameSessionContext BattleDto playback and replay/new-battle intent methods without placing timer ticks in Context in src/app/App.tsx and src/app/providers/GameSessionProvider.tsx
-- [ ] T081 [US4] Make all US4 unit, component and E2E tests pass via the Docker test gate
+- [X] T081 [US4] Make all US4 unit, component and E2E tests pass via the Docker test gate
 - [ ] T082 [US4] Capture ready, attack and victory battle states at 375x812, 768x1024 and 1440x900, verify cards, event panel, controls and timeline without page overflow, present the checkpoint and record approval or requested adjustments in specs/001-monster-battle/design-reviews/battle-playback.md with screenshots in specs/001-monster-battle/design-reviews/screenshots/battle-mobile.png, battle-tablet.png and battle-desktop.png
 
 **Checkpoint**: The full product journey is functional and every battle event can be inspected or played

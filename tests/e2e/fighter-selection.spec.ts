@@ -17,8 +17,8 @@ test('selects two fighters and confirms battle using the keyboard', async ({ pag
   await page.keyboard.press('Enter');
   await page.getByRole('button', { name: 'Iniciar batalha' }).press('Enter');
 
-  await expect(page.getByRole('heading', { name: 'Batalha calculada' })).toBeVisible();
-  await expect(page.getByText(/Vencedor:/u)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Arena de batalha' })).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('Batalha pronta');
 });
 
 async function registerMonster(page: Page, name: string, imageName: RegExp) {
