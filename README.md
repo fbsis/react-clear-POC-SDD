@@ -1,4 +1,4 @@
-# Coroa & Criaturas
+# Monster Arena
 
 [![CI](https://github.com/fbsis/react-clear-POC-SDD/actions/workflows/ci.yml/badge.svg)](https://github.com/fbsis/react-clear-POC-SDD/actions/workflows/ci.yml)
 [![Deploy GitHub Pages](https://github.com/fbsis/react-clear-POC-SDD/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/fbsis/react-clear-POC-SDD/actions/workflows/deploy-pages.yml)

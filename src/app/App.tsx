@@ -18,7 +18,7 @@ export function App() {
           <div className={styles.app}>
             <header className={styles.topbar}>
               <div className={styles.topbarInner}>
-                <span className={styles.brand}>Coroa &amp; Criaturas</span>
+                <span className={styles.brand}>Monster Arena</span>
                 <span className={styles.chapter}>Capítulo I · Convocação</span>
               </div>
             </header>
