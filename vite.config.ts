@@ -23,6 +23,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
+    allowedHosts: ['monster.test'],
     port: 5173,
     strictPort: true
   }
