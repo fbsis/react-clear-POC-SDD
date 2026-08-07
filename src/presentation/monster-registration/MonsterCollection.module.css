@@ -1,0 +1,107 @@
+.collection {
+  margin-top: clamp(3rem, 8vw, 7rem);
+}
+
+.heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  color: var(--color-parchment);
+}
+
+.heading span {
+  color: var(--color-brass-light);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.heading h2 {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.heading strong {
+  color: var(--color-stone-200);
+  white-space: nowrap;
+}
+
+.empty {
+  padding: var(--space-8);
+  border: 1px dashed var(--color-brass);
+  border-radius: var(--radius-large);
+  background: color-mix(in srgb, var(--color-stone-900) 78%, transparent);
+  color: var(--color-stone-200);
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-5);
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--color-brass-dark);
+  border-radius: var(--radius-large);
+  background: var(--color-parchment);
+  box-shadow: var(--shadow-card);
+  color: var(--color-ink);
+}
+
+.portrait {
+  display: grid;
+  min-height: 17rem;
+  place-items: center;
+  background: var(--color-stone-800);
+  color: var(--color-stone-200);
+}
+
+.portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.cardBody {
+  padding: var(--space-4);
+}
+
+.card h3 {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.card dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.card dl div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.3rem;
+}
+
+.card dt {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.card dd {
+  margin: 0;
+  font-weight: 900;
+}
+
+.card dl div > :last-child {
+  grid-column: 1 / -1;
+}

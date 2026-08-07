@@ -47,6 +47,17 @@ docker compose run --rm --build app pnpm check
 
 Expected: all commands exit 0, ESLint reports zero warnings and the production bundle respects budgets.
 
+Validated for the registration milestone on 2026-08-07:
+
+```bash
+docker compose run --rm app pnpm check
+docker compose up -d app
+docker compose run --rm e2e pnpm test:e2e tests/e2e/monster-registration.spec.ts
+```
+
+Result: 44 unit/integration tests and the Chromium catalog/upload/reload journey passed. All uploaded
+bytes remained in IndexedDB on the tested browser origin.
+
 ## Browser tests
 
 ```bash

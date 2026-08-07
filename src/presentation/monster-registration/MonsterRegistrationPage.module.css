@@ -1,0 +1,186 @@
+.forge {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.introduction {
+  max-width: 46rem;
+}
+
+.eyebrow {
+  color: var(--color-brass-light);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.introduction h1 {
+  margin: var(--space-2) 0;
+  color: var(--color-parchment);
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 7vw, 4.5rem);
+  line-height: 0.95;
+  text-shadow: 0 3px 0 var(--color-ink);
+}
+
+.introduction p {
+  color: var(--color-stone-200);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+}
+
+.form {
+  padding: clamp(var(--space-4), 4vw, var(--space-8));
+  border: 1px solid color-mix(in srgb, var(--color-brass) 55%, transparent);
+  border-radius: var(--radius-large);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-parchment) 96%, white),
+      var(--color-parchment-dark)
+    ),
+    var(--color-parchment);
+  box-shadow: var(--shadow-panel);
+  color: var(--color-ink);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.fields label,
+.uploadField {
+  display: grid;
+  gap: var(--space-2);
+  font-weight: 800;
+}
+
+.nameField {
+  grid-column: 1 / -1;
+}
+
+.fields input,
+.uploadField input {
+  width: 100%;
+  min-height: 2.8rem;
+  border: 1px solid var(--color-stone-500);
+  border-radius: var(--radius-small);
+  background: color-mix(in srgb, white 68%, var(--color-parchment));
+  color: var(--color-ink);
+  padding: 0.7rem 0.8rem;
+}
+
+.uploadArea {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.uploadPreview {
+  width: min(100%, 12rem);
+  aspect-ratio: 4 / 5;
+  border: 3px solid var(--color-brass);
+  border-radius: var(--radius-medium);
+  object-fit: cover;
+}
+
+.imageSource {
+  margin: var(--space-6) 0;
+  padding: 0;
+  border: 0;
+}
+
+.imageSource legend {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.modeTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.modeTabs label {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-brass-dark);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-brass-light) 25%, transparent);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.modeTabs input {
+  margin-right: 0.5rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.catalogChoice {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border: 3px solid transparent;
+  border-radius: var(--radius-medium);
+  background: var(--color-ink);
+  color: white;
+  cursor: pointer;
+}
+
+.catalogChoice:has(input:checked) {
+  border-color: var(--color-brass);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brass-light) 45%, transparent);
+}
+
+.catalogChoice input {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 1;
+}
+
+.catalogChoice img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.catalogChoice span {
+  padding: 0.6rem;
+  font-family: var(--font-display);
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .fields {
+    grid-template-columns: 2fr repeat(4, minmax(5.5rem, 1fr));
+  }
+
+  .nameField {
+    grid-column: auto;
+  }
+
+  .catalog {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .uploadArea {
+    grid-template-columns: minmax(0, 1fr) 12rem;
+  }
+}
+
+@media (min-width: 70rem) {
+  .catalog {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
