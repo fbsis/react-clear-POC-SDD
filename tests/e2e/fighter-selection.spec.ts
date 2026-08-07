@@ -7,7 +7,10 @@ test('selects two fighters and confirms battle using the keyboard', async ({ pag
   await registerMonster(page, 'Aeralune', /Aeralune/u);
   await page.getByRole('button', { name: 'Escolher lutadores' }).click();
 
-  const firstPortrait = page.getByRole('button', { name: 'Selecionar Pyraxis' });
+  const firstPortrait = page
+    .getByRole('grid', { name: 'Selecionar lutadores' })
+    .getByRole('button')
+    .first();
   await firstPortrait.focus();
   await page.keyboard.press('Enter');
   await page.keyboard.press('ArrowRight');
@@ -18,11 +21,7 @@ test('selects two fighters and confirms battle using the keyboard', async ({ pag
   await expect(page.getByText(/Vencedor:/u)).toBeVisible();
 });
 
-async function registerMonster(
-  page: Page,
-  name: string,
-  imageName: RegExp
-) {
+async function registerMonster(page: Page, name: string, imageName: RegExp) {
   await page.getByLabel('Nome').fill(name);
   await page.getByRole('spinbutton', { name: 'Ataque', exact: true }).fill('80');
   await page.getByRole('spinbutton', { name: 'Defesa', exact: true }).fill('60');

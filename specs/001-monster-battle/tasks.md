@@ -153,7 +153,7 @@ a duplicate and confirm the battle.
 - [X] T064 [US3] Implement the complete selection screen with local simple useState, reducer-driven correlated selection state and GameSessionContext StartBattle handoff in src/presentation/fighter-selection/FighterSelectionPage.tsx
 - [X] T065 [US3] Implement responsive medieval tournament-hall styling with carved frames, banners, magical side accents, focus, selection and reduced-motion states in src/presentation/fighter-selection/FighterSelectionPage.module.css
 - [X] T066 [US3] Integrate collection-to-selection and selection-to-battle transitions through MonsterCollectionContext, GameSessionContext and local AppScreen useState in src/app/App.tsx and src/app/providers/GameSessionProvider.tsx
-- [ ] T067 [US3] Make all US3 component and E2E tests pass via the Docker test gate
+- [X] T067 [US3] Make all US3 component and E2E tests pass via the Docker test gate
 - [ ] T068 [US3] Capture fighter selection at 375x812, 768x1024 and 1440x900 with populated slots and visible focus, verify no page overflow, present the checkpoint and record approval or requested adjustments in specs/001-monster-battle/design-reviews/fighter-selection.md with screenshots in specs/001-monster-battle/design-reviews/screenshots/selection-mobile.png, selection-tablet.png and selection-desktop.png
 
 **Checkpoint**: Selection is independently usable with keyboard, visually expressive and free of graphic

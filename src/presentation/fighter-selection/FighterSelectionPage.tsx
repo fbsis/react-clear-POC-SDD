@@ -54,7 +54,12 @@ export function FighterSelectionPage() {
       <section className={styles.emptyState}>
         <h1>Reúna dois monstros</h1>
         <p>A arena precisa de dois combatentes distintos antes de abrir os portões.</p>
-        <Button type="button" onClick={() => { session.navigate('registration'); }}>
+        <Button
+          type="button"
+          onClick={() => {
+            session.navigate('registration');
+          }}
+        >
           Voltar ao cadastro
         </Button>
       </section>
@@ -73,8 +78,12 @@ export function FighterSelectionPage() {
         firstMonster={firstMonster}
         secondMonster={secondMonster}
         activeSide={state.activeSide}
-        onActivate={(side) => { dispatch({ type: 'activate', side }); }}
-        onRemove={(side) => { dispatch({ type: 'remove', side }); }}
+        onActivate={(side) => {
+          dispatch({ type: 'activate', side });
+        }}
+        onRemove={(side) => {
+          dispatch({ type: 'remove', side });
+        }}
       />
 
       <div className={styles.selectionHall}>
@@ -90,8 +99,12 @@ export function FighterSelectionPage() {
             selectedMonsterIds={[state.firstMonsterId, state.secondMonsterId].filter(
               (id): id is string => Boolean(id)
             )}
-            onFocusMonster={(monsterId) => { dispatch({ type: 'focus', monsterId }); }}
-            onSelectMonster={(monsterId) => { dispatch({ type: 'select', monsterId }); }}
+            onFocusMonster={(monsterId) => {
+              dispatch({ type: 'focus', monsterId });
+            }}
+            onSelectMonster={(monsterId) => {
+              dispatch({ type: 'select', monsterId });
+            }}
           />
         </div>
       </div>
@@ -99,7 +112,13 @@ export function FighterSelectionPage() {
       {state.message ? <StatusMessage>{state.message}</StatusMessage> : null}
       {startError ? <StatusMessage tone="danger">{startError}</StatusMessage> : null}
       <div className={styles.actions}>
-        <Button type="button" variant="ghost" onClick={() => { session.navigate('registration'); }}>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => {
+            session.navigate('registration');
+          }}
+        >
           Voltar à companhia
         </Button>
         <Button

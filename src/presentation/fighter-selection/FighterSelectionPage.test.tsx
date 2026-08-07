@@ -35,7 +35,9 @@ describe('FighterSelectionPage', () => {
     expect(screen.getByRole('region', { name: 'Lutador 2' })).toHaveTextContent('Pyraxis');
     await user.click(screen.getByRole('button', { name: 'Iniciar batalha' }));
 
-    await waitFor(() => { expect(startBattle).toHaveBeenCalledWith('monster-2', 'monster-1'); });
+    await waitFor(() => {
+      expect(startBattle).toHaveBeenCalledWith('monster-2', 'monster-1');
+    });
   });
 
   it('rejects duplicate fighters without moving keyboard focus', async () => {

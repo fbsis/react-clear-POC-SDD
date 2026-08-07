@@ -64,9 +64,15 @@ export function FighterGrid({
                 data-selected={selected}
                 aria-label={`Selecionar ${monster.name}`}
                 tabIndex={monster.id === focusedMonsterId ? 0 : -1}
-                onFocus={() => { onFocusMonster(monster.id); }}
-                onClick={() => { onSelectMonster(monster.id); }}
-                onKeyDown={(event) => { moveFocus(event, index); }}
+                onFocus={() => {
+                  onFocusMonster(monster.id);
+                }}
+                onClick={() => {
+                  onSelectMonster(monster.id);
+                }}
+                onKeyDown={(event) => {
+                  moveFocus(event, index);
+                }}
               >
                 <MonsterPortrait monster={monster} />
                 <strong>{monster.name}</strong>

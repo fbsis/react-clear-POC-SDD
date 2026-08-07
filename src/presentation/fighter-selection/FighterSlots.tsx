@@ -58,7 +58,13 @@ function FighterSlot({
 }>) {
   return (
     <section className={styles.slot} data-active={active} aria-label={label}>
-      <button type="button" className={styles.slotTarget} onClick={() => { onActivate(side); }}>
+      <button
+        type="button"
+        className={styles.slotTarget}
+        onClick={() => {
+          onActivate(side);
+        }}
+      >
         <span className={styles.slotLabel}>{active ? '✦ Escolhendo' : label}</span>
         {monster ? (
           <>
@@ -73,7 +79,13 @@ function FighterSlot({
         )}
       </button>
       {monster ? (
-        <Button type="button" variant="ghost" onClick={() => { onRemove(side); }}>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => {
+            onRemove(side);
+          }}
+        >
           Remover {label.toLowerCase()}
         </Button>
       ) : null}

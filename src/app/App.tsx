@@ -53,7 +53,12 @@ function AppContent() {
             <MonsterCollection />
             {monsters.length >= 2 ? (
               <div className={styles.continueAction}>
-                <Button type="button" onClick={() => { session.navigate('selection'); }}>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    session.navigate('selection');
+                  }}
+                >
                   Escolher lutadores
                 </Button>
               </div>
