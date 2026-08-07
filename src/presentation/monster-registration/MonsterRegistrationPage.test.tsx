@@ -26,6 +26,7 @@ describe('MonsterRegistrationPage', () => {
     expect(registerMonster).toHaveBeenCalledWith(
       expect.objectContaining({ name: 'Pyraxis', image: { kind: 'catalog', imageId: 'pyraxis' } })
     );
+    expect(screen.getByRole('status')).toHaveTextContent('Pyraxis entrou para a coleção.');
   });
 });
 
