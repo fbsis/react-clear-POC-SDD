@@ -24,11 +24,8 @@ docker compose down
 ```
 
 Mantenha a porta `5173`: o IndexedDB é separado por origem, portanto mudar protocolo, host ou porta cria
-outro espaço de dados no navegador. Para acompanhar alterações com Compose Watch, use:
-
-```bash
-docker compose up --build --watch
-```
+outro espaço de dados no navegador. O volume configurado no Compose já entrega as alterações ao Vite com
+hot reload.
 
 ## Qualidade e testes
 

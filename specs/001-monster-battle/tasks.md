@@ -225,8 +225,8 @@ builds do not deploy and the live site passes its smoke test.
 - [X] T094 Review all exported names, one-declaration-per-file contracts, readonly DTOs, exhaustive unions, React state ownership and decision-focused documentation for Clean Code compliance across src/domains/, src/application/ and src/app/
 - [X] T095 Validate contrast pairs, 44px targets, focus order, live announcements and reduced motion against specs/001-monster-battle/contracts/ui-contracts.md
 - [X] T096 Document Docker prerequisites, canonical commands, DDD architecture, TypeScript interface injection, Context/useState ownership, one-declaration-per-file convention, IndexedDB behavior, local-data risks, tests, local production and GitHub Pages deployment in README.md
-- [ ] T097 Run every scenario and command in specs/001-monster-battle/quickstart.md and correct any documentation or implementation mismatch
-- [ ] T098 Run `pnpm check`, E2E and production export exclusively through Docker and record the final zero-warning result in specs/001-monster-battle/quickstart.md
+- [X] T097 Run every scenario and command in specs/001-monster-battle/quickstart.md and correct any documentation or implementation mismatch
+- [X] T098 Run `pnpm check`, E2E and production export exclusively through Docker and record the final zero-warning result in specs/001-monster-battle/quickstart.md
 
 ---
 

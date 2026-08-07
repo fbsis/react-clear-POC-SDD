@@ -1,7 +1,6 @@
 # Quickstart and Validation Guide
 
-This guide defines the commands and end-to-end evidence the implementation MUST provide. Until the
-implementation tasks are executed, commands describe the intended project interface.
+This guide defines the canonical commands and end-to-end evidence for the implemented application.
 
 ## Prerequisites
 
@@ -15,17 +14,11 @@ Do not install Node.js, pnpm or project dependencies on the host.
 
 ```bash
 docker compose build
-docker compose up --build --watch
-```
-
-Expected: the development app is available on the fixed documented port and changes reload. The port
-MUST remain stable because IndexedDB is scoped by origin.
-
-For a one-off run without Compose Watch:
-
-```bash
 docker compose up --build app
 ```
+
+Expected: the development app is available at `http://localhost:5173` and source changes reload through
+the configured volume. The port MUST remain stable because IndexedDB is scoped by origin.
 
 ## Quality gates
 
@@ -47,30 +40,34 @@ docker compose run --rm --build app pnpm check
 
 Expected: all commands exit 0, ESLint reports zero warnings and the production bundle respects budgets.
 
-Validated for the registration milestone on 2026-08-07:
+Final local validation on 2026-08-07:
 
 ```bash
 docker compose run --rm app pnpm check
 docker compose up -d app
-docker compose run --rm e2e pnpm test:e2e tests/e2e/monster-registration.spec.ts
+docker compose run --rm e2e pnpm test:e2e
 ```
 
-Result: 46 unit/integration tests and the Chromium catalog/upload/reload journey passed. All uploaded
-bytes remained in IndexedDB on the tested browser origin.
+Result: 39 unit/integration test files and 113 tests passed with zero formatting, lint, type or build
+warnings. The production JavaScript measured 74.62 KB gzip against the 250 KB budget. The Chromium E2E
+suite passed 19 local journeys; the one URL-dependent GitHub Pages smoke test was correctly skipped
+outside the deployment workflow. All uploaded bytes remained in IndexedDB on the tested browser origin.
 
 The GitHub Pages delivery contract was also validated locally in Docker: the BuildKit export emitted
 only the static site, `index.html` referenced scripts and styles below `/react-clear-POC-SDD/`, all six
 catalog images were present and the complete Playwright suite passed before publication.
 
-Validated for the battle-engine milestone on 2026-08-07:
+The cross-browser critical-path matrix was also validated:
 
 ```bash
-docker compose run --rm app pnpm check
+docker compose run --rm --env PLAYWRIGHT_FULL_MATRIX=true e2e pnpm test:e2e \
+  tests/e2e/monster-registration.spec.ts \
+  tests/e2e/fighter-selection.spec.ts \
+  tests/e2e/browser-context-isolation.spec.ts
 ```
 
-Result: 24 test files and 59 tests passed with zero lint or type warnings. The deterministic worst-case
-battle produced 9,999 rounds and 19,997 events within the one-second budget; the measured isolated test
-completed in tens of milliseconds. The production bundle remained below the 250 KB gzip budget.
+Result: all 9 persistence, keyboard and isolated-context journeys passed in Chromium, Firefox and WebKit.
+The deterministic worst-case battle produced 9,999 rounds and 19,997 events within the one-second budget.
 
 ## Browser tests
 
@@ -88,6 +85,19 @@ docker compose --profile production up --build
 ```
 
 Expected: static production assets are served by a non-root container. `vite preview` is not production.
+
+Final release evidence recorded on 2026-08-07:
+
+```bash
+docker compose run --rm app pnpm check
+docker compose run --rm e2e pnpm test:e2e
+docker build --target export --output type=local,dest=<temporary-directory> .
+```
+
+Result: the aggregate gate completed with zero warnings, 39 test files and 113 tests passed, 19 local E2E
+journeys passed with only the deployment-only smoke test skipped, and the BuildKit export contained only
+`index.html`, hashed scripts/styles and the six-image catalog. The temporary export was inspected and
+removed after validation.
 
 ## GitHub Pages deployment
 
@@ -142,14 +152,16 @@ Expected: monster and selected image remain in the collection.
 3. Reload and start a new browser page in the same context/origin.
 
 Expected: the uploaded image remains visible in collection, selection and battle cards; no network upload
-occurs. Browser devtools show `monsters` and `imageAssets` in IndexedDB, not localStorage.
+occurs. Browser devtools show `monsters` and `imageAssets` in IndexedDB, with image bytes stored as an
+`ArrayBuffer`, not in localStorage.
 
 ### 3. Validation and storage failures
 
 - Attempt blank name, fractional/negative/out-of-range stats, unsupported/corrupt/oversized image.
 - Simulate quota failure and a blocked schema upgrade.
 
-Expected: no partial monster or orphan blob is saved; entered data remains and messages are actionable.
+Expected: no partial monster or orphan image asset is saved; entered data remains and messages are
+actionable.
 
 ### 4. Battle algorithm
 
