@@ -1,9 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { MonsterCollectionContext } from '@app/contexts/MonsterCollectionContext';
 import type { MonsterCollectionContextValue } from '@app/contexts/MonsterCollectionContextValue';
 import { MonsterRegistrationPage } from './MonsterRegistrationPage';
+
+afterEach(cleanup);
 
 describe('MonsterRegistrationPage', () => {
   it('submits a keyboard-accessible catalog registration form', async () => {
@@ -27,6 +29,30 @@ describe('MonsterRegistrationPage', () => {
       expect.objectContaining({ name: 'Pyraxis', image: { kind: 'catalog', imageId: 'pyraxis' } })
     );
     expect(screen.getByRole('status')).toHaveTextContent('Pyraxis entrou para a coleção.');
+  });
+
+  it('keeps form data and handles a rejected registration without false success', async () => {
+    const registerMonster = vi.fn().mockRejectedValue(new Error('storage unavailable'));
+    render(
+      <MonsterCollectionContext.Provider
+        value={{ ...contextValue(registerMonster), error: 'Não foi possível guardar o monstro.' }}
+      >
+        <MonsterRegistrationPage />
+      </MonsterCollectionContext.Provider>
+    );
+    const user = userEvent.setup();
+
+    await user.type(screen.getByLabelText('Nome'), 'Pyraxis');
+    await user.type(screen.getByLabelText('Ataque'), '86');
+    await user.type(screen.getByLabelText('Defesa'), '68');
+    await user.type(screen.getByLabelText('Velocidade'), '72');
+    await user.type(screen.getByLabelText('Vida'), '180');
+    await user.click(screen.getByRole('button', { name: 'Guardar monstro' }));
+
+    expect(registerMonster).toHaveBeenCalledOnce();
+    expect(screen.getByLabelText('Nome')).toHaveValue('Pyraxis');
+    expect(screen.getByRole('alert')).toHaveTextContent('Não foi possível guardar o monstro.');
+    expect(screen.queryByText('Pyraxis entrou para a coleção.')).not.toBeInTheDocument();
   });
 });
 

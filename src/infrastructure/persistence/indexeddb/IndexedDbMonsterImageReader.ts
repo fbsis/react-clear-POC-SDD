@@ -28,13 +28,14 @@ export class IndexedDbMonsterImageReader implements MonsterImageReader {
     }
     return {
       kind: 'uploaded',
-      bytes: await this.readBytes(asset.blob),
+      bytes:
+        'bytes' in asset ? new Uint8Array(asset.bytes) : await this.readLegacyBytes(asset.blob),
       mediaType: asset.mediaType,
       alt: `Imagem enviada: ${asset.fileName}`
     };
   }
 
-  private async readBytes(blob: Blob): Promise<Uint8Array> {
+  private async readLegacyBytes(blob: Blob): Promise<Uint8Array> {
     if (typeof blob.arrayBuffer === 'function') {
       return new Uint8Array(await blob.arrayBuffer());
     }

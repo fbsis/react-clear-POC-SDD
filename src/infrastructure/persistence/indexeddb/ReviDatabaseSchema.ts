@@ -1,6 +1,6 @@
 import type { DBSchema } from 'idb';
-import type { ImageAssetRecord } from './ImageAssetRecord';
 import type { MonsterRecord } from './MonsterRecord';
+import type { StoredImageAssetRecord } from './StoredImageAssetRecord';
 
 export interface ReviDatabaseSchema extends DBSchema {
   monsters: {
@@ -13,7 +13,7 @@ export interface ReviDatabaseSchema extends DBSchema {
   };
   imageAssets: {
     key: string;
-    value: ImageAssetRecord;
+    value: StoredImageAssetRecord;
     indexes: {
       'by-created-at': string;
     };

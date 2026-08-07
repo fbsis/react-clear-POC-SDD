@@ -131,14 +131,17 @@ Key path: `id`.
 
 ```text
 id: string
-blob: Blob
-mimeType: "image/jpeg" | "image/png" | "image/webp"
+bytes: ArrayBuffer
+mediaType: "image/jpeg" | "image/png" | "image/webp"
 sizeBytes: number
-originalFileName: string
+fileName: string
+createdAt: ISO-8601 string
 ```
 
 Uma transação `readwrite` em ambas as stores grava upload e monstro. Validação/decodificação ocorre antes
-da transação. Batalhas não são persistidas porque histórico está fora do escopo.
+da transação. O leitor também aceita o formato legado com `blob: Blob`, preservando imagens gravadas antes
+da adoção do formato binário compatível com WebKit. Como stores e índices não mudaram, não há upgrade de
+versão do banco. Batalhas não são persistidas porque histórico está fora do escopo.
 
 ## Static catalog manifest
 

@@ -78,6 +78,34 @@ describe('IndexedDbMonsterRepository integration', () => {
     await deleteDB('monster-arena');
   });
 
+  it('reads legacy Blob records created before the cross-browser byte format', async () => {
+    const database = new ReviDatabase();
+    const connection = await database.open();
+    await connection.add('imageAssets', {
+      id: 'legacy-asset',
+      blob: new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' }),
+      fileName: 'legacy.png',
+      mediaType: 'image/png',
+      sizeBytes: 3,
+      createdAt: '2026-08-07T12:00:00.000Z'
+    });
+
+    await expect(
+      new IndexedDbMonsterImageReader(database, emptyCatalog()).read({
+        kind: 'upload',
+        reference: 'legacy-asset'
+      })
+    ).resolves.toEqual({
+      kind: 'uploaded',
+      bytes: new Uint8Array([1, 2, 3]),
+      mediaType: 'image/png',
+      alt: 'Imagem enviada: legacy.png'
+    });
+
+    await database.close();
+    await deleteDB('monster-arena');
+  });
+
   it('preserves the browser quota error for application-level mapping', async () => {
     const database = new ReviDatabase();
     const quotaError = new DOMException('Quota exceeded', 'QuotaExceededError');

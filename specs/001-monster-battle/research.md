@@ -4,10 +4,12 @@
 
 **Decision**: IndexedDB com o wrapper tipado `idb`; não usar SQL.
 
-**Rationale**: IndexedDB armazena dados estruturados e `Blob` de forma assíncrona e transacional. O
+**Rationale**: IndexedDB armazena dados estruturados e binários de forma assíncrona e transacional. O
 `idb` mantém a semântica nativa, adiciona Promises, `DBSchema` tipado, migrations e cerca de 1,19 KB
 compactado. Duas stores (`monsters`, `imageAssets`) atendem o produto sem backend ou WASM. A gravação de
-um monstro e sua imagem enviada será atômica.
+um monstro e sua imagem enviada será atômica. Os bytes são gravados como `ArrayBuffer`, pois a automação
+em WebKit demonstrou que registros com `Blob` abortam a transação nesse navegador; o leitor mantém suporte
+ao formato legado com `Blob`.
 
 **Alternatives considered**:
 
@@ -16,7 +18,7 @@ um monstro e sua imagem enviada será atômica.
 - `localStorage`: síncrono, somente strings e inadequado para blobs de até 10 MB.
 - SQLite/WASM com OPFS: SQL, worker, WASM, VFS e concorrência sem consulta relacional que os justifique.
 
-**Operational notes**: persistir blobs, criar `URL.createObjectURL` apenas para exibição e sempre revogar;
+**Operational notes**: persistir bytes, criar `Blob` e `URL.createObjectURL` apenas para exibição e sempre revogar;
 capturar quota; manter host/porta fixos; versionar migrations e tratar abas que bloqueiam upgrades.
 
 Sources: [MDN IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API),

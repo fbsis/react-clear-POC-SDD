@@ -19,6 +19,10 @@ export class BrowserStorageStatus implements StorageStatus {
     if (!storage || typeof storage.persist !== 'function') {
       return false;
     }
-    return storage.persist();
+    try {
+      return await storage.persist();
+    } catch {
+      return false;
+    }
   }
 }

@@ -21,9 +21,7 @@ export class IndexedDbMonsterRepository implements MonsterRepository {
       if (uploadedImage) {
         const asset: ImageAssetRecord = {
           id: uploadedImage.id,
-          blob: new Blob([Uint8Array.from(uploadedImage.bytes).buffer], {
-            type: uploadedImage.mediaType
-          }),
+          bytes: Uint8Array.from(uploadedImage.bytes).buffer,
           fileName: uploadedImage.fileName,
           mediaType: this.toSupportedMediaType(uploadedImage.mediaType),
           sizeBytes: uploadedImage.sizeBytes,

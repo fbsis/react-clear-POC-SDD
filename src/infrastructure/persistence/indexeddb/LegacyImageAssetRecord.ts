@@ -1,6 +1,6 @@
-export interface ImageAssetRecord {
+export interface LegacyImageAssetRecord {
   readonly id: string;
-  readonly bytes: ArrayBuffer;
+  readonly blob: Blob;
   readonly fileName: string;
   readonly mediaType: 'image/jpeg' | 'image/png' | 'image/webp';
   readonly sizeBytes: number;

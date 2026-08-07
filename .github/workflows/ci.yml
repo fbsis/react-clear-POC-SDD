@@ -38,6 +38,15 @@ jobs:
       - name: Run Playwright in Docker
         run: docker compose run --rm --build e2e pnpm test:e2e
 
+      - name: Run persistence and keyboard journeys across browser engines
+        run: >-
+          docker compose run --rm
+          --env PLAYWRIGHT_FULL_MATRIX=true
+          e2e pnpm test:e2e
+          tests/e2e/monster-registration.spec.ts
+          tests/e2e/fighter-selection.spec.ts
+          tests/e2e/browser-context-isolation.spec.ts
+
       - name: Print application logs on failure
         if: failure()
         run: docker compose logs app

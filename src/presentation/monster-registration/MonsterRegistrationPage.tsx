@@ -66,7 +66,7 @@ export function MonsterRegistrationPage() {
       <form
         className={styles.form}
         onSubmit={(event) => {
-          void submit(event);
+          void submit(event).catch(() => undefined);
         }}
       >
         <div className={styles.fields}>
