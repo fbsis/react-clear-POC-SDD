@@ -1,7 +1,7 @@
 # Fighter selection visual checkpoint
 
 Date: 2026-08-07  
-Status: awaiting product-owner review
+Status: approved
 
 The medieval tournament-hall selection milestone was captured with Chromium in Docker using three
 deterministic catalog monsters. Two fighter slots are populated and keyboard focus remains visible on a
@@ -24,4 +24,6 @@ third portrait in every viewport.
 
 ## Decision
 
-Awaiting approval or requested adjustments. T068 remains open until that decision is recorded here.
+Approved by the product owner on 2026-08-07 without requested adjustments. The responsive tournament
+hall, populated fighter slots and keyboard focus treatment are accepted as the visual baseline for the
+battle presentation.
