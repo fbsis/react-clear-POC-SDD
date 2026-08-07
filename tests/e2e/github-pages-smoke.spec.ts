@@ -3,10 +3,14 @@ import { expect, test } from '@playwright/test';
 test.skip(!process.env.GITHUB_PAGES_SMOKE, 'Runs only against the deployed GitHub Pages site.');
 
 test('serves the application and catalog from the repository base path', async ({ page }) => {
-  const response = await page.goto('./');
+  await expect(async () => {
+    const response = await page.goto(`./?smoke=${String(Date.now())}`);
+    expect(response?.ok()).toBe(true);
+    await expect(page.getByRole('heading', { name: 'Forje seu monstro' })).toBeVisible({
+      timeout: 3_000
+    });
+  }).toPass({ timeout: 60_000, intervals: [1_000, 2_000, 5_000] });
 
-  expect(response?.ok()).toBe(true);
-  await expect(page.getByRole('heading', { name: 'Forje seu monstro' })).toBeVisible();
   await expect(page.getByRole('radio', { name: 'Pyraxis' })).toBeVisible();
   await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute(
     'href',
