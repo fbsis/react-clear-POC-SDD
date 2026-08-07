@@ -1,0 +1,50 @@
+[
+  {
+    "id": "pyraxis",
+    "name": "Pyraxis",
+    "file": "pyraxis.webp",
+    "alt": "Jovem wyvern de escamas vermelhas e chifres de bronze em uma arena de castelo",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "id": "terralith",
+    "name": "Terralith",
+    "file": "terralith.webp",
+    "alt": "Guardião de pedra coberto por musgo e runas de bronze em uma arena medieval",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "id": "aeralune",
+    "name": "Aeralune",
+    "file": "aeralune.webp",
+    "alt": "Grifo-corujinha branco e azul de asas abertas diante de um castelo iluminado",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "id": "glacielle",
+    "name": "Glacielle",
+    "file": "glacielle.webp",
+    "alt": "Raposa ártica de várias caudas com pontas de cristal azul em uma arena noturna",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "id": "bramblehorn",
+    "name": "Bramblehorn",
+    "file": "bramblehorn.webp",
+    "alt": "Criatura urso-cervo com galhadas de madeira e manto de folhas em uma arena verde",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "id": "tideclaw",
+    "name": "Tideclaw",
+    "file": "tideclaw.webp",
+    "alt": "Dragão marinho turquesa com chifres de coral ao lado do canal de uma arena",
+    "width": 1024,
+    "height": 1280
+  }
+]
