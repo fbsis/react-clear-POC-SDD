@@ -181,7 +181,7 @@ event zero, verify 2,999/3,000 ms behavior, interrupt/restart and reach the winn
 
 - [X] T074 [P] [US4] Implement generation-safe immutable playback transitions with named state and action types isolated in src/presentation/battle-playback/PlaybackState.ts, src/presentation/battle-playback/PlaybackAction.ts and src/presentation/battle-playback/playbackReducer.ts
 - [X] T075 [P] [US4] Implement one-shot timeout scheduling and cleanup in src/presentation/battle-playback/useBattlePlayback.ts
-- [ ] T076 [P] [US4] Implement accessible round pagination/windowing with its model isolated from behavior in src/presentation/battle-playback/RoundWindowModel.ts, src/presentation/battle-playback/roundWindow.ts and src/presentation/battle-playback/RoundTimeline.tsx
+- [X] T076 [P] [US4] Implement accessible round pagination/windowing with its model isolated from behavior in src/presentation/battle-playback/RoundWindowModel.ts, src/presentation/battle-playback/roundWindow.ts and src/presentation/battle-playback/RoundTimeline.tsx
 - [ ] T077 [P] [US4] Implement parchment-and-brass fighter cards, HP text/progress and active event summary in src/presentation/battle-playback/BattleCard.tsx and BattleEventSummary.tsx
 - [ ] T078 [US4] Implement the responsive castle-arena composition using the BattleDto from GameSessionContext while keeping Play/Restart, previous/next, marker selection, live announcements and high-frequency playback state local in src/presentation/battle-playback/BattlePlaybackPage.tsx
 - [ ] T079 [US4] Implement non-violent medieval magic attack, impact, damage, HP, defeat and victory effects with reduced-motion alternatives in src/presentation/battle-playback/BattlePlaybackPage.module.css

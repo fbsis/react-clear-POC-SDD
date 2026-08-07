@@ -14,7 +14,9 @@ describe('createRoundWindow', () => {
   it('centers a bounded marker window inside a 9,999 round battle', () => {
     const model = createRoundWindow(9_999, 5_000);
 
-    expect(model.visibleRoundNumbers).toEqual([4996, 4997, 4998, 4999, 5000, 5001, 5002, 5003, 5004]);
+    expect(model.visibleRoundNumbers).toEqual([
+      4996, 4997, 4998, 4999, 5000, 5001, 5002, 5003, 5004
+    ]);
     expect(model.isWindowed).toBe(true);
     expect(model.activeRoundNumber).toBe(5_000);
   });
