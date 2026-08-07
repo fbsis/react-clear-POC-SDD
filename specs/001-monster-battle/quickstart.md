@@ -55,8 +55,12 @@ docker compose up -d app
 docker compose run --rm e2e pnpm test:e2e tests/e2e/monster-registration.spec.ts
 ```
 
-Result: 44 unit/integration tests and the Chromium catalog/upload/reload journey passed. All uploaded
+Result: 46 unit/integration tests and the Chromium catalog/upload/reload journey passed. All uploaded
 bytes remained in IndexedDB on the tested browser origin.
+
+The GitHub Pages delivery contract was also validated locally in Docker: the BuildKit export emitted
+only the static site, `index.html` referenced scripts and styles below `/react-clear-POC-SDD/`, all six
+catalog images were present and the complete Playwright suite passed before publication.
 
 ## Browser tests
 

@@ -199,12 +199,12 @@ without stale timers or inaccessible state.
 **Purpose**: Validate every change in Docker and deploy the static artifact to GitHub Pages after a
 successful `main` build.
 
-- [ ] T083 Finalize a BuildKit export target that emits only the production `dist/` artifact in Dockerfile
-- [ ] T084 [P] Add base-path and catalog-asset assertions for `/react-clear-POC-SDD/` in tests/build/pages-base-path.test.ts
-- [ ] T085 [P] Add a GitHub Actions CI workflow for pull requests and main pushes that runs format, lint, typecheck, unit/integration coverage, production build and E2E through Docker in .github/workflows/ci.yml
-- [ ] T086 Create a least-privilege Pages CD workflow with main/workflow_dispatch triggers, Docker quality/build jobs, `VITE_BASE_PATH=/react-clear-POC-SDD/`, Pages artifact upload, protected `github-pages` environment and concurrency in .github/workflows/deploy-pages.yml
-- [ ] T087 Add a containerized post-deploy Playwright smoke test for root HTML, scripts, styles and catalog assets at the deployed base path in tests/e2e/github-pages-smoke.spec.ts and .github/workflows/deploy-pages.yml
-- [ ] T088 Add CI and deployment badges, expected Pages URL, one-time Settings → Pages configuration and rollback/re-run guidance in README.md
+- [X] T083 Finalize a BuildKit export target that emits only the production `dist/` artifact in Dockerfile
+- [X] T084 [P] Add base-path and catalog-asset assertions for `/react-clear-POC-SDD/` in tests/build/pages-base-path.test.ts
+- [X] T085 [P] Add a GitHub Actions CI workflow for pull requests and main pushes that runs format, lint, typecheck, unit/integration coverage, production build and E2E through Docker in .github/workflows/ci.yml
+- [X] T086 Create a least-privilege Pages CD workflow with main/workflow_dispatch triggers, Docker quality/build jobs, `VITE_BASE_PATH=/react-clear-POC-SDD/`, Pages artifact upload, protected `github-pages` environment and concurrency in .github/workflows/deploy-pages.yml
+- [X] T087 Add a containerized post-deploy Playwright smoke test for root HTML, scripts, styles and catalog assets at the deployed base path in tests/e2e/github-pages-smoke.spec.ts and .github/workflows/deploy-pages.yml
+- [X] T088 Add CI and deployment badges, expected Pages URL, one-time Settings → Pages configuration and rollback/re-run guidance in README.md
 - [ ] T089 Configure the repository Pages source as GitHub Actions and verify the first deployment at https://fbsis.github.io/react-clear-POC-SDD/ following specs/001-monster-battle/quickstart.md
 - [ ] T090 Verify with a same-origin browser session that a new Pages deployment preserves IndexedDB monsters/uploads and document the evidence in specs/001-monster-battle/quickstart.md
 
