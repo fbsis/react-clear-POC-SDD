@@ -18,8 +18,8 @@ export class Battle {
     result: BattleResult
   ) {
     this.id = `${fighters[0].id}:${fighters[1].id}`;
-    this.fighters = Object.freeze([...fighters]) as readonly [MonsterSnapshot, MonsterSnapshot];
-    this.attackOrder = Object.freeze([...attackOrder]) as readonly [string, string];
+    this.fighters = Object.freeze([...fighters]);
+    this.attackOrder = Object.freeze([...attackOrder]);
     this.rounds = Object.freeze([...rounds]);
     this.result = result;
     Object.freeze(this);

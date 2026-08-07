@@ -12,10 +12,10 @@ export function resolveBattle(firstMonster: Monster, secondMonster: Monster): Ba
     throw new InvalidBattleError();
   }
 
-  const fighters = Object.freeze([
+  const fighters: readonly [MonsterSnapshot, MonsterSnapshot] = Object.freeze([
     snapshotMonster(firstMonster),
     snapshotMonster(secondMonster)
-  ]) as readonly [MonsterSnapshot, MonsterSnapshot];
+  ]);
   const attackOrder = determineAttackOrder(fighters);
   const currentHp: Record<string, number> = {
     [fighters[0].id]: fighters[0].stats.hp,
