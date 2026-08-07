@@ -5,6 +5,7 @@ import { useGameSession } from '@app/hooks/useGameSession';
 import { Button } from '@presentation/shared/components/Button';
 import { BattleCard } from './BattleCard';
 import { BattleEventSummary } from './BattleEventSummary';
+import { RoundBattleLog } from './RoundBattleLog';
 import { RoundTimeline } from './RoundTimeline';
 import { useBattlePlayback } from './useBattlePlayback';
 import styles from './BattlePlaybackPage.module.css';
@@ -36,6 +37,11 @@ function BattleContent({
   const event =
     playback.state.eventIndex === null ? null : (events[playback.state.eventIndex] ?? null);
   const activeRoundNumber = event?.roundNumber ?? 1;
+  const activeRound = battle.rounds[activeRoundNumber - 1] ?? battle.rounds[0];
+  const activeActionNumber =
+    event && activeRound
+      ? activeRound.events.findIndex((candidate) => candidate.sequence === event.sequence) + 1
+      : null;
   const hp =
     playback.state.eventIndex === null
       ? Object.fromEntries(battle.fighters.map((fighter) => [fighter.id, fighter.hp]))
@@ -76,7 +82,13 @@ function BattleContent({
         />
         <div className={styles.centerStage}>
           <span className={styles.roundCrest}>Round {activeRoundNumber}</span>
-          <BattleEventSummary event={event} attacker={attacker} defender={defender} />
+          <BattleEventSummary
+            event={event}
+            attacker={attacker}
+            defender={defender}
+            actionNumber={activeActionNumber}
+            totalActions={activeRound?.events.length ?? 0}
+          />
           <div className={styles.playbackControls}>
             <Button type="button" onClick={playback.play}>
               {playback.state.eventIndex === null ? 'Play' : 'Reiniciar'}
@@ -97,6 +109,10 @@ function BattleContent({
           isDefeated={complete && battle.loserId === battle.fighters[1].id}
         />
       </div>
+
+      {activeRound ? (
+        <RoundBattleLog round={activeRound} fighters={battle.fighters} currentEvent={event} />
+      ) : null}
 
       <div className={styles.liveRegion} role="status" aria-live="polite" aria-atomic="true">
         {event && attacker && defender

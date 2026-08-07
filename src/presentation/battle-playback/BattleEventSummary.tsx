@@ -5,11 +5,15 @@ import styles from './BattlePlaybackPage.module.css';
 export function BattleEventSummary({
   event,
   attacker,
-  defender
+  defender,
+  actionNumber,
+  totalActions
 }: Readonly<{
   event: BattleEventDto | null;
   attacker: MonsterDto | null;
   defender: MonsterDto | null;
+  actionNumber: number | null;
+  totalActions: number;
 }>) {
   if (!event || !attacker || !defender) {
     return (
@@ -23,7 +27,9 @@ export function BattleEventSummary({
 
   return (
     <section className={styles.eventSummary} aria-label="Evento atual">
-      <span className={styles.eventEyebrow}>Round {event.roundNumber}</span>
+      <span className={styles.eventEyebrow}>
+        Round {event.roundNumber} · Ação {actionNumber} de {totalActions}
+      </span>
       <h2>
         {attacker.name} ataca {defender.name}
       </h2>

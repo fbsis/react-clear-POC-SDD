@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Application } from '@application/Application';
@@ -45,6 +45,32 @@ describe('BattlePlaybackPage', () => {
     expect(screen.getByText('Derrotado')).toBeVisible();
     expect(screen.getByRole('heading', { name: 'Pyraxis vence!' })).toBeVisible();
     expect(screen.getByRole('button', { name: 'Próximo round indisponível' })).toBeDisabled();
+  });
+
+  it('makes every attack in the current round and the active action explicit', async () => {
+    renderPage();
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', { name: 'Play' }));
+
+    expect(screen.getByText('Ação 1 de 2')).toBeVisible();
+    const battleLog = screen.getByRole('region', { name: 'Log do round 1' });
+    const firstAction = within(battleLog).getAllByRole('listitem')[0];
+    const secondAction = within(battleLog).getAllByRole('listitem')[1];
+    expect(firstAction).toHaveTextContent('Agora');
+    expect(firstAction).toHaveTextContent('Pyraxis ataca Aeralune');
+    expect(firstAction).toHaveTextContent('90 → 60 HP (-30)');
+    expect(secondAction).toHaveTextContent('Próxima');
+    expect(secondAction).toHaveTextContent('Aeralune atacará Pyraxis');
+    expect(secondAction).toHaveTextContent('100 → 80 HP (-20)');
+
+    await user.click(screen.getByRole('button', { name: 'Round 1 de 3' }));
+
+    expect(screen.getByText('Ação 2 de 2')).toBeVisible();
+    expect(firstAction).toHaveTextContent('Concluída');
+    expect(firstAction).toHaveTextContent('Pyraxis atacou Aeralune');
+    expect(secondAction).toHaveTextContent('Agora');
+    expect(secondAction).toHaveTextContent('Aeralune ataca Pyraxis');
   });
 });
 

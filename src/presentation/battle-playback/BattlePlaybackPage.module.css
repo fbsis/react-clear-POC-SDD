@@ -245,6 +245,107 @@
   color: var(--color-text-muted);
 }
 
+.battleLog {
+  display: grid;
+  gap: var(--space-4);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid color-mix(in srgb, var(--color-brass) 45%, var(--color-stone-700));
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgb(34 28 23 / 94%), rgb(8 13 23 / 96%));
+  box-shadow: var(--shadow-card);
+}
+
+.battleLogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.battleLogHeader span,
+.logState {
+  color: var(--color-brass-light);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.battleLogHeader h2 {
+  margin: var(--space-1) 0 0;
+  color: var(--color-parchment);
+  font-family: var(--font-display);
+}
+
+.battleLogHeader > strong {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--color-brass-500);
+  border-radius: 999px;
+  background: rgb(5 8 18 / 72%);
+  color: var(--color-focus);
+  white-space: nowrap;
+}
+
+.battleLogList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.battleLogEntry {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-stone-700);
+  border-radius: var(--radius-sm);
+  background: rgb(5 8 18 / 70%);
+}
+
+.battleLogEntry[data-state='current'] {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 3px rgb(255 209 102 / 12%);
+}
+
+.battleLogEntry[data-state='completed'] {
+  border-color: color-mix(in srgb, var(--color-magic-300) 55%, var(--color-stone-700));
+}
+
+.battleLogEntry[data-state='upcoming'] {
+  opacity: 0.72;
+}
+
+.logSequence {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid var(--color-brass-500);
+  border-radius: 50%;
+  color: var(--color-brass-light);
+  font-weight: 900;
+}
+
+.battleLogEntry div {
+  display: grid;
+  min-width: 0;
+  gap: 0.2rem;
+}
+
+.battleLogEntry strong {
+  overflow-wrap: anywhere;
+  color: var(--color-parchment);
+}
+
+.battleLogEntry small {
+  color: var(--color-text-muted);
+}
+
 .result {
   padding: var(--space-5);
   border: 1px solid var(--color-brass-300);
@@ -398,6 +499,15 @@
   .playbackControls button,
   .footerActions button {
     width: 100%;
+  }
+
+  .battleLogHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .battleLogList {
+    grid-template-columns: 1fr;
   }
 }
 

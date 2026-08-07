@@ -17,6 +17,8 @@ test('navigates, plays, restarts and reveals the battle result', async ({ page }
   await page.getByRole('button', { name: 'Play' }).click();
   await expect(page.getByRole('status')).toContainText('causando');
   await expect(page.getByText(/-\d+ HP/u)).toBeVisible();
+  await expect(page.getByText('Ação 1 de 2', { exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Log do round 1' })).toContainText('Próxima');
   await page.getByRole('button', { name: 'Reiniciar' }).click();
   await expect(page.getByRole('button', { name: 'Round 1 de 2' })).toHaveAttribute(
     'aria-current',
