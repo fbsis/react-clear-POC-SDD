@@ -386,33 +386,120 @@
   justify-self: end;
 }
 
-.markers {
-  display: flex;
-  gap: var(--space-2);
+.progressScroller {
   min-width: 0;
-  margin: 0;
-  padding: var(--space-2);
+  padding: var(--space-2) 1.375rem;
   overflow-x: auto;
-  list-style: none;
 }
 
-.markers button {
-  display: grid;
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  place-items: center;
-  border: 1px solid var(--color-stone-700);
-  border-radius: 50%;
-  background: var(--color-stone-850);
-  color: var(--color-text);
+.progressNavigator {
+  position: relative;
+  height: 3.25rem;
+}
+
+.progressNavigator:has(.progressRange:focus-visible) {
+  border-radius: var(--radius-sm);
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.progressTrack {
+  position: absolute;
+  top: 0.62rem;
+  right: 0;
+  left: 0;
+  height: 0.34rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-stone-700);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 55%);
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-brass-500), var(--color-focus));
+  box-shadow: 0 0 0.8rem rgb(255 209 102 / 45%);
+  transition: width var(--motion-normal) ease;
+}
+
+.progressRange {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 2rem;
+  margin: 0;
+  opacity: 0;
   cursor: pointer;
 }
 
-.markers button[aria-current='step'] {
+.progressMarkers {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.progressMarkers li {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.progressMarkers button {
+  position: relative;
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 1.35rem 0 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.progressMarkers button::before {
+  position: absolute;
+  top: 0.3rem;
+  left: 50%;
+  width: 0.95rem;
+  height: 0.95rem;
+  transform: translateX(-50%);
+  border: 2px solid var(--color-stone-500);
+  border-radius: 50%;
+  background: var(--color-night-950);
+  box-shadow: 0 0 0 3px rgb(5 8 18 / 82%);
+  content: '';
+  transition:
+    transform var(--motion-fast) ease,
+    background var(--motion-fast) ease;
+}
+
+.progressMarkers button:hover::before,
+.progressMarkers button:focus-visible::before {
+  transform: translateX(-50%) scale(1.18);
+  border-color: var(--color-focus);
+}
+
+.progressMarkers button[aria-current='step'] {
+  color: var(--color-focus);
+}
+
+.progressMarkers button[aria-current='step']::before {
+  width: 1.15rem;
+  height: 1.15rem;
   border-color: var(--color-focus);
   background: var(--color-brass-500);
-  color: var(--color-ink-900);
-  box-shadow: 0 0 0 3px rgb(255 209 102 / 18%);
+  box-shadow:
+    0 0 0 4px rgb(255 209 102 / 18%),
+    0 0 1rem rgb(255 209 102 / 42%);
 }
 
 .roundJump {

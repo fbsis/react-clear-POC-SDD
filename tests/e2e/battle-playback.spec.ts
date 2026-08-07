@@ -25,7 +25,7 @@ test('navigates, plays, restarts and reveals the battle result', async ({ page }
     'step'
   );
 
-  await page.getByRole('button', { name: 'Round 2 de 2' }).click();
+  await page.getByRole('slider', { name: 'Navegar pelos rounds' }).fill('2');
   await expect(page.getByText('Vencedor')).toBeVisible();
   await expect(page.getByRole('heading', { name: /vence!/u })).toBeVisible();
 });
