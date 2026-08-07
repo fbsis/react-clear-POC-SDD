@@ -29,7 +29,7 @@ describe('GameSessionProvider', () => {
     expect(result.current.battle).toBe(battle);
 
     act(() => {
-      result.current.clearBattle();
+      result.current.prepareNewBattle();
     });
 
     expect(result.current.screen).toBe('selection');

@@ -35,7 +35,7 @@ export function GameSessionProvider({ children }: GameSessionProviderProps) {
     },
     [application.startBattle]
   );
-  const clearBattle = useCallback((): void => {
+  const prepareNewBattle = useCallback((): void => {
     setBattle(null);
     setSelectedMonsterIds([]);
     setScreen('selection');
@@ -50,12 +50,12 @@ export function GameSessionProvider({ children }: GameSessionProviderProps) {
       selectMonster,
       resetSelection,
       startBattle,
-      clearBattle
+      prepareNewBattle
     }),
     [
       battle,
-      clearBattle,
       navigate,
+      prepareNewBattle,
       resetSelection,
       screen,
       selectMonster,

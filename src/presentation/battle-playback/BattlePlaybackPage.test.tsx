@@ -86,6 +86,6 @@ function sessionValue(): GameSessionContextValue {
     selectMonster: vi.fn(),
     resetSelection: vi.fn(),
     startBattle: vi.fn(),
-    clearBattle: vi.fn()
+    prepareNewBattle: vi.fn()
   };
 }

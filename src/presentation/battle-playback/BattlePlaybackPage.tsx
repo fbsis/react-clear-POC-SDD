@@ -16,14 +16,14 @@ export function BattlePlaybackPage() {
     return (
       <section className={styles.emptyBattle}>
         <h1>Nenhuma batalha preparada</h1>
-        <Button type="button" onClick={session.clearBattle}>
+        <Button type="button" onClick={session.prepareNewBattle}>
           Escolher lutadores
         </Button>
       </section>
     );
   }
 
-  return <BattleContent battle={session.battle} onNewBattle={session.clearBattle} />;
+  return <BattleContent battle={session.battle} onNewBattle={session.prepareNewBattle} />;
 }
 
 function BattleContent({

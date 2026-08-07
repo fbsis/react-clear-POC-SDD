@@ -109,7 +109,7 @@ function sessionValue(
     selectMonster: vi.fn(),
     resetSelection: vi.fn(),
     startBattle,
-    clearBattle: vi.fn()
+    prepareNewBattle: vi.fn()
   };
 }
 

@@ -1,5 +1,6 @@
 import { useGameSession } from '@app/hooks/useGameSession';
 import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
+import { BattlePlaybackPage } from '@presentation/battle-playback/BattlePlaybackPage';
 import { FighterSelectionPage } from '@presentation/fighter-selection/FighterSelectionPage';
 import { MonsterCollection } from '@presentation/monster-registration/MonsterCollection';
 import { MonsterRegistrationPage } from '@presentation/monster-registration/MonsterRegistrationPage';
@@ -34,9 +35,6 @@ function AppContent() {
     selection: 'Capítulo II · Escolha',
     battle: 'Capítulo III · Arena'
   }[session.screen];
-  const winner = session.battle?.fighters.find(
-    (fighter) => fighter.id === session.battle?.winnerId
-  );
 
   return (
     <div className={styles.app}>
@@ -66,17 +64,7 @@ function AppContent() {
           </>
         ) : null}
         {session.screen === 'selection' ? <FighterSelectionPage /> : null}
-        {session.screen === 'battle' ? (
-          <section className={styles.battleBridge}>
-            <span>Os cálculos do conselho foram concluídos</span>
-            <h1>Batalha calculada</h1>
-            <p>Vencedor: {winner?.name ?? 'Monstro desconhecido'}</p>
-            <p>A apresentação round a round será construída no próximo capítulo.</p>
-            <Button type="button" onClick={session.clearBattle}>
-              Nova batalha
-            </Button>
-          </section>
-        ) : null}
+        {session.screen === 'battle' ? <BattlePlaybackPage /> : null}
       </main>
     </div>
   );

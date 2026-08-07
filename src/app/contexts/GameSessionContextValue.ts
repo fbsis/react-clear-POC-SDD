@@ -9,5 +9,5 @@ export interface GameSessionContextValue {
   readonly selectMonster: (monsterId: string) => void;
   readonly resetSelection: () => void;
   readonly startBattle: (firstMonsterId: string, secondMonsterId: string) => Promise<void>;
-  readonly clearBattle: () => void;
+  readonly prepareNewBattle: () => void;
 }
