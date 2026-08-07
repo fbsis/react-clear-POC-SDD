@@ -112,10 +112,10 @@ damage/HP transition, missing counterattack after defeat and final winner.
 
 ### Tests for User Story 2
 
-- [ ] T047 [P] [US2] Write failing battle aggregate tests for snapshots, contiguous rounds, events and final result in src/domains/battle/Battle.test.ts
-- [ ] T048 [P] [US2] Write failing table-driven algorithm tests for all tie-breakers, minimum damage, zero clamp and no post-defeat counterattack in src/domains/battle/resolveBattle.test.ts
-- [ ] T049 [P] [US2] Write failing StartBattleUseCase constructor-injection tests for equal IDs, missing monsters, immutability and DTO mapping in src/application/battle/StartBattle.test.ts
-- [ ] T050 [P] [US2] Add a failing worst-case 9,999-round calculation benchmark assertion in src/domains/battle/resolveBattle.performance.test.ts
+- [X] T047 [P] [US2] Write failing battle aggregate tests for snapshots, contiguous rounds, events and final result in src/domains/battle/Battle.test.ts
+- [X] T048 [P] [US2] Write failing table-driven algorithm tests for all tie-breakers, minimum damage, zero clamp and no post-defeat counterattack in src/domains/battle/resolveBattle.test.ts
+- [X] T049 [P] [US2] Write failing StartBattleUseCase constructor-injection tests for equal IDs, missing monsters, immutability and DTO mapping in src/application/battle/StartBattle.test.ts
+- [X] T050 [P] [US2] Add a failing worst-case 9,999-round calculation benchmark assertion in src/domains/battle/resolveBattle.performance.test.ts
 
 ### Implementation for User Story 2
 
