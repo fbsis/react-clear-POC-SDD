@@ -1,13 +1,17 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Application } from '@application/Application';
+import type { ImageContentDto } from '@application/monster/dtos/ImageContentDto';
+import type { MonsterImageReferenceDto } from '@application/monster/dtos/MonsterImageReferenceDto';
 import type { MonsterCollectionContextValue } from '@app/contexts/MonsterCollectionContextValue';
 import type { GameSessionContextValue } from '@app/contexts/GameSessionContextValue';
 import { ApplicationContext } from '@app/contexts/ApplicationContext';
 import { GameSessionContext } from '@app/contexts/GameSessionContext';
 import { MonsterCollectionContext } from '@app/contexts/MonsterCollectionContext';
 import { FighterSelectionPage } from './FighterSelectionPage';
+
+afterEach(cleanup);
 
 describe('FighterSelectionPage', () => {
   it('supports roving keyboard focus, preview, slots and battle handoff', async () => {
@@ -31,7 +35,7 @@ describe('FighterSelectionPage', () => {
     expect(screen.getByRole('region', { name: 'Lutador 2' })).toHaveTextContent('Pyraxis');
     await user.click(screen.getByRole('button', { name: 'Iniciar batalha' }));
 
-    await waitFor(() => expect(startBattle).toHaveBeenCalledWith('monster-2', 'monster-1'));
+    await waitFor(() => { expect(startBattle).toHaveBeenCalledWith('monster-2', 'monster-1'); });
   });
 
   it('rejects duplicate fighters without moving keyboard focus', async () => {
@@ -65,8 +69,12 @@ function applicationFake(): Application {
     listMonsters: { execute: vi.fn() },
     listMonsterImages: { execute: vi.fn() },
     loadMonsterImage: {
-      execute: vi.fn(({ reference }) =>
-        Promise.resolve({ kind: 'catalog' as const, src: `/monster-catalog/${reference}.webp` })
+      execute: vi.fn((reference: MonsterImageReferenceDto): Promise<ImageContentDto> =>
+        Promise.resolve({
+          kind: 'catalog',
+          src: `/monster-catalog/${reference.reference}.webp`,
+          alt: 'Retrato de monstro'
+        })
       )
     },
     startBattle: { execute: vi.fn() },
@@ -76,7 +84,10 @@ function applicationFake(): Application {
 
 function collectionValue(): MonsterCollectionContextValue {
   return {
-    monsters: [monster('monster-1', 'Pyraxis', 'pyraxis'), monster('monster-2', 'Aeralune', 'aeralune')],
+    monsters: [
+      monster('monster-1', 'Pyraxis', 'pyraxis'),
+      monster('monster-2', 'Aeralune', 'aeralune')
+    ],
     images: [],
     status: 'ready',
     error: null,
@@ -85,7 +96,9 @@ function collectionValue(): MonsterCollectionContextValue {
   };
 }
 
-function sessionValue(startBattle: GameSessionContextValue['startBattle']): GameSessionContextValue {
+function sessionValue(
+  startBattle: GameSessionContextValue['startBattle']
+): GameSessionContextValue {
   return {
     screen: 'selection',
     selectedMonsterIds: [],

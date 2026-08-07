@@ -148,10 +148,10 @@ a duplicate and confirm the battle.
 ### Implementation for User Story 3
 
 - [X] T061 [P] [US3] Implement exhaustive fighter selection transitions with named state and action types isolated in src/presentation/fighter-selection/FighterSelectionState.ts, src/presentation/fighter-selection/FighterSelectionAction.ts and src/presentation/fighter-selection/fighterSelectionReducer.ts
-- [ ] T062 [P] [US3] Implement reusable monster portrait and enlarged preview cards in src/presentation/fighter-selection/MonsterPortrait.tsx and FighterPreview.tsx
-- [ ] T063 [US3] Implement accessible grid navigation, roving tabindex and two fighter slots in src/presentation/fighter-selection/FighterGrid.tsx and FighterSlots.tsx
-- [ ] T064 [US3] Implement the complete selection screen with local simple useState, reducer-driven correlated selection state and GameSessionContext StartBattle handoff in src/presentation/fighter-selection/FighterSelectionPage.tsx
-- [ ] T065 [US3] Implement responsive medieval tournament-hall styling with carved frames, banners, magical side accents, focus, selection and reduced-motion states in src/presentation/fighter-selection/FighterSelectionPage.module.css
+- [X] T062 [P] [US3] Implement reusable monster portrait and enlarged preview cards in src/presentation/fighter-selection/MonsterPortrait.tsx and FighterPreview.tsx
+- [X] T063 [US3] Implement accessible grid navigation, roving tabindex and two fighter slots in src/presentation/fighter-selection/FighterGrid.tsx and FighterSlots.tsx
+- [X] T064 [US3] Implement the complete selection screen with local simple useState, reducer-driven correlated selection state and GameSessionContext StartBattle handoff in src/presentation/fighter-selection/FighterSelectionPage.tsx
+- [X] T065 [US3] Implement responsive medieval tournament-hall styling with carved frames, banners, magical side accents, focus, selection and reduced-motion states in src/presentation/fighter-selection/FighterSelectionPage.module.css
 - [ ] T066 [US3] Integrate collection-to-selection and selection-to-battle transitions through MonsterCollectionContext, GameSessionContext and local AppScreen useState in src/app/App.tsx and src/app/providers/GameSessionProvider.tsx
 - [ ] T067 [US3] Make all US3 component and E2E tests pass via the Docker test gate
 - [ ] T068 [US3] Capture fighter selection at 375x812, 768x1024 and 1440x900 with populated slots and visible focus, verify no page overflow, present the checkpoint and record approval or requested adjustments in specs/001-monster-battle/design-reviews/fighter-selection.md with screenshots in specs/001-monster-battle/design-reviews/screenshots/selection-mobile.png, selection-tablet.png and selection-desktop.png
