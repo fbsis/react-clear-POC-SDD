@@ -1,4 +1,4 @@
-import { InvalidBattleError } from './errors/InvalidBattleError';
+import { validateBattleResult } from '../validations/validateBattleResult';
 
 export class BattleResult {
   public readonly winnerId: string;
@@ -27,20 +27,7 @@ export class BattleResult {
       finalEventSequence: number;
     }>
   ): BattleResult {
-    const winnerId = input.winnerId.trim();
-    const loserId = input.loserId.trim();
-    if (
-      !winnerId ||
-      !loserId ||
-      winnerId === loserId ||
-      !Number.isInteger(input.finalRoundNumber) ||
-      input.finalRoundNumber < 1 ||
-      !Number.isInteger(input.finalEventSequence) ||
-      input.finalEventSequence < 0
-    ) {
-      throw new InvalidBattleError('Battle result is invalid.');
-    }
-
+    const [winnerId, loserId] = validateBattleResult(input);
     return new BattleResult(winnerId, loserId, input.finalRoundNumber, input.finalEventSequence);
   }
 }

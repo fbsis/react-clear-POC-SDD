@@ -1,11 +1,11 @@
 import type { Monster } from '@domains/monster';
-import { AttackEvent } from './AttackEvent';
 import { Battle } from './Battle';
-import { BattleResult } from './BattleResult';
 import { InvalidBattleError } from './errors/InvalidBattleError';
-import { snapshotMonster } from './MonsterSnapshot';
-import type { MonsterSnapshot } from './MonsterSnapshot';
-import { Round } from './Round';
+import { AttackEvent } from './value-objects/AttackEvent';
+import { BattleResult } from './value-objects/BattleResult';
+import { snapshotMonster } from './value-objects/MonsterSnapshot';
+import type { MonsterSnapshot } from './value-objects/MonsterSnapshot';
+import { Round } from './value-objects/Round';
 
 export function resolveBattle(firstMonster: Monster, secondMonster: Monster): Battle {
   if (firstMonster.id.equals(secondMonster.id)) {

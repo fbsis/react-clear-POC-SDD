@@ -1,5 +1,5 @@
 import type { Battle } from '@domains/battle/Battle';
-import type { MonsterSnapshot } from '@domains/battle/MonsterSnapshot';
+import type { MonsterSnapshot } from '@domains/battle';
 import type { MonsterDto } from '../monster/dtos/MonsterDto';
 import type { BattleDto } from './dtos/BattleDto';
 import type { BattleEventDto } from './dtos/BattleEventDto';

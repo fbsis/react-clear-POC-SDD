@@ -1,6 +1,6 @@
-export { AttackEvent } from './AttackEvent';
 export { Battle } from './Battle';
-export { BattleResult } from './BattleResult';
-export type { MonsterSnapshot } from './MonsterSnapshot';
-export { Round } from './Round';
 export { resolveBattle } from './resolveBattle';
+export { AttackEvent } from './value-objects/AttackEvent';
+export { BattleResult } from './value-objects/BattleResult';
+export type { MonsterSnapshot } from './value-objects/MonsterSnapshot';
+export { Round } from './value-objects/Round';
