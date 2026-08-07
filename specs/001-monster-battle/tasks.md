@@ -147,7 +147,7 @@ a duplicate and confirm the battle.
 
 ### Implementation for User Story 3
 
-- [ ] T061 [P] [US3] Implement exhaustive fighter selection transitions with named state and action types isolated in src/presentation/fighter-selection/FighterSelectionState.ts, src/presentation/fighter-selection/FighterSelectionAction.ts and src/presentation/fighter-selection/fighterSelectionReducer.ts
+- [X] T061 [P] [US3] Implement exhaustive fighter selection transitions with named state and action types isolated in src/presentation/fighter-selection/FighterSelectionState.ts, src/presentation/fighter-selection/FighterSelectionAction.ts and src/presentation/fighter-selection/fighterSelectionReducer.ts
 - [ ] T062 [P] [US3] Implement reusable monster portrait and enlarged preview cards in src/presentation/fighter-selection/MonsterPortrait.tsx and FighterPreview.tsx
 - [ ] T063 [US3] Implement accessible grid navigation, roving tabindex and two fighter slots in src/presentation/fighter-selection/FighterGrid.tsx and FighterSlots.tsx
 - [ ] T064 [US3] Implement the complete selection screen with local simple useState, reducer-driven correlated selection state and GameSessionContext StartBattle handoff in src/presentation/fighter-selection/FighterSelectionPage.tsx
