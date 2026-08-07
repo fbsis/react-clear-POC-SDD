@@ -1,0 +1,91 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  quality:
+    name: Quality gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Validate application in Docker
+        run: docker build --target quality --tag monster-arena-quality:${{ github.sha }} .
+
+  build:
+    name: Build Pages artifact
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Export static application from Docker
+        run: >-
+          docker build
+          --target export
+          --build-arg VITE_BASE_PATH=/react-clear-POC-SDD/
+          --output type=local,dest=./pages
+          .
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: pages
+
+  deploy:
+    name: Publish GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy artifact
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  smoke:
+    name: Verify public site
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Build Playwright image
+        run: docker build --target e2e --tag monster-arena-e2e:${{ github.sha }} .
+
+      - name: Test deployed Pages site
+        env:
+          GITHUB_PAGES_SMOKE: 'true'
+          PLAYWRIGHT_BASE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: >-
+          docker run --rm --ipc=host
+          --env GITHUB_PAGES_SMOKE
+          --env PLAYWRIGHT_BASE_URL
+          monster-arena-e2e:${{ github.sha }}
+          pnpm test:e2e tests/e2e/github-pages-smoke.spec.ts
