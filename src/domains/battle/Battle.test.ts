@@ -33,16 +33,21 @@ describe('Battle', () => {
     const first = monster('first', { attack: 5, defense: 0, speed: 2, hp: 10 });
     const second = monster('second', { attack: 4, defense: 0, speed: 1, hp: 10 });
     const valid = resolveBattle(first, second);
-    const skippedRound = Object.create(Object.getPrototypeOf(valid.rounds[1])) as {
+    const firstRound = valid.rounds[0];
+    const secondRound = valid.rounds[1];
+    if (!firstRound || !secondRound) {
+      throw new Error('Fixture must contain two rounds.');
+    }
+    const skippedRound = Object.create(Object.getPrototypeOf(secondRound)) as {
       number: number;
     };
-    Object.assign(skippedRound, valid.rounds[1], { number: 3 });
+    Object.assign(skippedRound, secondRound, { number: 3 });
 
     expect(() =>
       Battle.create({
         fighters: valid.fighters,
         attackOrder: valid.attackOrder,
-        rounds: [valid.rounds[0], skippedRound as never],
+        rounds: [firstRound, skippedRound as never],
         result: valid.result
       })
     ).toThrow(InvalidBattleSequenceError);

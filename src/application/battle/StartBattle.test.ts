@@ -12,7 +12,7 @@ describe('StartBattle', () => {
 
     await expect(
       new StartBattle(repository).execute({ firstMonsterId: 'same', secondMonsterId: 'same' })
-    ).rejects.toMatchObject<ApplicationError>({ code: 'BATTLE_INVALID' });
+    ).rejects.toMatchObject({ code: 'BATTLE_INVALID' } satisfies Partial<ApplicationError>);
     expect(repository.findById).not.toHaveBeenCalled();
   });
 
@@ -21,10 +21,10 @@ describe('StartBattle', () => {
 
     await expect(
       new StartBattle(repository).execute({ firstMonsterId: 'first', secondMonsterId: 'missing' })
-    ).rejects.toMatchObject<ApplicationError>({
+    ).rejects.toMatchObject({
       code: 'MONSTER_NOT_FOUND',
       details: { monsterId: 'missing' }
-    });
+    } satisfies Partial<ApplicationError>);
   });
 
   it('maps the complete battle to readonly DTOs without changing stored HP', async () => {

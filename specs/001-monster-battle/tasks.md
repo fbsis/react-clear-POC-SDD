@@ -119,10 +119,10 @@ damage/HP transition, missing counterattack after defeat and final winner.
 
 ### Implementation for User Story 2
 
-- [ ] T051 [P] [US2] Implement immutable AttackEvent and Round values in src/domains/battle/AttackEvent.ts and src/domains/battle/Round.ts
-- [ ] T052 [P] [US2] Implement BattleResult and each battle-specific domain error in its own file in src/domains/battle/BattleResult.ts, src/domains/battle/errors/InvalidBattleError.ts and src/domains/battle/errors/InvalidBattleSequenceError.ts
-- [ ] T053 [US2] Implement Battle aggregate with fighter snapshots and invariant validation in src/domains/battle/Battle.ts
-- [ ] T054 [US2] Implement the pure complete battle resolver and fixed order rules in src/domains/battle/resolveBattle.ts and src/domains/battle/index.ts
+- [X] T051 [P] [US2] Implement immutable AttackEvent and Round values in src/domains/battle/AttackEvent.ts and src/domains/battle/Round.ts
+- [X] T052 [P] [US2] Implement BattleResult and each battle-specific domain error in its own file in src/domains/battle/BattleResult.ts, src/domains/battle/errors/InvalidBattleError.ts and src/domains/battle/errors/InvalidBattleSequenceError.ts
+- [X] T053 [US2] Implement Battle aggregate with fighter snapshots and invariant validation in src/domains/battle/Battle.ts
+- [X] T054 [US2] Implement the pure complete battle resolver and fixed order rules in src/domains/battle/resolveBattle.ts and src/domains/battle/index.ts
 - [ ] T055 [US2] Define immutable battle contracts one per file and implement StartBattleUseCase with MonsterRepository constructor injection in src/application/battle/contracts/StartBattleUseCase.ts, src/application/battle/dtos/StartBattleInput.ts, src/application/battle/dtos/BattleDto.ts, src/application/battle/dtos/BattleRoundDto.ts, src/application/battle/dtos/BattleEventDto.ts and src/application/battle/StartBattle.ts
 - [ ] T056 [US2] Register StartBattle in the composition root and expose the completed BattleDto through GameSessionContext intent methods in src/app/composition-root/createApplication.ts and src/app/providers/GameSessionProvider.tsx
 - [ ] T057 [US2] Make all US2 domain/application/performance tests pass via the Docker test gate
