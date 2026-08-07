@@ -207,7 +207,7 @@ successful `main` build.
 - [X] T086 Create a least-privilege Pages CD workflow with main/workflow_dispatch triggers, Docker quality/build jobs, `VITE_BASE_PATH=/react-clear-POC-SDD/`, Pages artifact upload, protected `github-pages` environment and concurrency in .github/workflows/deploy-pages.yml
 - [X] T087 Add a containerized post-deploy Playwright smoke test for root HTML, scripts, styles and catalog assets at the deployed base path in tests/e2e/github-pages-smoke.spec.ts and .github/workflows/deploy-pages.yml
 - [X] T088 Add CI and deployment badges, expected Pages URL, one-time Settings → Pages configuration and rollback/re-run guidance in README.md
-- [ ] T089 Configure the repository Pages source as GitHub Actions and verify the first deployment at https://fbsis.github.io/react-clear-POC-SDD/ following specs/001-monster-battle/quickstart.md
+- [X] T089 Configure the repository Pages source as GitHub Actions and verify the first deployment at https://fbsis.github.io/react-clear-POC-SDD/ following specs/001-monster-battle/quickstart.md
 - [ ] T090 Verify with a same-origin browser session that a new Pages deployment preserves IndexedDB monsters/uploads and document the evidence in specs/001-monster-battle/quickstart.md
 
 **Checkpoint**: Pull requests cannot bypass quality gates, a successful `main` publishes Pages, failed

@@ -130,6 +130,12 @@ Validation after deployment:
 - deploy a new version and confirm the same-origin local data remains;
 - verify browser network requests never send an uploaded image to GitHub or another service.
 
+First deployment evidence recorded on 2026-08-07: the public URL returned HTTP 200 and the containerized
+Playwright smoke test loaded the application heading, hashed CSS/JavaScript below
+`/react-clear-POC-SDD/`, the catalog manifest and all six catalog images. A first request during CDN
+propagation returned the new HTML before the page became interactive; the required retry passed after the
+artifact reached the edge cache.
+
 GitHub Pages serves only static assets. The application MUST NOT rely on server APIs, secrets or
 server-side routing. A future custom domain changes the origin and requires explicit data-migration
 planning.
