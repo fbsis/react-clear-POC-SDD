@@ -1,0 +1,12 @@
+node_modules/
+.agents/
+.specify/
+specs/
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+public/monster-catalog/*.webp
+.DS_Store

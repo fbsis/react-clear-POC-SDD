@@ -19,18 +19,18 @@ before the corresponding implementation.
 
 **Purpose**: Create the container-only React/Vite/TypeScript toolchain and repository skeleton.
 
-- [ ] T001 Create the Vite 8 React TypeScript package manifest with pinned pnpm, React 19.2, TypeScript 5.9, `idb`, test, lint and formatting dependencies in package.json
-- [ ] T002 Generate and commit the reproducible dependency lockfile through the build container in pnpm-lock.yaml
-- [ ] T003 Create multi-stage development, quality, build, export and local-production targets using Node 24.18 Debian slim in Dockerfile
-- [ ] T004 Create `app`, `e2e` and `production` services with fixed development origin and container-only commands in compose.yml
-- [ ] T005 [P] Configure strict TypeScript project references and path aliases in tsconfig.json, tsconfig.app.json and tsconfig.node.json
-- [ ] T006 [P] Configure Vite React, environment-driven `VITE_BASE_PATH`, build budgets and asset handling in vite.config.ts
-- [ ] T007 [P] Configure ESLint flat typed rules, explicit type imports, naming conventions, React Hooks, JSX accessibility and layer import restrictions in eslint.config.js
-- [ ] T008 [P] Configure Prettier and ignore generated artifacts in .prettierrc.json and .prettierignore
-- [ ] T009 [P] Configure Vitest node/jsdom projects, V8 coverage and shared setup in vitest.config.ts and tests/setup.ts
-- [ ] T010 [P] Configure Playwright web server, browser projects, traces and screenshots in playwright.config.ts
-- [ ] T011 Create the planned `domains`, `application`, `infrastructure`, `presentation` and `app` module directories with public boundaries under src/
-- [ ] T012 Update repository ignores for dependencies, builds, test reports, editor metadata and `.DS_Store` in .gitignore
+- [X] T001 Create the Vite 8 React TypeScript package manifest with pinned pnpm, React 19.2, TypeScript 5.9, `idb`, test, lint and formatting dependencies in package.json
+- [X] T002 Generate and commit the reproducible dependency lockfile through the build container in pnpm-lock.yaml
+- [X] T003 Create multi-stage development, quality, build, export and local-production targets using Node 24.18 Debian slim in Dockerfile
+- [X] T004 Create `app`, `e2e` and `production` services with fixed development origin and container-only commands in compose.yml
+- [X] T005 [P] Configure strict TypeScript project references and path aliases in tsconfig.json, tsconfig.app.json and tsconfig.node.json
+- [X] T006 [P] Configure Vite React, environment-driven `VITE_BASE_PATH`, build budgets and asset handling in vite.config.ts
+- [X] T007 [P] Configure ESLint flat typed rules, explicit type imports, naming conventions, React Hooks, JSX accessibility and layer import restrictions in eslint.config.js
+- [X] T008 [P] Configure Prettier and ignore generated artifacts in .prettierrc.json and .prettierignore
+- [X] T009 [P] Configure Vitest node/jsdom projects, V8 coverage and shared setup in vitest.config.ts and tests/setup.ts
+- [X] T010 [P] Configure Playwright web server, browser projects, traces and screenshots in playwright.config.ts
+- [X] T011 Create the planned `domains`, `application`, `infrastructure`, `presentation` and `app` module directories with public boundaries under src/
+- [X] T012 Update repository ignores for dependencies, builds, test reports, editor metadata and `.DS_Store` in .gitignore
 
 **Checkpoint**: The empty application builds, all tools execute through Compose and no Node tool is
 required on the host.

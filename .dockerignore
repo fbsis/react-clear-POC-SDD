@@ -1,0 +1,13 @@
+node_modules/
+.pnpm-store/
+.git/
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+Dockerfile*
+.dockerignore
+*.log*
+.env*
+.DS_Store
