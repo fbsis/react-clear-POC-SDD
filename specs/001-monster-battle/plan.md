@@ -295,8 +295,9 @@ ou arquivos genéricos como `types.ts`, `dto.ts` e `errors.ts`.
 
 - IndexedDB usa schema versionado e migrations cumulativas; migrations publicadas nunca são alteradas.
 - Cadastro com imagem enviada grava `imageAssets` e `monsters` na mesma transação.
-- O banco guarda o `Blob`, nunca Data URL nem `blob:` URL. A apresentação cria object URLs temporárias e
-  as revoga no cleanup.
+- O banco guarda os bytes como `ArrayBuffer`, nunca Data URL nem `blob:` URL; o leitor aceita registros
+  legados com `Blob`. A apresentação cria `Blob` e object URLs temporárias apenas para exibição e as revoga
+  no cleanup.
 - `image_url` do requisito vira referência estável `catalog:<id>` ou `uploaded:<id>`.
 - O app consulta quota e captura `QuotaExceededError`; solicita persistência do navegador após o primeiro
   upload, sem prometer que o browser nunca removerá dados.

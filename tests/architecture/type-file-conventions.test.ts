@@ -31,4 +31,32 @@ describe('type file conventions', () => {
 
     expect(violations).toEqual([]);
   });
+
+  it('matches each exported named type declaration to its file name', () => {
+    const violations = sourceFiles('src')
+      .filter((file) => ['.ts', '.tsx'].includes(extname(file)))
+      .filter((file) => !file.endsWith('vite-env.d.ts'))
+      .flatMap((file) => {
+        const source = readFileSync(file, 'utf8');
+        const declaration = /export (?:class|interface|type|enum)\s+(\w+)/u.exec(source)?.[1];
+        return declaration && declaration !== parse(file).name ? [file] : [];
+      });
+
+    expect(violations).toEqual([]);
+  });
+
+  it('keeps every application DTO property readonly', () => {
+    const violations = sourceFiles('src/application')
+      .filter((file) => file.includes('/dtos/'))
+      .filter((file) => extname(file) === '.ts')
+      .filter((file) => {
+        const source = readFileSync(file, 'utf8');
+        const mutableInterfaceProperty =
+          source.includes('export interface') && /^\s{2}(?!readonly\s)\w+[?]?:/mu.test(source);
+        const mutableTypeAlias = source.includes('export type') && !source.includes('Readonly<');
+        return mutableInterfaceProperty || mutableTypeAlias;
+      });
+
+    expect(violations).toEqual([]);
+  });
 });

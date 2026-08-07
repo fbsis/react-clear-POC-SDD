@@ -1,5 +1,6 @@
 import { ApplicationError } from '@application/shared/errors/ApplicationError';
 import type { IdGenerator } from '@application/shared/ports/IdGenerator';
+import { assertNever } from '@application/shared/assertNever';
 import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import type { RegisterMonsterUseCase } from './contracts/RegisterMonsterUseCase';
 import type { MonsterDto } from './dtos/MonsterDto';
@@ -26,14 +27,21 @@ export class RegisterMonster implements RegisterMonsterUseCase {
 
   public async execute(input: RegisterMonsterInput): Promise<MonsterDto> {
     const monsterId = MonsterId.create(this.idGenerator.next());
-    const upload =
-      input.image.kind === 'upload'
-        ? await this.validateUpload(monsterId.value, input.image)
-        : undefined;
-    const image =
-      input.image.kind === 'catalog'
-        ? MonsterImageRef.catalog(input.image.imageId)
-        : MonsterImageRef.upload(`${monsterId.value}-image`);
+    let image: MonsterImageRef;
+    let upload: PersistedUploadedImageContent | undefined;
+
+    switch (input.image.kind) {
+      case 'catalog':
+        image = MonsterImageRef.catalog(input.image.imageId);
+        break;
+      case 'upload':
+        upload = await this.validateUpload(monsterId.value, input.image);
+        image = MonsterImageRef.upload(upload.id);
+        break;
+      default:
+        assertNever(input.image);
+    }
+
     const monster = Monster.create({
       id: monsterId,
       name: input.name,
