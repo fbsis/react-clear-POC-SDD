@@ -136,6 +136,14 @@ Playwright smoke test loaded the application heading, hashed CSS/JavaScript belo
 propagation returned the new HTML before the page became interactive; the required retry passed after the
 artifact reached the edge cache.
 
+Same-origin continuity evidence recorded on 2026-08-07: a persistent Chromium profile registered
+`Upload Persistente T090` with a local WebP and confirmed that its rendered image used a valid `blob:` URL
+while the deployed document reported `Last-Modified: 00:00:50 GMT`. Commit `f66c84e` triggered a new Pages
+deployment; the same profile observed `Last-Modified: 00:02:49 GMT`, retried until the new assets reached
+the CDN, reloaded the page and found both the saved monster and uploaded image intact. No export/import or
+storage-state restoration was used; continuity came from the existing `monsters` and `imageAssets`
+IndexedDB stores on the unchanged Pages origin.
+
 GitHub Pages serves only static assets. The application MUST NOT rely on server APIs, secrets or
 server-side routing. A future custom domain changes the origin and requires explicit data-migration
 planning.
