@@ -235,9 +235,9 @@ builds do not deploy and the live site passes its smoke test.
 **Purpose**: Give the player explicit, safe control over locally persisted monsters and the complete
 browser database.
 
-- [X] T100 Add separate injected use cases and infrastructure ports for atomically clearing monsters/uploads and deleting the complete IndexedDB database in src/application/ and src/infrastructure/
-- [X] T101 Add responsive, confirmed collection-cleanup and database-reset controls with loading, success and recoverable error states in src/app/ and src/presentation/monster-registration/
-- [X] T102 Cover both destructive intents, cancellation, store contents and reload behavior with unit, integration, component and Playwright tests
+- [X] T101 Add separate injected use cases and infrastructure ports for atomically clearing monsters/uploads and deleting the complete IndexedDB database in src/application/ and src/infrastructure/
+- [X] T102 Add responsive, confirmed collection-cleanup and database-reset controls with loading, success and recoverable error states in src/app/ and src/presentation/monster-registration/
+- [X] T103 Cover both destructive intents, cancellation, store contents and reload behavior with unit, integration, component and Playwright tests
 
 ---
 
@@ -348,3 +348,10 @@ Then T086–T087: deploy workflow and live smoke test
   screenshots alone; requested adjustments require a new screenshot set and recorded approval.
 - GitHub Pages receives only static `dist/`; uploaded monster images remain in browser IndexedDB.
 - Repository Pages configuration in T089 is an external one-time action and may require owner approval.
+
+---
+
+## Phase 10: Convergence
+
+- [ ] T104 Obtain and record product-owner approval for the existing responsive battle playback evidence, then close T082 per FR-040 (partial)
+- [X] T105 Restore unique task traceability by renumbering the Phase 9 tasks that duplicated T100 per Constitution II (contradicts)
