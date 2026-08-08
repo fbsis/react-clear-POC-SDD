@@ -48,9 +48,9 @@ docker compose up -d app
 docker compose run --rm e2e pnpm test:e2e
 ```
 
-Result: 41 unit/integration test files and 121 tests passed with zero formatting, lint, type or build
-warnings. The production JavaScript measured 75.29 KB gzip against the 250 KB budget. The Chromium E2E
-suite passed 20 local journeys; the one URL-dependent GitHub Pages smoke test was correctly skipped
+Result: 41 unit/integration test files and 122 tests passed with zero formatting, lint, type or build
+warnings. The production JavaScript measured 75.49 KB gzip against the 250 KB budget. The Chromium E2E
+suite passed 21 local journeys; the one URL-dependent GitHub Pages smoke test was correctly skipped
 outside the deployment workflow. All uploaded bytes remained in IndexedDB on the tested browser origin.
 
 The GitHub Pages delivery contract was also validated locally in Docker: the BuildKit export emitted
@@ -94,7 +94,7 @@ docker compose run --rm e2e pnpm test:e2e
 docker build --target export --output type=local,dest=<temporary-directory> .
 ```
 
-Result: the aggregate gate completed with zero warnings, 41 test files and 121 tests passed, 20 local E2E
+Result: the aggregate gate completed with zero warnings, 41 test files and 122 tests passed, 21 local E2E
 journeys passed with only the deployment-only smoke test skipped, and the BuildKit export contained only
 `index.html`, hashed scripts/styles and the six-image catalog. The temporary export was inspected and
 removed after validation.

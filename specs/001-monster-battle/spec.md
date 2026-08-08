@@ -221,6 +221,8 @@ todos os rounds e aciona Play para ver cada ataque em ordem, com intervalo de 3 
   ação explícita, confirmada e atômica, sem alterar o esquema do banco local.
 - **FR-042**: O jogador MUST poder excluir todo o banco de dados local por uma ação destrutiva separada e
   confirmada; após a exclusão, a aplicação MUST recriar um banco vazio e continuar utilizável.
+- **FR-043**: As ações de dados locais MUST permanecer recolhidas sob um único botão e abrir em um modal
+  acessível, fechável por botão ou Escape, com foco devolvido ao acionador.
 
 ### Key Entities
 
