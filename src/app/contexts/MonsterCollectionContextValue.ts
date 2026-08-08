@@ -9,5 +9,7 @@ export interface MonsterCollectionContextValue {
   readonly status: MonsterCollectionStatus;
   readonly error: string | null;
   readonly registerMonster: (input: RegisterMonsterInput) => Promise<void>;
+  readonly clearMonsters: () => Promise<void>;
+  readonly resetDatabase: () => Promise<void>;
   readonly refresh: () => Promise<void>;
 }

@@ -105,3 +105,49 @@
 .card dl div > :last-child {
   grid-column: 1 / -1;
 }
+
+.dataManagement {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--color-stone-700);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-night-950) 82%, transparent);
+  color: var(--color-text);
+}
+
+.dataManagement span {
+  color: var(--color-brass-light);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dataManagement h3 {
+  margin: var(--space-1) 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+
+.dataManagement p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.dataActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media (max-width: 42rem) {
+  .dataActions {
+    display: grid;
+  }
+
+  .dataActions button {
+    width: 100%;
+  }
+}

@@ -68,6 +68,7 @@ function renderPage(startBattle: GameSessionContextValue['startBattle']) {
 function applicationFake(): Application {
   return {
     registerMonster: { execute: vi.fn() },
+    clearMonsterCollection: { execute: vi.fn() },
     listMonsters: { execute: vi.fn() },
     listMonsterImages: { execute: vi.fn() },
     loadMonsterImage: {
@@ -80,6 +81,7 @@ function applicationFake(): Application {
       )
     },
     startBattle: { execute: vi.fn() },
+    resetLocalDatabase: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() }
   };
 }
@@ -94,6 +96,8 @@ function collectionValue(): MonsterCollectionContextValue {
     status: 'ready',
     error: null,
     registerMonster: vi.fn(),
+    clearMonsters: vi.fn(),
+    resetDatabase: vi.fn(),
     refresh: vi.fn()
   };
 }

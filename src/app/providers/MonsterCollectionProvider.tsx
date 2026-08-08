@@ -62,9 +62,45 @@ export function MonsterCollectionProvider({ children }: MonsterCollectionProvide
     [application, refresh]
   );
 
+  const runCleanup = useCallback(
+    async (operation: () => Promise<void>): Promise<void> => {
+      setStatus('clearing');
+      setError(null);
+      try {
+        await operation();
+        await refresh();
+      } catch (cause) {
+        const mappedError = mapApplicationError(cause);
+        setError(mappedError.message);
+        setStatus('error');
+        throw mappedError;
+      }
+    },
+    [refresh]
+  );
+
+  const clearMonsters = useCallback(
+    (): Promise<void> => runCleanup(() => application.clearMonsterCollection.execute()),
+    [application.clearMonsterCollection, runCleanup]
+  );
+
+  const resetDatabase = useCallback(
+    (): Promise<void> => runCleanup(() => application.resetLocalDatabase.execute()),
+    [application.resetLocalDatabase, runCleanup]
+  );
+
   const value = useMemo<MonsterCollectionContextValue>(
-    () => ({ monsters, images, status, error, registerMonster, refresh }),
-    [error, images, monsters, refresh, registerMonster, status]
+    () => ({
+      monsters,
+      images,
+      status,
+      error,
+      registerMonster,
+      clearMonsters,
+      resetDatabase,
+      refresh
+    }),
+    [clearMonsters, error, images, monsters, refresh, registerMonster, resetDatabase, status]
   );
 
   return (

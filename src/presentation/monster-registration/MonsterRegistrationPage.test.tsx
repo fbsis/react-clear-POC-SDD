@@ -72,6 +72,8 @@ function contextValue(
     status: 'ready',
     error: null,
     registerMonster,
+    clearMonsters: vi.fn(),
+    resetDatabase: vi.fn(),
     refresh: vi.fn()
   };
 }

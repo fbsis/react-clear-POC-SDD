@@ -178,7 +178,7 @@ export function MonsterRegistrationPage() {
 
         {error ? <StatusMessage tone="danger">{error}</StatusMessage> : null}
         {success ? <StatusMessage tone="success">{success}</StatusMessage> : null}
-        <Button type="submit" disabled={status === 'saving'}>
+        <Button type="submit" disabled={status === 'saving' || status === 'clearing'}>
           {status === 'saving' ? 'Guardando…' : 'Guardar monstro'}
         </Button>
       </form>

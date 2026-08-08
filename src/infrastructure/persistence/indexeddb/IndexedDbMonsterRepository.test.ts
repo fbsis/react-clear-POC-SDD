@@ -106,6 +106,26 @@ describe('IndexedDbMonsterRepository integration', () => {
     await deleteDB('monster-arena');
   });
 
+  it('clears monsters and uploaded image assets atomically', async () => {
+    const database = new ReviDatabase();
+    const repository = new IndexedDbMonsterRepository(database);
+    await repository.add(createUploadedMonster('clear-monster', 'clear-asset'), {
+      id: 'clear-asset',
+      fileName: 'clear.png',
+      mediaType: 'image/png',
+      sizeBytes: 3,
+      bytes: new Uint8Array([1, 2, 3])
+    });
+
+    await repository.clear();
+
+    const connection = await database.open();
+    await expect(connection.getAll('monsters')).resolves.toEqual([]);
+    await expect(connection.getAll('imageAssets')).resolves.toEqual([]);
+    await database.close();
+    await deleteDB('monster-arena');
+  });
+
   it('preserves the browser quota error for application-level mapping', async () => {
     const database = new ReviDatabase();
     const quotaError = new DOMException('Quota exceeded', 'QuotaExceededError');

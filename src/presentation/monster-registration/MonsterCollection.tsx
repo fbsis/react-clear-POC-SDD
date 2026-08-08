@@ -1,12 +1,50 @@
+import { useState } from 'react';
 import type { MonsterDto } from '@application/monster/dtos/MonsterDto';
 import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
+import { Button } from '@presentation/shared/components/Button';
 import { ProgressBar } from '@presentation/shared/components/ProgressBar';
 import { StatusMessage } from '@presentation/shared/components/StatusMessage';
 import { useMonsterImageUrl } from '@presentation/shared/images/useMonsterImageUrl';
 import styles from './MonsterCollection.module.css';
 
 export function MonsterCollection() {
-  const { monsters, status, error } = useMonsterCollection();
+  const { monsters, status, error, clearMonsters, resetDatabase } = useMonsterCollection();
+  const [cleanupMessage, setCleanupMessage] = useState<string | null>(null);
+  const isClearing = status === 'clearing';
+
+  const confirmCollectionCleanup = async (): Promise<void> => {
+    if (
+      !window.confirm(
+        'Remover todos os monstros convocados e suas imagens enviadas? Esta ação não pode ser desfeita.'
+      )
+    ) {
+      return;
+    }
+    setCleanupMessage(null);
+    try {
+      await clearMonsters();
+      setCleanupMessage('Todos os monstros convocados foram removidos.');
+    } catch {
+      setCleanupMessage(null);
+    }
+  };
+
+  const confirmDatabaseReset = async (): Promise<void> => {
+    if (
+      !window.confirm(
+        'Apagar todo o banco de dados local do Monster Arena? Monstros e imagens serão removidos permanentemente.'
+      )
+    ) {
+      return;
+    }
+    setCleanupMessage(null);
+    try {
+      await resetDatabase();
+      setCleanupMessage('O banco de dados local foi limpo e recriado vazio.');
+    } catch {
+      setCleanupMessage(null);
+    }
+  };
 
   return (
     <section className={styles.collection} aria-labelledby="collection-title">
@@ -29,6 +67,38 @@ export function MonsterCollection() {
           <MonsterCard key={monster.id} monster={monster} />
         ))}
       </div>
+      <section className={styles.dataManagement} aria-labelledby="data-management-title">
+        <div>
+          <span>Dados locais</span>
+          <h3 id="data-management-title">Gerenciar coleção</h3>
+          <p>
+            Escolha entre dispensar a companhia atual ou reiniciar todo o banco deste navegador.
+          </p>
+        </div>
+        {cleanupMessage ? <StatusMessage tone="success">{cleanupMessage}</StatusMessage> : null}
+        <div className={styles.dataActions}>
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={monsters.length === 0 || isClearing}
+            onClick={() => {
+              void confirmCollectionCleanup();
+            }}
+          >
+            {isClearing ? 'Limpando…' : 'Limpar monstros convocados'}
+          </Button>
+          <Button
+            type="button"
+            variant="destructive"
+            disabled={isClearing}
+            onClick={() => {
+              void confirmDatabaseReset();
+            }}
+          >
+            {isClearing ? 'Limpando…' : 'Limpar todo o banco de dados'}
+          </Button>
+        </div>
+      </section>
     </section>
   );
 }

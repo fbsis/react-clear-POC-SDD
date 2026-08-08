@@ -40,10 +40,12 @@ describe('GameSessionProvider', () => {
 function applicationFake(execute: Application['startBattle']['execute']): Application {
   return {
     registerMonster: { execute: vi.fn() },
+    clearMonsterCollection: { execute: vi.fn() },
     listMonsters: { execute: vi.fn().mockResolvedValue([]) },
     listMonsterImages: { execute: vi.fn().mockResolvedValue([]) },
     loadMonsterImage: { execute: vi.fn() },
     startBattle: { execute },
+    resetLocalDatabase: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() }
   };
 }

@@ -37,11 +37,41 @@ describe('MonsterCollectionProvider', () => {
     expect(result.current.monsters).toEqual([monsterFixture()]);
     expect(listMonsters).toHaveBeenCalledTimes(2);
   });
+
+  it('refreshes the projection after collection cleanup and complete database reset', async () => {
+    const listMonsters = vi.fn().mockResolvedValueOnce([monsterFixture()]).mockResolvedValue([]);
+    const clear = vi.fn().mockResolvedValue(undefined);
+    const reset = vi.fn().mockResolvedValue(undefined);
+    const application = createApplicationFake({
+      listMonsters: { execute: listMonsters },
+      clearMonsterCollection: { execute: clear },
+      resetLocalDatabase: { execute: reset }
+    });
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <ApplicationProvider application={application}>
+        <MonsterCollectionProvider>{children}</MonsterCollectionProvider>
+      </ApplicationProvider>
+    );
+    const { result } = renderHook(() => useMonsterCollection(), { wrapper });
+    await waitFor(() => {
+      expect(result.current.monsters).toHaveLength(1);
+    });
+
+    await act(() => result.current.clearMonsters());
+    expect(clear).toHaveBeenCalledOnce();
+    expect(result.current.monsters).toEqual([]);
+
+    await act(() => result.current.resetDatabase());
+    expect(reset).toHaveBeenCalledOnce();
+    expect(result.current.monsters).toEqual([]);
+    expect(listMonsters).toHaveBeenCalledTimes(3);
+  });
 });
 
 function createApplicationFake(overrides: Partial<Application> = {}): Application {
   return {
     registerMonster: { execute: vi.fn().mockResolvedValue(monsterFixture()) },
+    clearMonsterCollection: { execute: vi.fn().mockResolvedValue(undefined) },
     listMonsters: { execute: vi.fn().mockResolvedValue([]) },
     listMonsterImages: {
       execute: vi.fn().mockResolvedValue([
@@ -55,6 +85,7 @@ function createApplicationFake(overrides: Partial<Application> = {}): Applicatio
     },
     loadMonsterImage: { execute: vi.fn() },
     startBattle: { execute: vi.fn() },
+    resetLocalDatabase: { execute: vi.fn().mockResolvedValue(undefined) },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() },
     ...overrides
   };

@@ -1,4 +1,4 @@
-import { type IDBPDatabase, openDB } from 'idb';
+import { deleteDB, type IDBPDatabase, openDB } from 'idb';
 import { migrateDatabase } from './migrations';
 import type { ReviDatabaseSchema } from './ReviDatabaseSchema';
 
@@ -27,5 +27,10 @@ export class ReviDatabase {
     const database = await this.connection;
     database.close();
     this.connection = null;
+  }
+
+  public async reset(): Promise<void> {
+    await this.close();
+    await deleteDB(DATABASE_NAME);
   }
 }

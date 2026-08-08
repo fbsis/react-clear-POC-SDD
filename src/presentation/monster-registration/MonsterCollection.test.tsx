@@ -1,10 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Application } from '@application/Application';
+import type { MonsterDto } from '@application/monster/dtos/MonsterDto';
 import { ApplicationProvider } from '@app/providers/ApplicationProvider';
 import { MonsterCollectionContext } from '@app/contexts/MonsterCollectionContext';
 import type { MonsterCollectionContextValue } from '@app/contexts/MonsterCollectionContextValue';
 import { MonsterCollection } from './MonsterCollection';
+
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
 
 describe('MonsterCollection', () => {
   it('shows a helpful empty state', () => {
@@ -28,9 +34,47 @@ describe('MonsterCollection', () => {
     expect(screen.getByRole('article', { name: 'Pyraxis' })).toBeVisible();
     expect(screen.getByText('86')).toBeVisible();
   });
+
+  it('confirms and dispatches each cleanup intent separately', async () => {
+    const clearMonsters = vi.fn().mockResolvedValue(undefined);
+    const resetDatabase = vi.fn().mockResolvedValue(undefined);
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
+    renderCollection([monsterFixture()], { clearMonsters, resetDatabase });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
+    await waitFor(() => {
+      expect(clearMonsters).toHaveBeenCalledOnce();
+    });
+    expect(resetDatabase).not.toHaveBeenCalled();
+    expect(confirm).toHaveBeenLastCalledWith(expect.stringContaining('monstros convocados'));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
+    await waitFor(() => {
+      expect(resetDatabase).toHaveBeenCalledOnce();
+    });
+    expect(confirm).toHaveBeenLastCalledWith(
+      expect.stringContaining('todo o banco de dados local')
+    );
+  });
+
+  it('does not clean local data when confirmation is declined', () => {
+    const clearMonsters = vi.fn();
+    const resetDatabase = vi.fn();
+    vi.spyOn(window, 'confirm').mockReturnValue(false);
+    renderCollection([monsterFixture()], { clearMonsters, resetDatabase });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
+
+    expect(clearMonsters).not.toHaveBeenCalled();
+    expect(resetDatabase).not.toHaveBeenCalled();
+  });
 });
 
-function renderCollection(monsters: MonsterCollectionContextValue['monsters']): void {
+function renderCollection(
+  monsters: MonsterCollectionContextValue['monsters'],
+  overrides: Partial<MonsterCollectionContextValue> = {}
+): void {
   render(
     <ApplicationProvider application={applicationFake()}>
       <MonsterCollectionContext.Provider
@@ -47,7 +91,10 @@ function renderCollection(monsters: MonsterCollectionContextValue['monsters']): 
           status: 'ready',
           error: null,
           registerMonster: vi.fn(),
-          refresh: vi.fn()
+          clearMonsters: vi.fn(),
+          resetDatabase: vi.fn(),
+          refresh: vi.fn(),
+          ...overrides
         }}
       >
         <MonsterCollection />
@@ -56,9 +103,22 @@ function renderCollection(monsters: MonsterCollectionContextValue['monsters']): 
   );
 }
 
+function monsterFixture(): MonsterDto {
+  return {
+    id: 'monster-1',
+    name: 'Pyraxis',
+    attack: 86,
+    defense: 68,
+    speed: 72,
+    hp: 180,
+    image: { kind: 'catalog', reference: 'pyraxis' }
+  };
+}
+
 function applicationFake(): Application {
   return {
     registerMonster: { execute: vi.fn() },
+    clearMonsterCollection: { execute: vi.fn() },
     listMonsters: { execute: vi.fn() },
     listMonsterImages: { execute: vi.fn() },
     loadMonsterImage: {
@@ -69,6 +129,7 @@ function applicationFake(): Application {
       })
     },
     startBattle: { execute: vi.fn() },
+    resetLocalDatabase: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() }
   };
 }

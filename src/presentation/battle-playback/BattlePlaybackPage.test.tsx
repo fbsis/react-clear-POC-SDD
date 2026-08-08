@@ -87,6 +87,7 @@ function renderPage() {
 function applicationFake(): Application {
   return {
     registerMonster: { execute: vi.fn() },
+    clearMonsterCollection: { execute: vi.fn() },
     listMonsters: { execute: vi.fn() },
     listMonsterImages: { execute: vi.fn() },
     loadMonsterImage: {
@@ -99,6 +100,7 @@ function applicationFake(): Application {
       )
     },
     startBattle: { execute: vi.fn() },
+    resetLocalDatabase: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() }
   };
 }

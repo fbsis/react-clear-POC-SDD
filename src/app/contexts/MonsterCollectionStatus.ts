@@ -1,1 +1,1 @@
-export type MonsterCollectionStatus = 'loading' | 'ready' | 'saving' | 'error';
+export type MonsterCollectionStatus = 'loading' | 'ready' | 'saving' | 'clearing' | 'error';

@@ -97,10 +97,12 @@ function Providers({ children }: PropsWithChildren) {
 function applicationFake(): Application {
   return {
     registerMonster: { execute: vi.fn() },
+    clearMonsterCollection: { execute: vi.fn() },
     listMonsters: { execute: vi.fn().mockImplementation(() => Promise.resolve([])) },
     listMonsterImages: { execute: vi.fn().mockImplementation(() => Promise.resolve([])) },
     loadMonsterImage: { execute: vi.fn() },
     startBattle: { execute: vi.fn() },
+    resetLocalDatabase: { execute: vi.fn() },
     storageStatus: { estimate: vi.fn(), requestPersistence: vi.fn() }
   };
 }

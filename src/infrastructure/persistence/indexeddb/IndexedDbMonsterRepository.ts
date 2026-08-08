@@ -1,11 +1,12 @@
 import type { MonsterRepository } from '@application/monster/ports/MonsterRepository';
+import type { MonsterCollectionCleaner } from '@application/monster/ports/MonsterCollectionCleaner';
 import type { PersistedUploadedImageContent } from '@application/monster/ports/PersistedUploadedImageContent';
 import type { Monster, MonsterId } from '@domains/monster';
 import type { ImageAssetRecord } from './ImageAssetRecord';
 import { MonsterRecordMapper } from './MonsterRecordMapper';
 import type { ReviDatabase } from './ReviDatabase';
 
-export class IndexedDbMonsterRepository implements MonsterRepository {
+export class IndexedDbMonsterRepository implements MonsterRepository, MonsterCollectionCleaner {
   private readonly mapper = new MonsterRecordMapper();
   private readonly database: ReviDatabase;
 
@@ -46,6 +47,16 @@ export class IndexedDbMonsterRepository implements MonsterRepository {
   public async list(): Promise<readonly Monster[]> {
     const records = await (await this.database.open()).getAllFromIndex('monsters', 'by-name');
     return records.map((record) => this.mapper.toDomain(record));
+  }
+
+  public async clear(): Promise<void> {
+    const connection = await this.database.open();
+    const transaction = connection.transaction(['monsters', 'imageAssets'], 'readwrite');
+    await Promise.all([
+      transaction.objectStore('monsters').clear(),
+      transaction.objectStore('imageAssets').clear()
+    ]);
+    await transaction.done;
   }
 
   private toSupportedMediaType(mediaType: string): 'image/jpeg' | 'image/png' | 'image/webp' {
