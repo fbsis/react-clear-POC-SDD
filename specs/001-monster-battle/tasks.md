@@ -356,3 +356,4 @@ Then T086–T087: deploy workflow and live smoke test
 - [ ] T104 Obtain and record product-owner approval for the existing responsive battle playback evidence, then close T082 per FR-040 (partial)
 - [X] T105 Restore unique task traceability by renumbering the Phase 9 tasks that duplicated T100 per Constitution II (contradicts)
 - [X] T106 Replace the persistent local-data panel with a single responsive trigger and accessible modal, preserving confirmed cleanup actions and focus recovery per FR-043
+- [X] T107 Add a complete functional and technical walkthrough with a demonstration script, battle example, architecture diagrams, validation and deployment guidance in docs/WALKTHROUGH.md

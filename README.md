@@ -134,6 +134,7 @@ indesejado em `main`; o push do revert executará os gates e publicará novament
 
 ## Mais documentação
 
+- [Walkthrough técnico e funcional](docs/WALKTHROUGH.md)
 - [Especificação](specs/001-monster-battle/spec.md)
 - [Plano técnico](specs/001-monster-battle/plan.md)
 - [Tarefas](specs/001-monster-battle/tasks.md)
