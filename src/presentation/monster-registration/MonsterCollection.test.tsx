@@ -35,12 +35,26 @@ describe('MonsterCollection', () => {
     expect(screen.getByText('86')).toBeVisible();
   });
 
+  it('opens and closes local data management as a labelled modal', () => {
+    renderCollection([monsterFixture()]);
+
+    expect(screen.queryByRole('dialog', { name: 'Gerenciar coleção' })).not.toBeInTheDocument();
+    openDataDialog();
+    expect(screen.getByRole('dialog', { name: 'Gerenciar coleção' })).toHaveTextContent(
+      'Escolha entre dispensar a companhia atual ou reiniciar todo o banco deste navegador.'
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Fechar' }));
+    expect(screen.queryByRole('dialog', { name: 'Gerenciar coleção' })).not.toBeInTheDocument();
+  });
+
   it('confirms and dispatches each cleanup intent separately', async () => {
     const clearMonsters = vi.fn().mockResolvedValue(undefined);
     const resetDatabase = vi.fn().mockResolvedValue(undefined);
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
     renderCollection([monsterFixture()], { clearMonsters, resetDatabase });
 
+    openDataDialog();
     fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
     await waitFor(() => {
       expect(clearMonsters).toHaveBeenCalledOnce();
@@ -48,6 +62,7 @@ describe('MonsterCollection', () => {
     expect(resetDatabase).not.toHaveBeenCalled();
     expect(confirm).toHaveBeenLastCalledWith(expect.stringContaining('monstros convocados'));
 
+    openDataDialog();
     fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
     await waitFor(() => {
       expect(resetDatabase).toHaveBeenCalledOnce();
@@ -63,6 +78,7 @@ describe('MonsterCollection', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false);
     renderCollection([monsterFixture()], { clearMonsters, resetDatabase });
 
+    openDataDialog();
     fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
     fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
 
@@ -70,6 +86,10 @@ describe('MonsterCollection', () => {
     expect(resetDatabase).not.toHaveBeenCalled();
   });
 });
+
+function openDataDialog(): void {
+  fireEvent.click(screen.getByRole('button', { name: 'Gerenciar dados locais' }));
+}
 
 function renderCollection(
   monsters: MonsterCollectionContextValue['monsters'],

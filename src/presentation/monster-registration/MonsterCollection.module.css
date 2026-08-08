@@ -106,18 +106,46 @@
   grid-column: 1 / -1;
 }
 
-.dataManagement {
-  display: grid;
-  gap: var(--space-4);
+.dataLauncher {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-3);
   margin-top: var(--space-6);
-  padding: var(--space-5);
-  border: 1px solid var(--color-stone-700);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--color-night-950) 82%, transparent);
+}
+
+.dataDialog {
+  width: min(36rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--color-brass);
+  border-radius: var(--radius-large);
+  background: var(--color-night-950);
+  box-shadow: var(--shadow-card);
   color: var(--color-text);
 }
 
-.dataManagement span {
+.dataDialog::backdrop {
+  background: color-mix(in srgb, var(--color-night-950) 78%, transparent);
+  backdrop-filter: blur(0.25rem);
+}
+
+.dialogContent {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.dataDialog span {
   color: var(--color-brass-light);
   font-size: 0.75rem;
   font-weight: 800;
@@ -125,13 +153,13 @@
   text-transform: uppercase;
 }
 
-.dataManagement h3 {
+.dataDialog h3 {
   margin: var(--space-1) 0;
   font-family: var(--font-display);
   font-size: 1.5rem;
 }
 
-.dataManagement p {
+.dataDialog p {
   margin: 0;
   color: var(--color-text-muted);
 }
@@ -143,6 +171,14 @@
 }
 
 @media (max-width: 42rem) {
+  .dataLauncher {
+    display: grid;
+  }
+
+  .dataLauncher > button {
+    width: 100%;
+  }
+
   .dataActions {
     display: grid;
   }

@@ -9,6 +9,14 @@ test('registration has no detectable WCAG A or AA violations', async ({ page }) 
   await expectNoAccessibilityViolations(page);
 });
 
+test('local data modal has no detectable WCAG A or AA violations', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Gerenciar dados locais' }).click();
+  await expect(page.getByRole('dialog', { name: 'Gerenciar coleção' })).toBeVisible();
+
+  await expectNoAccessibilityViolations(page);
+});
+
 test('fighter selection has no detectable WCAG A or AA violations', async ({ page }) => {
   await page.goto('/');
   await registerMonster(page, 'Pyraxis', 'Pyraxis', 90, 40, 80, 100);
@@ -112,6 +120,9 @@ async function expectMinimumTargetSize(page: Page): Promise<void> {
           input && ['checkbox', 'radio'].includes(input.type) && input.labels?.[0]
             ? input.labels[0]
             : element;
+        if (target.getClientRects().length === 0) {
+          return [];
+        }
         const bounds = target.getBoundingClientRect();
         return bounds.width < 44 || bounds.height < 44
           ? [

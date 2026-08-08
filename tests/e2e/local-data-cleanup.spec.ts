@@ -6,11 +6,19 @@ test('clears the collection or resets the complete local database after confirma
 }) => {
   await page.goto('/');
   await registerUploadedMonster(page, 'Monstro temporário');
+  const dataManagerButton = page.getByRole('button', { name: 'Gerenciar dados locais' });
+
+  await dataManagerButton.click();
+  await expect(page.getByRole('dialog', { name: 'Gerenciar coleção' })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog', { name: 'Gerenciar coleção' })).not.toBeVisible();
+  await expect(dataManagerButton).toBeFocused();
 
   page.once('dialog', async (dialog) => {
     expect(dialog.message()).toContain('monstros convocados');
     await dialog.accept();
   });
+  await dataManagerButton.click();
   await page.getByRole('button', { name: 'Limpar monstros convocados' }).click();
   await expect(page.getByText(/ainda não há monstros/iu)).toBeVisible();
   await expect(databaseCounts(page)).resolves.toEqual({ monsters: 0, imageAssets: 0 });
@@ -20,6 +28,7 @@ test('clears the collection or resets the complete local database after confirma
     expect(dialog.message()).toContain('todo o banco de dados local');
     await dialog.accept();
   });
+  await dataManagerButton.click();
   await page.getByRole('button', { name: 'Limpar todo o banco de dados' }).click();
   await expect(page.getByText(/banco de dados local foi limpo/iu)).toBeVisible();
   await page.reload();
