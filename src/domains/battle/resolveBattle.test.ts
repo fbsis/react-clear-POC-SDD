@@ -70,6 +70,34 @@ describe('resolveBattle', () => {
       'first'
     ]);
   });
+
+  it('calculates every HP transition until the first monster reaches zero', () => {
+    const battle = resolveBattle(
+      monster('first', { attack: 8, defense: 2, speed: 10, hp: 10 }),
+      monster('second', { attack: 5, defense: 3, speed: 5, hp: 11 })
+    );
+
+    expect(battle.attackOrder).toEqual(['first', 'second']);
+    expect(
+      battle.rounds.flatMap((round) =>
+        round.events.map((event) => ({
+          attackerId: event.attackerId,
+          damage: event.damage,
+          defenderHpBefore: event.defenderHpBefore,
+          defenderHpAfter: event.defenderHpAfter
+        }))
+      )
+    ).toEqual([
+      { attackerId: 'first', damage: 5, defenderHpBefore: 11, defenderHpAfter: 6 },
+      { attackerId: 'second', damage: 3, defenderHpBefore: 10, defenderHpAfter: 7 },
+      { attackerId: 'first', damage: 5, defenderHpBefore: 6, defenderHpAfter: 1 },
+      { attackerId: 'second', damage: 3, defenderHpBefore: 7, defenderHpAfter: 4 },
+      { attackerId: 'first', damage: 5, defenderHpBefore: 1, defenderHpAfter: 0 }
+    ]);
+    expect(battle.rounds).toHaveLength(3);
+    expect(battle.rounds[2]?.events).toHaveLength(1);
+    expect(battle.result).toMatchObject({ winnerId: 'first', loserId: 'second' });
+  });
 });
 
 function monster(
