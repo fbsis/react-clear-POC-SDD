@@ -217,6 +217,10 @@ todos os rounds e aciona Play para ver cada ataque em ordem, com intervalo de 3 
 - **FR-040**: Cadastro/coleção, seleção de lutadores e batalha MUST possuir checkpoints visuais separados
   com screenshots nos três viewports de referência; cada etapa MUST registrar aprovação ou ajustes
   solicitados pelo responsável do produto antes de a próxima etapa visual ser considerada concluída.
+- **FR-041**: O jogador MUST poder remover todos os monstros convocados e suas imagens enviadas por uma
+  ação explícita, confirmada e atômica, sem alterar o esquema do banco local.
+- **FR-042**: O jogador MUST poder excluir todo o banco de dados local por uma ação destrutiva separada e
+  confirmada; após a exclusão, a aplicação MUST recriar um banco vazio e continuar utilizável.
 
 ### Key Entities
 

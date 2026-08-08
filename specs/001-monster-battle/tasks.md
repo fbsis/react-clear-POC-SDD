@@ -230,6 +230,17 @@ builds do not deploy and the live site passes its smoke test.
 
 ---
 
+## Phase 9: Local Data Management
+
+**Purpose**: Give the player explicit, safe control over locally persisted monsters and the complete
+browser database.
+
+- [X] T100 Add separate injected use cases and infrastructure ports for atomically clearing monsters/uploads and deleting the complete IndexedDB database in src/application/ and src/infrastructure/
+- [X] T101 Add responsive, confirmed collection-cleanup and database-reset controls with loading, success and recoverable error states in src/app/ and src/presentation/monster-registration/
+- [X] T102 Cover both destructive intents, cancellation, store contents and reload behavior with unit, integration, component and Playwright tests
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -245,6 +256,8 @@ builds do not deploy and the live site passes its smoke test.
 - **Phase 7 — CI/CD**: workflow skeleton can start after Phase 1, but deployment verification depends on
   all selected product phases and their gates.
 - **Phase 8 — Polish**: depends on the complete product and CI/CD.
+- **Phase 9 — Local Data Management**: depends on US1 persistence and preserves the existing database
+  boundary through injected application ports.
 
 ### User Story Dependencies
 

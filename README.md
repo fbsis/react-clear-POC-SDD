@@ -97,6 +97,10 @@ URLs `blob:` temporárias somente para exibição e as revoga no cleanup. Não h
 ou sincronização entre dispositivos. A solicitação de armazenamento persistente ao navegador é apenas
 uma tentativa: políticas de quota ou limpeza automática ainda podem remover os dados.
 
+Ao fim da coleção, **Limpar monstros convocados** remove atomicamente monstros e imagens enviadas,
+mantendo o banco disponível. **Limpar todo o banco de dados** exclui o IndexedDB completo e o recria
+vazio. As duas ações exigem confirmação e não podem ser desfeitas.
+
 `http://localhost:5173` e a URL do GitHub Pages são origens diferentes, então suas coleções são
 independentes. Novos deploys na mesma URL do Pages preservam o IndexedDB; trocar para domínio próprio
 exige uma estratégia explícita de migração.
