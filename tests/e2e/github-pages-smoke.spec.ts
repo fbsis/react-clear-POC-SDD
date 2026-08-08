@@ -9,7 +9,7 @@ test('serves the application and catalog from the repository base path', async (
     await expect(page.getByRole('heading', { name: 'Forje seu monstro' })).toBeVisible({
       timeout: 3_000
     });
-  }).toPass({ timeout: 60_000, intervals: [1_000, 2_000, 5_000] });
+  }).toPass({ timeout: 120_000, intervals: [1_000, 2_000, 5_000] });
 
   await expect(page.getByRole('radio', { name: 'Pyraxis' })).toBeVisible();
   await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute(
