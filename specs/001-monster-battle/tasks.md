@@ -358,3 +358,4 @@ Then T086–T087: deploy workflow and live smoke test
 - [X] T106 Replace the persistent local-data panel with a single responsive trigger and accessible modal, preserving confirmed cleanup actions and focus recovery per FR-043
 - [X] T107 Add a complete functional and technical walkthrough with a demonstration script, battle example, architecture diagrams, validation and deployment guidance in docs/WALKTHROUGH.md
 - [X] T108 Align registration success feedback with the parchment-and-brass theme, separate it from the submit action and keep collection cards at a stable responsive width per FR-044
+- [X] T109 Move local-data management to an accessible icon-only action in the global header, preserve the action-choice modal and return safely to registration after cleanup per FR-043 and FR-045

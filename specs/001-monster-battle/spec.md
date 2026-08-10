@@ -221,11 +221,14 @@ todos os rounds e aciona Play para ver cada ataque em ordem, com intervalo de 3 
   ação explícita, confirmada e atômica, sem alterar o esquema do banco local.
 - **FR-042**: O jogador MUST poder excluir todo o banco de dados local por uma ação destrutiva separada e
   confirmada; após a exclusão, a aplicação MUST recriar um banco vazio e continuar utilizável.
-- **FR-043**: As ações de dados locais MUST permanecer recolhidas sob um único botão e abrir em um modal
-  acessível, fechável por botão ou Escape, com foco devolvido ao acionador.
+- **FR-043**: As ações de dados locais MUST permanecer recolhidas sob um único botão de ícone no
+  cabeçalho global, com nome acessível **Gerenciar dados locais**, e abrir em um modal que pergunta qual
+  ação executar, fechável por botão ou Escape, com foco devolvido ao acionador.
 - **FR-044**: O feedback de cadastro bem-sucedido MUST usar a identidade visual de pergaminho e bronze,
   manter separação clara da ação de salvar e a coleção MUST preservar largura consistente de carta quando
   houver um ou vários monstros, usando largura fluida apenas em telas estreitas.
+- **FR-045**: Após qualquer limpeza de dados locais concluída em seleção ou batalha, a aplicação MUST
+  voltar ao cadastro e descartar a seleção ativa para não exibir referências a monstros removidos.
 
 ### Key Entities
 

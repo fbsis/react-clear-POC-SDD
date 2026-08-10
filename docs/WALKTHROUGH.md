@@ -74,13 +74,16 @@ de até 10 MB. Recarregue a página para demonstrar que a coleção e as imagens
 
 ### Etapa 3 — Apresentar a gestão de dados locais
 
-No final da coleção, pressione **Gerenciar dados locais**. O modal oferece duas ações independentes:
+No cabeçalho da aplicação, pressione o ícone de banco de dados identificado de forma acessível como
+**Gerenciar dados locais**. O modal pergunta qual ação executar e oferece duas opções independentes:
 
 - **Limpar monstros convocados** remove monstros e uploads, preservando o esquema do banco;
 - **Limpar todo o banco de dados** exclui o IndexedDB e permite que a aplicação o recrie vazio.
 
 As ações exigem confirmação. O modal fecha pelo botão **Fechar** ou pela tecla `Escape` e devolve o foco
-ao acionador.
+ao acionador. Como o controle está no cabeçalho, ele permanece disponível em todas as telas; depois de
+uma limpeza bem-sucedida, a aplicação retorna ao cadastro para não manter uma seleção ou batalha com
+referências removidas.
 
 Não execute a limpeza durante a demonstração se quiser continuar com os dois monstros cadastrados.
 
