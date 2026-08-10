@@ -289,6 +289,186 @@ Report completion to the user with:
 - **Mandatory sections**: Must be completed for every feature
 - **Optional sections**: Include only when relevant to the feature
 - When a section doesn't apply, remove it entirely (don't leave as "N/A")
+# Feature Specification: Cadastro e Batalha de Monstros
+
+**Feature Branch**: `main`
+
+**Created**: 2026-08-07
+
+**Status**: Draft
+
+**Input**: Cadastro local de monstros, batalha automática por atributos e visualização 3D do resultado.
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Cadastrar um monstro (Priority: P1)
+
+Como jogador, quero cadastrar um monstro com nome, atributos e uma imagem escolhida no meu dispositivo
+para formar uma coleção local que possa ser usada em batalhas.
+
+**Why this priority**: Monstros válidos são a unidade básica do produto e pré-requisito para qualquer
+batalha.
+
+**Independent Test**: O jogador cadastra um monstro com todos os campos válidos, encerra e reabre a
+experiência no mesmo dispositivo e encontra o monstro com os mesmos dados e imagem.
+
+**Acceptance Scenarios**:
+
+1. **Given** que o jogador está no cadastro, **When** informa nome, ataque, defesa, velocidade, vida e
+   escolhe uma imagem local válida, **Then** o monstro é salvo e aparece na coleção com todos os dados.
+2. **Given** que um campo obrigatório está vazio ou inválido, **When** tenta salvar, **Then** o cadastro
+   não é concluído e cada problema é indicado junto ao campo correspondente.
+3. **Given** que um monstro foi salvo, **When** o jogador retorna em outra visita no mesmo dispositivo,
+   **Then** os dados e a imagem continuam disponíveis.
+
+---
+
+### User Story 2 - Batalhar com dois monstros (Priority: P2)
+
+Como jogador, quero escolher dois monstros diferentes da coleção e iniciar uma batalha para descobrir
+o vencedor de acordo com seus atributos.
+
+**Why this priority**: A batalha transforma os monstros cadastrados na principal experiência de jogo.
+
+**Independent Test**: Com dois monstros conhecidos, o jogador inicia a batalha e confirma que todos os
+rounds, danos e pontos de vida seguem exatamente as regras definidas.
+
+**Acceptance Scenarios**:
+
+1. **Given** dois monstros diferentes selecionados, **When** a batalha começa, **Then** todos os rounds
+   são calculados de uma vez, sem novas decisões do jogador.
+2. **Given** velocidades diferentes, **When** a batalha é calculada, **Then** o monstro mais veloz ataca
+   primeiro em cada round.
+3. **Given** velocidades iguais e ataques diferentes, **When** a batalha é calculada, **Then** o monstro
+   com maior ataque ataca primeiro em cada round.
+4. **Given** velocidade e ataque iguais, **When** a batalha é calculada, **Then** o monstro escolhido na
+   primeira posição ataca primeiro em cada round.
+5. **Given** um atacante com ataque maior que a defesa do oponente, **When** ele ataca, **Then** o dano é
+   ataque menos defesa; caso contrário, o dano é exatamente 1.
+6. **Given** que o primeiro ataque do round reduz a vida do defensor a zero, **When** o round é
+   processado, **Then** o defensor não contra-ataca e o atacante vence imediatamente.
+
+---
+
+### User Story 3 - Visualizar batalha e resultado em 3D (Priority: P3)
+
+Como jogador, quero acompanhar uma representação tridimensional da batalha usando as imagens dos
+monstros e ver automaticamente o vencedor para entender o confronto sem analisar cálculos manualmente.
+
+**Why this priority**: A apresentação dá clareza e personalidade ao resultado, mas depende do cadastro
+e das regras de batalha já funcionarem corretamente.
+
+**Independent Test**: Após iniciar uma batalha, o jogador vê os dois monstros em uma arena com sensação
+de profundidade, acompanha a progressão visual e recebe o vencedor e o resumo sem outra ação.
+
+**Acceptance Scenarios**:
+
+1. **Given** uma batalha válida, **When** o cálculo termina, **Then** a arena apresenta os dois monstros
+   com suas imagens locais, nomes, vida e indicação visual de ataques e danos.
+2. **Given** que um monstro chega a zero de vida, **When** a apresentação termina, **Then** o resultado
+   identifica automaticamente vencedor e derrotado e permite consultar o resumo dos rounds.
+3. **Given** que o jogador prefere movimento reduzido, **When** visualiza a batalha, **Then** recebe a
+   mesma informação e resultado com transições reduzidas, sem perder conteúdo.
+4. **Given** que efeitos tridimensionais não podem ser apresentados, **When** a batalha é aberta,
+   **Then** uma apresentação bidimensional equivalente preserva todas as informações e ações.
+
+### Edge Cases
+
+- Um monstro com ataque igual ou menor que a defesa adversária sempre causa 1 ponto de dano.
+- Um ataque que ultrapassa a vida restante exibe vida final igual a zero, nunca negativa.
+- Se os dois monstros têm velocidade e ataque iguais, a primeira posição de seleção desempata a ordem.
+- O segundo atacante não contra-ataca quando é derrotado pelo primeiro ataque do round.
+- O jogador não pode selecionar o mesmo cadastro nas duas posições da batalha.
+- A batalha não pode começar com menos de dois monstros válidos disponíveis.
+- Arquivos ausentes, corrompidos ou de formato não aceito geram orientação para escolher outra imagem.
+- Nomes compostos apenas por espaços, atributos fracionários, negativos ou fora do limite são rejeitados.
+- Uma coleção vazia apresenta orientação clara para cadastrar o primeiro monstro.
+
+## Requirements *(mandatory)*
+
+### Functional Requirements
+
+- **FR-001**: O sistema MUST permitir cadastrar um monstro com `name`, `attack`, `defense`, `speed`,
+  `hp` e `image_url`.
+- **FR-002**: `name` MUST conter de 1 a 80 caracteres visíveis após remover espaços nas extremidades.
+- **FR-003**: `attack`, `defense` e `speed` MUST aceitar somente números inteiros entre 0 e 9.999.
+- **FR-004**: `hp` MUST aceitar somente números inteiros entre 1 e 9.999.
+- **FR-005**: O jogador MUST escolher uma imagem do dispositivo para concluir o cadastro; o sistema
+  MUST manter em `image_url` uma referência local gerenciada para essa imagem.
+- **FR-006**: O sistema MUST aceitar imagens JPEG, PNG ou WebP de até 10 MB e MUST rejeitar arquivos
+  ausentes, ilegíveis ou fora dessas condições com mensagem acionável.
+- **FR-007**: Os monstros cadastrados e suas imagens MUST permanecer disponíveis entre visitas no mesmo
+  dispositivo, sem depender de endereço de imagem externo.
+- **FR-008**: O sistema MUST exibir a coleção local com imagem, nome e atributos de cada monstro.
+- **FR-009**: O jogador MUST selecionar exatamente dois monstros distintos antes de iniciar uma batalha.
+- **FR-010**: O sistema MUST determinar uma ordem fixa de ataque no início da batalha: maior `speed`;
+  em empate, maior `attack`; persistindo o empate, o monstro da primeira posição de seleção.
+- **FR-011**: Em cada round, o primeiro monstro da ordem MUST atacar e, se o oponente permanecer com
+  vida, o segundo MUST contra-atacar.
+- **FR-012**: O dano de cada ataque MUST ser `attack - defense` quando o resultado for maior que zero;
+  em qualquer outro caso, MUST ser 1.
+- **FR-013**: Cada ataque MUST reduzir o `hp` atual do defensor pelo dano calculado, limitando o valor
+  exibido a no mínimo zero.
+- **FR-014**: A batalha MUST continuar automaticamente até o primeiro ataque que reduza o `hp` de um
+  monstro a zero.
+- **FR-015**: Todos os rounds MUST ser calculados em uma única execução após o início da batalha, sem
+  entrada adicional do jogador e sem alterar o `hp` original salvo dos monstros.
+- **FR-016**: O monstro que primeiro reduzir o `hp` do oponente a zero MUST ser declarado vencedor.
+- **FR-017**: O sistema MUST registrar, para consulta durante o resultado, o número do round, atacante,
+  defensor, dano e vida restante após cada ataque.
+- **FR-018**: Após o cálculo, o sistema MUST iniciar automaticamente a apresentação da batalha e exibir
+  o resultado final sem exigir uma ação adicional.
+- **FR-019**: A apresentação MUST representar uma arena com profundidade visual e usar as imagens locais
+  dos dois monstros, sem exigir modelos tridimensionais próprios.
+- **FR-020**: A apresentação MUST comunicar visualmente cada ataque, o dano, a vida restante e o vencedor.
+- **FR-021**: Todas as informações da batalha MUST permanecer compreensíveis sem movimento, com suporte
+  a preferência de movimento reduzido e uma apresentação equivalente quando efeitos 3D não estiverem
+  disponíveis.
+- **FR-022**: Cadastro, seleção, início da batalha, histórico de rounds e resultado MUST ser operáveis
+  por teclado, possuir foco visível e nomes acessíveis.
+- **FR-023**: O sistema MUST apresentar estados claros de coleção vazia, validação, processamento,
+  resultado e falha recuperável.
+
+### Key Entities
+
+- **Monster**: Combatente cadastrado localmente; possui nome, ataque, defesa, velocidade, vida máxima e
+  referência para sua imagem local. Seus atributos salvos não são consumidos pelas batalhas.
+- **Battle**: Confronto imutável entre dois monstros selecionados; contém a ordem de ataque, os estados
+  temporários de vida, a sequência completa de ataques, o vencedor e o derrotado.
+- **Attack Event**: Registro de uma ação dentro de um round; identifica round, atacante, defensor,
+  dano aplicado e vida restante do defensor.
+
+## Success Criteria *(mandatory)*
+
+### Measurable Outcomes
+
+- **SC-001**: Pelo menos 90% dos novos jogadores conseguem cadastrar o primeiro monstro válido em até
+  2 minutos, sem ajuda externa.
+- **SC-002**: Em 100% dos cenários de regras automatizados, ordem, dano, vida restante e vencedor
+  correspondem ao algoritmo especificado.
+- **SC-003**: Para monstros dentro dos limites permitidos, 95% das batalhas exibem o resultado inicial
+  em até 1 segundo após o comando de início.
+- **SC-004**: Em 100% das batalhas concluídas, o jogador consegue identificar vencedor e derrotado e
+  consultar todos os ataques realizados.
+- **SC-005**: Cadastro, seleção, batalha e resultado podem ser concluídos somente por teclado em 100%
+  dos cenários principais.
+- **SC-006**: Uma coleção com pelo menos 100 monstros permanece navegável, e uma batalha entre quaisquer
+  dois deles pode ser iniciada em até 30 segundos por pelo menos 90% dos jogadores em teste.
+- **SC-007**: A experiência mantém todas as informações essenciais e o resultado correto com movimento
+  reduzido ou apresentação 3D indisponível.
+
+## Assumptions
+
+- A primeira versão é individual, local ao dispositivo e não inclui contas, autenticação,
+  sincronização entre dispositivos, partidas em rede ou compartilhamento público.
+- "3D" significa uma arena com profundidade, perspectiva e animações aplicada às imagens 2D locais;
+  criação, importação e animação de modelos 3D completos estão fora do escopo inicial.
+- As imagens são escolhidas pelo jogador no próprio dispositivo; geração automática de imagens e uso
+  de endereços remotos estão fora do escopo inicial.
+- A ordem de ataque é definida uma vez no início e repetida em todos os rounds.
+- Se velocidade e ataque empatarem, a primeira posição de seleção é um desempate intencional e visível.
+- Os limites de atributos e arquivo mantêm cadastros e batalhas previsíveis para a primeira versão.
+- Editar ou excluir monstros e manter um histórico de batalhas estão fora do escopo inicial.
 
 ### For AI Generation
 
