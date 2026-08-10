@@ -229,6 +229,21 @@ todos os rounds e aciona Play para ver cada ataque em ordem, com intervalo de 3 
   houver um ou vários monstros, usando largura fluida apenas em telas estreitas.
 - **FR-045**: Após qualquer limpeza de dados locais concluída em seleção ou batalha, a aplicação MUST
   voltar ao cadastro e descartar a seleção ativa para não exibir referências a monstros removidos.
+- **FR-046**: Uma batalha cujo primeiro ataque já seja letal MUST concluir o playback imediatamente,
+  revelar o resultado e remover estados transitórios de ataque, impacto e pausa sem agendar outro evento.
+- **FR-047**: O sucesso de cadastro ou limpeza MUST ser confirmado pelo resultado do respectivo caso de
+  uso e MUST NOT ser convertido em falha por um erro posterior ao atualizar projeções de leitura.
+- **FR-048**: Resultados assíncronos iniciados antes de navegação, limpeza ou reinício de sessão MUST NOT
+  sobrescrever o estado mais recente; comandos destrutivos, cadastro e início de batalha MUST impedir
+  concorrência incompatível.
+- **FR-049**: O cadastro com imagem do catálogo MUST validar a existência da referência antes de
+  persistir; falhas transitórias do manifesto MUST permitir nova tentativa e MUST NOT impedir a exibição
+  de monstros locais carregados com sucesso.
+- **FR-050**: Falhas de leitura de upload, carregamento de imagem ou limpeza MUST produzir feedback
+  acionável na própria superfície e MUST NOT deixar carregamento infinito ou rejeições silenciosas.
+- **FR-051**: Factories públicas do domínio MUST rejeitar datas inválidas, HP inicial não positivo, HP
+  final negativo, atacante derrotado, ordem de ataque inconsistente e dano diferente da regra da batalha;
+  aggregates declarados imutáveis MUST proteger também valores mutáveis em runtime.
 
 ### Key Entities
 
