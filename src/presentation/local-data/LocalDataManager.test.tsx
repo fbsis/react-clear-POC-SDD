@@ -70,6 +70,17 @@ describe('LocalDataManager', () => {
     expect(resetDatabase).not.toHaveBeenCalled();
     expect(onDataCleared).not.toHaveBeenCalled();
   });
+
+  it('keeps the modal open and explains a cleanup failure', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    renderManager({ clearMonsters: vi.fn().mockRejectedValue(new Error('Banco indisponível.')) });
+
+    openDataDialog();
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Banco indisponível.');
+    expect(screen.getByRole('dialog', { name: 'Gerenciar coleção' })).toBeVisible();
+  });
 });
 
 function openDataDialog(): void {
@@ -94,7 +105,7 @@ function renderManager(
         ...overrides
       }}
     >
-      <LocalDataManager onDataCleared={onDataCleared} />
+      <LocalDataManager disabled={false} onDataCleared={onDataCleared} />
     </MonsterCollectionContext.Provider>
   );
 }

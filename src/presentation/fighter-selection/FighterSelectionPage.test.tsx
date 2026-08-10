@@ -109,9 +109,11 @@ function sessionValue(
     screen: 'selection',
     selectedMonsterIds: [],
     battle: null,
+    status: 'idle',
     navigate: vi.fn(),
     selectMonster: vi.fn(),
     resetSelection: vi.fn(),
+    resetSession: vi.fn(),
     startBattle,
     prepareNewBattle: vi.fn()
   };

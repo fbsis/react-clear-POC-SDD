@@ -5,14 +5,16 @@ import { StatusMessage } from '@presentation/shared/components/StatusMessage';
 import type { LocalDataManagerProps } from './LocalDataManagerProps';
 import styles from './LocalDataManager.module.css';
 
-export function LocalDataManager({ onDataCleared }: LocalDataManagerProps) {
+export function LocalDataManager({ disabled, onDataCleared }: LocalDataManagerProps) {
   const { monsters, status, clearMonsters, resetDatabase } = useMonsterCollection();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [cleanupMessage, setCleanupMessage] = useState<string | null>(null);
-  const isClearing = status === 'clearing';
+  const [cleanupError, setCleanupError] = useState<string | null>(null);
+  const isBusy = disabled || status === 'loading' || status === 'saving' || status === 'clearing';
 
   const openDialog = (): void => {
     setCleanupMessage(null);
+    setCleanupError(null);
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (typeof dialog.showModal === 'function') {
@@ -47,11 +49,12 @@ export function LocalDataManager({ onDataCleared }: LocalDataManagerProps) {
       return;
     }
     setCleanupMessage(null);
+    setCleanupError(null);
     try {
       await clearMonsters();
       finishCleanup('Todos os monstros convocados foram removidos.');
-    } catch {
-      setCleanupMessage(null);
+    } catch (cause) {
+      setCleanupError(errorMessage(cause));
     }
   };
 
@@ -64,11 +67,12 @@ export function LocalDataManager({ onDataCleared }: LocalDataManagerProps) {
       return;
     }
     setCleanupMessage(null);
+    setCleanupError(null);
     try {
       await resetDatabase();
       finishCleanup('O banco de dados local foi limpo e recriado vazio.');
-    } catch {
-      setCleanupMessage(null);
+    } catch (cause) {
+      setCleanupError(errorMessage(cause));
     }
   };
 
@@ -85,6 +89,7 @@ export function LocalDataManager({ onDataCleared }: LocalDataManagerProps) {
         className={styles.trigger}
         aria-label="Gerenciar dados locais"
         title="Gerenciar dados locais"
+        disabled={isBusy}
         onClick={openDialog}
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
@@ -114,30 +119,37 @@ export function LocalDataManager({ onDataCleared }: LocalDataManagerProps) {
           <p id="data-management-description">
             Escolha entre dispensar a companhia atual ou reiniciar todo o banco deste navegador.
           </p>
+          {cleanupError ? <StatusMessage tone="danger">{cleanupError}</StatusMessage> : null}
           <div className={styles.dataActions}>
             <Button
               type="button"
               variant="secondary"
-              disabled={monsters.length === 0 || isClearing}
+              disabled={monsters.length === 0 || isBusy}
               onClick={() => {
                 void confirmCollectionCleanup();
               }}
             >
-              {isClearing ? 'Limpando…' : 'Limpar monstros convocados'}
+              {status === 'clearing' ? 'Limpando…' : 'Limpar monstros convocados'}
             </Button>
             <Button
               type="button"
               variant="destructive"
-              disabled={isClearing}
+              disabled={isBusy}
               onClick={() => {
                 void confirmDatabaseReset();
               }}
             >
-              {isClearing ? 'Limpando…' : 'Limpar todo o banco de dados'}
+              {status === 'clearing' ? 'Limpando…' : 'Limpar todo o banco de dados'}
             </Button>
           </div>
         </div>
       </dialog>
     </div>
   );
+}
+
+function errorMessage(cause: unknown): string {
+  return cause instanceof Error
+    ? cause.message
+    : 'Não foi possível concluir a limpeza. Tente novamente.';
 }

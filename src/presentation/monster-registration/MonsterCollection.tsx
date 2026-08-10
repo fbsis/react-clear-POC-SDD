@@ -2,7 +2,7 @@ import type { MonsterDto } from '@application/monster/dtos/MonsterDto';
 import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
 import { ProgressBar } from '@presentation/shared/components/ProgressBar';
 import { StatusMessage } from '@presentation/shared/components/StatusMessage';
-import { useMonsterImageUrl } from '@presentation/shared/images/useMonsterImageUrl';
+import { MonsterImage } from '@presentation/shared/images/MonsterImage';
 import styles from './MonsterCollection.module.css';
 
 export function MonsterCollection() {
@@ -34,15 +34,14 @@ export function MonsterCollection() {
 }
 
 function MonsterCard({ monster }: Readonly<{ monster: MonsterDto }>) {
-  const imageUrl = useMonsterImageUrl(monster.image);
   return (
     <article className={styles.card} aria-label={monster.name}>
       <div className={styles.portrait}>
-        {imageUrl ? (
-          <img src={imageUrl} alt={`Retrato de ${monster.name}`} />
-        ) : (
-          <span>Carregando…</span>
-        )}
+        <MonsterImage
+          reference={monster.image}
+          monsterName={monster.name}
+          loadingLabel="Carregando…"
+        />
       </div>
       <div className={styles.cardBody}>
         <h3>{monster.name}</h3>

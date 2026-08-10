@@ -5,4 +5,5 @@ export type ApplicationErrorCode =
   | 'STORAGE_QUOTA_EXCEEDED'
   | 'MONSTER_NOT_FOUND'
   | 'BATTLE_INVALID'
+  | 'OPERATION_IN_PROGRESS'
   | 'UNEXPECTED';

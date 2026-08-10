@@ -27,6 +27,7 @@ describe('GameSessionProvider', () => {
     expect(result.current.screen).toBe('battle');
     expect(result.current.selectedMonsterIds).toEqual(['first', 'second']);
     expect(result.current.battle).toBe(battle);
+    expect(result.current.status).toBe('idle');
 
     act(() => {
       result.current.prepareNewBattle();
@@ -34,6 +35,40 @@ describe('GameSessionProvider', () => {
 
     expect(result.current.screen).toBe('selection');
     expect(result.current.battle).toBeNull();
+  });
+
+  it('ignores a stale battle completion after the session is reset', async () => {
+    const battle = battleFixture();
+    let finishBattle: ((battle: BattleDto) => void) | undefined;
+    const pendingBattle = new Promise<BattleDto>((resolve) => {
+      finishBattle = resolve;
+    });
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <ApplicationProvider application={applicationFake(vi.fn(() => pendingBattle))}>
+        <GameSessionProvider>{children}</GameSessionProvider>
+      </ApplicationProvider>
+    );
+    const { result } = renderHook(() => useGameSession(), { wrapper });
+
+    let start: Promise<void> | undefined;
+    act(() => {
+      start = result.current.startBattle('first', 'second');
+    });
+    expect(result.current.status).toBe('starting');
+    act(() => {
+      result.current.resetSession();
+    });
+    await act(async () => {
+      finishBattle?.(battle);
+      await start;
+    });
+
+    expect(result.current).toMatchObject({
+      screen: 'registration',
+      status: 'idle',
+      battle: null,
+      selectedMonsterIds: []
+    });
   });
 });
 

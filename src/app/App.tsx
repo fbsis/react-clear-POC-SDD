@@ -45,9 +45,9 @@ function AppContent() {
           <div className={styles.topbarActions}>
             <span className={styles.chapter}>{chapter}</span>
             <LocalDataManager
+              disabled={session.status === 'starting'}
               onDataCleared={() => {
-                session.resetSelection();
-                session.navigate('registration');
+                session.resetSession();
               }}
             />
           </div>

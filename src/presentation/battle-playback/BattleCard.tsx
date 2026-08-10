@@ -1,6 +1,6 @@
 import type { MonsterDto } from '@application/monster/dtos/MonsterDto';
 import { ProgressBar } from '@presentation/shared/components/ProgressBar';
-import { useMonsterImageUrl } from '@presentation/shared/images/useMonsterImageUrl';
+import { MonsterImage } from '@presentation/shared/images/MonsterImage';
 import styles from './BattlePlaybackPage.module.css';
 
 export function BattleCard({
@@ -18,8 +18,6 @@ export function BattleCard({
   isWinner: boolean;
   isDefeated: boolean;
 }>) {
-  const imageUrl = useMonsterImageUrl(monster.image);
-
   return (
     <article
       className={styles.battleCard}
@@ -30,11 +28,7 @@ export function BattleCard({
       data-defeated={isDefeated}
     >
       <div className={styles.cardPortrait}>
-        {imageUrl ? (
-          <img src={imageUrl} alt={`Retrato de ${monster.name}`} />
-        ) : (
-          <span>Invocando…</span>
-        )}
+        <MonsterImage reference={monster.image} monsterName={monster.name} />
         {isAttacker ? <span className={styles.attackSeal}>Atacando</span> : null}
         {isDefender ? <span className={styles.impactSeal}>Impacto</span> : null}
         {isWinner ? <span className={styles.winnerSeal}>Vencedor</span> : null}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { SyntheticEvent } from 'react';
+import type { RegisterMonsterInput } from '@application/monster/dtos/RegisterMonsterInput';
 import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
 import { Button } from '@presentation/shared/components/Button';
 import { StatusMessage } from '@presentation/shared/components/StatusMessage';
@@ -18,6 +19,7 @@ export function MonsterRegistrationPage() {
   const [upload, setUpload] = useState<File | null>(null);
   const [uploadPreviewUrl, setUploadPreviewUrl] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [inputError, setInputError] = useState<string | null>(null);
 
   const effectiveImageId = selectedImageId.length > 0 ? selectedImageId : (images[0]?.id ?? '');
 
@@ -32,10 +34,17 @@ export function MonsterRegistrationPage() {
   const submit = async (event: SyntheticEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     setSuccess(null);
-    const image =
-      imageMode === 'catalog'
-        ? { kind: 'catalog' as const, imageId: effectiveImageId }
-        : await toUploadedImage(upload);
+    setInputError(null);
+    let image: RegisterMonsterInput['image'];
+    try {
+      image =
+        imageMode === 'catalog'
+          ? { kind: 'catalog', imageId: effectiveImageId }
+          : await toUploadedImage(upload);
+    } catch {
+      setInputError('Não foi possível ler a imagem escolhida. Selecione outro arquivo.');
+      return;
+    }
 
     await collection.registerMonster({
       name,
@@ -159,6 +168,7 @@ export function MonsterRegistrationPage() {
                   accept="image/jpeg,image/png,image/webp"
                   onChange={(event) => {
                     const file = event.target.files?.[0] ?? null;
+                    setInputError(null);
                     setUpload(file);
                     setUploadPreviewUrl(file ? URL.createObjectURL(file) : null);
                   }}
@@ -176,6 +186,7 @@ export function MonsterRegistrationPage() {
           )}
         </fieldset>
 
+        {inputError ? <StatusMessage tone="danger">{inputError}</StatusMessage> : null}
         {error ? <StatusMessage tone="danger">{error}</StatusMessage> : null}
         {success ? <StatusMessage tone="success">{success}</StatusMessage> : null}
         <Button type="submit" disabled={status === 'saving' || status === 'clearing'}>

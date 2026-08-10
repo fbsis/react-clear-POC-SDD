@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { MonsterCollectionContext } from '@app/contexts/MonsterCollectionContext';
@@ -53,6 +53,25 @@ describe('MonsterRegistrationPage', () => {
     expect(screen.getByLabelText('Nome')).toHaveValue('Pyraxis');
     expect(screen.getByRole('alert')).toHaveTextContent('Não foi possível guardar o monstro.');
     expect(screen.queryByText('Pyraxis entrou para a coleção.')).not.toBeInTheDocument();
+  });
+
+  it('shows an actionable error when the selected upload cannot be read', async () => {
+    const registerMonster = vi.fn();
+    render(
+      <MonsterCollectionContext.Provider value={contextValue(registerMonster)}>
+        <MonsterRegistrationPage />
+      </MonsterCollectionContext.Provider>
+    );
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('radio', { name: 'Minha imagem' }));
+    const form = screen.getByRole('button', { name: 'Guardar monstro' }).closest('form');
+    if (!form) throw new Error('Registration form was not found.');
+    fireEvent.submit(form);
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível ler a imagem escolhida. Selecione outro arquivo.'
+    );
+    expect(registerMonster).not.toHaveBeenCalled();
   });
 });
 

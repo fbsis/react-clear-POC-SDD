@@ -13,14 +13,13 @@ import {
 import styles from './FighterSelectionPage.module.css';
 
 export function FighterSelectionPage() {
-  const { monsters } = useMonsterCollection();
+  const { monsters, status: collectionStatus } = useMonsterCollection();
   const session = useGameSession();
   const [state, dispatch] = useReducer(
     fighterSelectionReducer,
     monsters[0]?.id ?? null,
     createInitialFighterSelectionState
   );
-  const [isStarting, setIsStarting] = useState(false);
   const [startError, setStartError] = useState<string | null>(null);
   const monstersById = useMemo(
     () => new Map(monsters.map((monster) => [monster.id, monster])),
@@ -38,14 +37,11 @@ export function FighterSelectionPage() {
 
   async function confirmBattle(): Promise<void> {
     if (!state.firstMonsterId || !state.secondMonsterId) return;
-    setIsStarting(true);
     setStartError(null);
     try {
       await session.startBattle(state.firstMonsterId, state.secondMonsterId);
     } catch {
       setStartError('Não foi possível preparar a batalha. Tente novamente.');
-    } finally {
-      setIsStarting(false);
     }
   }
 
@@ -123,10 +119,17 @@ export function FighterSelectionPage() {
         </Button>
         <Button
           type="button"
-          disabled={!firstMonster || !secondMonster || isStarting}
+          disabled={
+            !firstMonster ||
+            !secondMonster ||
+            session.status === 'starting' ||
+            collectionStatus === 'loading' ||
+            collectionStatus === 'saving' ||
+            collectionStatus === 'clearing'
+          }
           onClick={() => void confirmBattle()}
         >
-          {isStarting ? 'Calculando…' : 'Iniciar batalha'}
+          {session.status === 'starting' ? 'Calculando…' : 'Iniciar batalha'}
         </Button>
       </div>
     </section>
