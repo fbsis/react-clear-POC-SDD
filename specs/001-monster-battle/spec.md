@@ -223,6 +223,9 @@ todos os rounds e aciona Play para ver cada ataque em ordem, com intervalo de 3 
   confirmada; após a exclusão, a aplicação MUST recriar um banco vazio e continuar utilizável.
 - **FR-043**: As ações de dados locais MUST permanecer recolhidas sob um único botão e abrir em um modal
   acessível, fechável por botão ou Escape, com foco devolvido ao acionador.
+- **FR-044**: O feedback de cadastro bem-sucedido MUST usar a identidade visual de pergaminho e bronze,
+  manter separação clara da ação de salvar e a coleção MUST preservar largura consistente de carta quando
+  houver um ou vários monstros, usando largura fluida apenas em telas estreitas.
 
 ### Key Entities
 
