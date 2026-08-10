@@ -41,8 +41,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
+  justify-content: start;
 }
 
 .card {
@@ -104,6 +105,12 @@
 
 .card dl div > :last-child {
   grid-column: 1 / -1;
+}
+
+@media (min-width: 34rem) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, 17rem);
+  }
 }
 
 .dataLauncher {

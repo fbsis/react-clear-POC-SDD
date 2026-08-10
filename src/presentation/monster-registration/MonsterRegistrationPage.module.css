@@ -44,6 +44,16 @@
   color: var(--color-ink);
 }
 
+.form > [role='status'],
+.form > [role='alert'] {
+  display: flex;
+}
+
+.form > [role='status'] + button,
+.form > [role='alert'] + button {
+  margin-top: var(--space-4);
+}
+
 .fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

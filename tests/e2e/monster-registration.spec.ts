@@ -12,7 +12,19 @@ test('registers catalog and uploaded-image monsters across reloads', async ({ pa
   await page.getByRole('radio', { name: /Pyraxis/u }).check();
   await page.getByRole('button', { name: 'Guardar monstro' }).click();
 
-  await expect(page.getByRole('article', { name: 'Pyraxis' })).toBeVisible();
+  const pyraxisCard = page.getByRole('article', { name: 'Pyraxis' });
+  await expect(pyraxisCard).toBeVisible();
+  const feedbackGap = await page
+    .getByRole('button', { name: 'Guardar monstro' })
+    .evaluate((button) => {
+      const feedback = document.querySelector<HTMLElement>('[role="status"]');
+      if (!feedback) throw new Error('Registration feedback must be visible.');
+      return button.getBoundingClientRect().top - feedback.getBoundingClientRect().bottom;
+    });
+  expect(feedbackGap).toBeGreaterThanOrEqual(12);
+  const singleCardWidth = await pyraxisCard.evaluate(
+    (element) => element.getBoundingClientRect().width
+  );
 
   await page.getByLabel('Nome').fill('Aeralune enviada');
   await page.getByRole('spinbutton', { name: 'Ataque', exact: true }).fill('70');
@@ -26,6 +38,10 @@ test('registers catalog and uploaded-image monsters across reloads', async ({ pa
   await page.getByRole('button', { name: 'Guardar monstro' }).click();
 
   await expect(page.getByRole('article', { name: 'Aeralune enviada' })).toBeVisible();
+  const populatedCardWidth = await pyraxisCard.evaluate(
+    (element) => element.getBoundingClientRect().width
+  );
+  expect(populatedCardWidth).toBeCloseTo(singleCardWidth, 1);
   await page.reload();
   await expect(page.getByRole('article', { name: 'Pyraxis' })).toBeVisible();
   await expect(page.getByRole('article', { name: 'Aeralune enviada' })).toBeVisible();

@@ -65,18 +65,22 @@
 }
 
 .success {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
   gap: var(--space-3);
-  border-color: color-mix(in srgb, var(--color-success) 78%, var(--color-ink-900));
+  border-color: var(--color-brass-500);
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--color-success) 18%, var(--color-parchment-100)),
-    var(--color-parchment-100)
+    color-mix(in srgb, var(--color-brass-300) 20%, var(--color-parchment-100)),
+    color-mix(in srgb, var(--color-parchment-100) 92%, white)
   );
   color: var(--color-ink-900);
   font-weight: 700;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 45%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 45%),
+    0 0.2rem 0 color-mix(in srgb, var(--color-brass-dark) 35%, transparent);
 }
 
 .success::before {
@@ -86,7 +90,8 @@
   height: 1.75rem;
   place-items: center;
   border-radius: 50%;
-  background: var(--color-success);
+  border: 1px solid var(--color-brass-500);
+  background: var(--color-brass-300);
   color: var(--color-ink-900);
   content: '✓';
   font-size: 1rem;
