@@ -10,6 +10,12 @@ describe('playbackReducer', () => {
     expect(playing).toMatchObject({ status: 'playing', eventIndex: 0, generation: 2 });
   });
 
+  it('completes immediately when event zero is also the final event', () => {
+    const state = playbackReducer(createPlaybackState(1), { type: 'play' });
+
+    expect(state).toMatchObject({ status: 'complete', eventIndex: 0, totalEvents: 1 });
+  });
+
   it('ignores stale ticks after restart and advances a current generation', () => {
     const initial = playbackReducer(createPlaybackState(3), { type: 'play' });
     const restarted = playbackReducer(initial, { type: 'play' });

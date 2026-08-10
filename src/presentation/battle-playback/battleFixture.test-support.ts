@@ -40,6 +40,28 @@ export function battleFixture(): BattleDto {
   };
 }
 
+export function singleEventBattleFixture(): BattleDto {
+  const first = monster('first', 'Teste', 'pyraxis', 1);
+  const second = monster('second', 'Teste 2', 'aeralune', 1);
+  return {
+    id: 'single-event-battle',
+    fighters: [first, second],
+    attackOrder: ['second', 'first'],
+    rounds: [
+      {
+        number: 1,
+        startingHp: { first: 1, second: 1 },
+        events: [event(0, 1, 'second', 'first', 1, 1, 0, true)],
+        endingHp: { first: 0, second: 1 }
+      }
+    ],
+    winnerId: 'second',
+    loserId: 'first',
+    finalRoundNumber: 1,
+    finalEventSequence: 0
+  };
+}
+
 function monster(id: string, name: string, reference: string, hp: number) {
   return {
     id,

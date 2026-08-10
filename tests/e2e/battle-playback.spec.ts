@@ -30,6 +30,22 @@ test('navigates, plays, restarts and reveals the battle result', async ({ page }
   await expect(page.getByRole('heading', { name: /vence!/u })).toBeVisible();
 });
 
+test('completes a lethal first attack without leaving playback stuck', async ({ page }) => {
+  await page.goto('/');
+  await registerMonster(page, 'Teste', 'Pyraxis', 1, 1, 1, 1);
+  await registerMonster(page, 'Teste 2', 'Aeralune', 2, 2, 2, 1);
+  await page.getByRole('button', { name: 'Escolher lutadores' }).click();
+  await page.getByRole('button', { name: 'Selecionar Teste', exact: true }).click();
+  await page.getByRole('button', { name: 'Selecionar Teste 2', exact: true }).click();
+  await page.getByRole('button', { name: 'Iniciar batalha' }).click();
+  await page.getByRole('button', { name: 'Play' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Teste 2 vence!' })).toBeVisible();
+  await expect(page.getByText('Atacando')).toHaveCount(0);
+  await expect(page.getByText('Impacto')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Pausar' })).toHaveCount(0);
+});
+
 async function registerMonster(
   page: Page,
   name: string,

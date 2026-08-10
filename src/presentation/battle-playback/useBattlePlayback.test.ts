@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { battleFixture } from './battleFixture.test-support';
+import { battleFixture, singleEventBattleFixture } from './battleFixture.test-support';
 import { useBattlePlayback } from './useBattlePlayback';
 
 describe('useBattlePlayback', () => {
@@ -25,6 +25,18 @@ describe('useBattlePlayback', () => {
       vi.advanceTimersByTime(1);
     });
     expect(result.current.state.eventIndex).toBe(1);
+  });
+
+  it('finishes a single-event battle immediately without scheduling a timer', () => {
+    const { result } = renderHook(() => useBattlePlayback(singleEventBattleFixture()));
+    const baselineTimerCount = vi.getTimerCount();
+
+    act(() => {
+      result.current.play();
+    });
+
+    expect(result.current.state).toMatchObject({ status: 'complete', eventIndex: 0 });
+    expect(vi.getTimerCount()).toBe(baselineTimerCount);
   });
 
   it('cancels pending work after manual selection, restart and unmount', () => {

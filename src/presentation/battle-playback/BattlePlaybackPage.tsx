@@ -75,8 +75,8 @@ function BattleContent({
         <BattleCard
           monster={battle.fighters[0]}
           currentHp={hp[battle.fighters[0].id] ?? battle.fighters[0].hp}
-          isAttacker={event?.attackerId === battle.fighters[0].id}
-          isDefender={event?.defenderId === battle.fighters[0].id}
+          isAttacker={!complete && event?.attackerId === battle.fighters[0].id}
+          isDefender={!complete && event?.defenderId === battle.fighters[0].id}
           isWinner={complete && battle.winnerId === battle.fighters[0].id}
           isDefeated={complete && battle.loserId === battle.fighters[0].id}
         />
@@ -103,8 +103,8 @@ function BattleContent({
         <BattleCard
           monster={battle.fighters[1]}
           currentHp={hp[battle.fighters[1].id] ?? battle.fighters[1].hp}
-          isAttacker={event?.attackerId === battle.fighters[1].id}
-          isDefender={event?.defenderId === battle.fighters[1].id}
+          isAttacker={!complete && event?.attackerId === battle.fighters[1].id}
+          isDefender={!complete && event?.defenderId === battle.fighters[1].id}
           isWinner={complete && battle.winnerId === battle.fighters[1].id}
           isDefeated={complete && battle.loserId === battle.fighters[1].id}
         />

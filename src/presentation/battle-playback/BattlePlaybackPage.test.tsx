@@ -2,12 +2,13 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Application } from '@application/Application';
+import type { BattleDto } from '@application/battle/dtos/BattleDto';
 import type { ImageContentDto } from '@application/monster/dtos/ImageContentDto';
 import type { MonsterImageReferenceDto } from '@application/monster/dtos/MonsterImageReferenceDto';
 import type { GameSessionContextValue } from '@app/contexts/GameSessionContextValue';
 import { ApplicationContext } from '@app/contexts/ApplicationContext';
 import { GameSessionContext } from '@app/contexts/GameSessionContext';
-import { battleFixture } from './battleFixture.test-support';
+import { battleFixture, singleEventBattleFixture } from './battleFixture.test-support';
 import { BattlePlaybackPage } from './BattlePlaybackPage';
 
 afterEach(cleanup);
@@ -72,12 +73,24 @@ describe('BattlePlaybackPage', () => {
     expect(secondAction).toHaveTextContent('Agora');
     expect(secondAction).toHaveTextContent('Aeralune ataca Pyraxis');
   });
+
+  it('reveals a single-event result without leaving transient combat states active', async () => {
+    renderPage(singleEventBattleFixture());
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', { name: 'Play' }));
+
+    expect(screen.getByRole('heading', { name: 'Teste 2 vence!' })).toBeVisible();
+    expect(screen.queryByText('Atacando')).not.toBeInTheDocument();
+    expect(screen.queryByText('Impacto')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Pausar' })).not.toBeInTheDocument();
+  });
 });
 
-function renderPage() {
+function renderPage(battle = battleFixture()) {
   return render(
     <ApplicationContext.Provider value={applicationFake()}>
-      <GameSessionContext.Provider value={sessionValue()}>
+      <GameSessionContext.Provider value={sessionValue(battle)}>
         <BattlePlaybackPage />
       </GameSessionContext.Provider>
     </ApplicationContext.Provider>
@@ -105,14 +118,16 @@ function applicationFake(): Application {
   };
 }
 
-function sessionValue(): GameSessionContextValue {
+function sessionValue(battle: BattleDto): GameSessionContextValue {
   return {
     screen: 'battle',
     selectedMonsterIds: ['first', 'second'],
-    battle: battleFixture(),
+    battle,
+    status: 'idle',
     navigate: vi.fn(),
     selectMonster: vi.fn(),
     resetSelection: vi.fn(),
+    resetSession: vi.fn(),
     startBattle: vi.fn(),
     prepareNewBattle: vi.fn()
   };

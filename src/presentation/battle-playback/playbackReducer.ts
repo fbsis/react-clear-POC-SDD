@@ -22,7 +22,7 @@ export function playbackReducer(state: PlaybackState, action: PlaybackAction): P
     case 'play':
       return {
         ...state,
-        status: state.totalEvents === 0 ? 'complete' : 'playing',
+        status: state.totalEvents <= 1 ? 'complete' : 'playing',
         eventIndex: state.totalEvents === 0 ? null : 0,
         generation: state.generation + 1
       };
