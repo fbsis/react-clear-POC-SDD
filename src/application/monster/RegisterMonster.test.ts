@@ -10,7 +10,8 @@ describe('RegisterMonster', () => {
     const repository = { add, findById: vi.fn(), list: vi.fn() } satisfies MonsterRepository;
     const idGenerator = { next: () => 'monster-1' } satisfies IdGenerator;
     const validator = { inspect: vi.fn() } satisfies ImageValidator;
-    const useCase = new RegisterMonster(repository, idGenerator, validator);
+    const catalog = catalogWith('pyraxis');
+    const useCase = new RegisterMonster(repository, idGenerator, validator, catalog);
 
     const result = await useCase.execute({
       name: 'Pyraxis',
@@ -24,6 +25,7 @@ describe('RegisterMonster', () => {
     expect(result.id).toBe('monster-1');
     expect(add).toHaveBeenCalledOnce();
     expect(validator.inspect).not.toHaveBeenCalled();
+    expect(catalog.findById).toHaveBeenCalledWith('pyraxis');
   });
 
   it('validates upload bytes before persistence', async () => {
@@ -42,7 +44,13 @@ describe('RegisterMonster', () => {
         return Promise.resolve({ valid: true });
       })
     } satisfies ImageValidator;
-    const useCase = new RegisterMonster(repository, { next: () => 'monster-2' }, validator);
+    const catalog = catalogWith();
+    const useCase = new RegisterMonster(
+      repository,
+      { next: () => 'monster-2' },
+      validator,
+      catalog
+    );
 
     await useCase.execute({
       name: 'Terralith',
@@ -60,5 +68,42 @@ describe('RegisterMonster', () => {
     });
 
     expect(callOrder).toEqual(['inspect', 'persist']);
+    expect(catalog.findById).not.toHaveBeenCalled();
+  });
+
+  it('rejects a catalog reference that does not exist before persistence', async () => {
+    const add = vi.fn<MonsterRepository['add']>();
+    const repository = { add, findById: vi.fn(), list: vi.fn() } satisfies MonsterRepository;
+    const useCase = new RegisterMonster(
+      repository,
+      { next: () => 'monster-3' },
+      { inspect: vi.fn() },
+      catalogWith()
+    );
+
+    await expect(
+      useCase.execute({
+        name: 'Desconhecido',
+        attack: 10,
+        defense: 10,
+        speed: 10,
+        hp: 10,
+        image: { kind: 'catalog', imageId: 'missing' }
+      })
+    ).rejects.toMatchObject({ code: 'IMAGE_INVALID' });
+    expect(add).not.toHaveBeenCalled();
   });
 });
+
+function catalogWith(...imageIds: readonly string[]) {
+  return {
+    list: vi.fn().mockResolvedValue([]),
+    findById: vi.fn(async (id: string) =>
+      Promise.resolve(
+        imageIds.includes(id)
+          ? { id, name: id, src: `/monster-catalog/${id}.webp`, alt: `Retrato de ${id}` }
+          : null
+      )
+    )
+  };
+}

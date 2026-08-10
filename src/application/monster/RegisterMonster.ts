@@ -7,6 +7,7 @@ import type { MonsterDto } from './dtos/MonsterDto';
 import type { RegisterMonsterInput } from './dtos/RegisterMonsterInput';
 import { mapMonsterToDto } from './mapMonsterToDto';
 import type { ImageValidator } from './ports/ImageValidator';
+import type { MonsterImageCatalog } from './ports/MonsterImageCatalog';
 import type { MonsterRepository } from './ports/MonsterRepository';
 import type { PersistedUploadedImageContent } from './ports/PersistedUploadedImageContent';
 
@@ -14,15 +15,18 @@ export class RegisterMonster implements RegisterMonsterUseCase {
   private readonly repository: MonsterRepository;
   private readonly idGenerator: IdGenerator;
   private readonly imageValidator: ImageValidator;
+  private readonly imageCatalog: MonsterImageCatalog;
 
   public constructor(
     repository: MonsterRepository,
     idGenerator: IdGenerator,
-    imageValidator: ImageValidator
+    imageValidator: ImageValidator,
+    imageCatalog: MonsterImageCatalog
   ) {
     this.repository = repository;
     this.idGenerator = idGenerator;
     this.imageValidator = imageValidator;
+    this.imageCatalog = imageCatalog;
   }
 
   public async execute(input: RegisterMonsterInput): Promise<MonsterDto> {
@@ -32,6 +36,12 @@ export class RegisterMonster implements RegisterMonsterUseCase {
 
     switch (input.image.kind) {
       case 'catalog':
+        if (!(await this.imageCatalog.findById(input.image.imageId.trim()))) {
+          throw new ApplicationError(
+            'IMAGE_INVALID',
+            'A imagem escolhida não está mais disponível. Escolha outro retrato.'
+          );
+        }
         image = MonsterImageRef.catalog(input.image.imageId);
         break;
       case 'upload':

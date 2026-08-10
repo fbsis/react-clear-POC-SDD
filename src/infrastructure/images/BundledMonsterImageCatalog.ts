@@ -1,6 +1,7 @@
 import type { CatalogImage } from '@application/monster/ports/CatalogImage';
 import type { MonsterImageCatalog } from '@application/monster/ports/MonsterImageCatalog';
 import type { BundledCatalogRecord } from './BundledCatalogRecord';
+import { validateBundledCatalogRecords } from './validateBundledCatalogRecords';
 
 export class BundledMonsterImageCatalog implements MonsterImageCatalog {
   private records: Promise<readonly BundledCatalogRecord[]> | null = null;
@@ -25,12 +26,23 @@ export class BundledMonsterImageCatalog implements MonsterImageCatalog {
   }
 
   private load(): Promise<readonly BundledCatalogRecord[]> {
-    this.records ??= fetch(`${this.baseUrl}monster-catalog/catalog.json`).then(async (response) => {
-      if (!response.ok) {
-        throw new Error('Monster catalog could not be loaded.');
-      }
-      return (await response.json()) as readonly BundledCatalogRecord[];
-    });
+    if (!this.records) {
+      const request = fetch(`${this.baseUrl}monster-catalog/catalog.json`).then(
+        async (response) => {
+          if (!response.ok) {
+            throw new Error('Monster catalog could not be loaded.');
+          }
+          return validateBundledCatalogRecords(await response.json());
+        }
+      );
+      const retryableRequest = request.catch((error: unknown) => {
+        if (this.records === retryableRequest) {
+          this.records = null;
+        }
+        throw error;
+      });
+      this.records = retryableRequest;
+    }
     return this.records;
   }
 }

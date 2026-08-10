@@ -24,7 +24,8 @@ export function createApplication(): Application {
     registerMonster: new RegisterMonster(
       repository,
       new CryptoIdGenerator(),
-      new BrowserImageValidator()
+      new BrowserImageValidator(),
+      catalog
     ),
     clearMonsterCollection: new ClearMonsterCollection(repository),
     listMonsters: new ListMonsters(repository),

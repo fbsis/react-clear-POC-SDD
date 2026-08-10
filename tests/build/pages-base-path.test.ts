@@ -19,16 +19,16 @@ describe('GitHub Pages build contract', () => {
       'fetch',
       vi.fn().mockResolvedValue(
         new Response(
-          JSON.stringify([
-            {
-              id: 'pyraxis',
-              name: 'Pyraxis',
-              file: 'pyraxis.webp',
-              alt: 'Wyvern vermelho',
+          JSON.stringify(
+            Array.from({ length: 6 }, (_, index) => ({
+              id: index === 0 ? 'pyraxis' : `monster-${String(index)}`,
+              name: index === 0 ? 'Pyraxis' : `Monster ${String(index)}`,
+              file: index === 0 ? 'pyraxis.webp' : `monster-${String(index)}.webp`,
+              alt: index === 0 ? 'Wyvern vermelho' : `Monster ${String(index)}`,
               width: 1024,
               height: 1280
-            }
-          ])
+            }))
+          )
         )
       )
     );
@@ -36,10 +36,14 @@ describe('GitHub Pages build contract', () => {
       '../../src/infrastructure/images/BundledMonsterImageCatalog'
     );
 
-    await expect(new BundledMonsterImageCatalog('/react-clear-POC-SDD/').list()).resolves.toEqual([
-      expect.objectContaining({
-        src: '/react-clear-POC-SDD/monster-catalog/pyraxis.webp'
-      })
-    ]);
+    await expect(
+      new BundledMonsterImageCatalog('/react-clear-POC-SDD/').list()
+    ).resolves.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          src: '/react-clear-POC-SDD/monster-catalog/pyraxis.webp'
+        })
+      ])
+    );
   });
 });
