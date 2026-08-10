@@ -1,9 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
 import { Button } from '@presentation/shared/components/Button';
 import { StatusMessage } from '@presentation/shared/components/StatusMessage';
 import type { LocalDataManagerProps } from './LocalDataManagerProps';
 import styles from './LocalDataManager.module.css';
+
+const SUCCESS_MESSAGE_DURATION_MS = 4_000;
 
 export function LocalDataManager({ disabled, onDataCleared }: LocalDataManagerProps) {
   const { monsters, status, clearMonsters, resetDatabase } = useMonsterCollection();
@@ -11,6 +13,18 @@ export function LocalDataManager({ disabled, onDataCleared }: LocalDataManagerPr
   const [cleanupMessage, setCleanupMessage] = useState<string | null>(null);
   const [cleanupError, setCleanupError] = useState<string | null>(null);
   const isBusy = disabled || status === 'loading' || status === 'saving' || status === 'clearing';
+
+  useEffect(() => {
+    if (!cleanupMessage) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setCleanupMessage(null);
+    }, SUCCESS_MESSAGE_DURATION_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [cleanupMessage]);
 
   const openDialog = (): void => {
     setCleanupMessage(null);

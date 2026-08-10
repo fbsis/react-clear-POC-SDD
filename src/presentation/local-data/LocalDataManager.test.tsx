@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { MonsterDto } from '@application/monster/dtos/MonsterDto';
 import { MonsterCollectionContext } from '@app/contexts/MonsterCollectionContext';
@@ -7,6 +7,7 @@ import { LocalDataManager } from './LocalDataManager';
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   vi.restoreAllMocks();
 });
 
@@ -80,6 +81,27 @@ describe('LocalDataManager', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Banco indisponível.');
     expect(screen.getByRole('dialog', { name: 'Gerenciar coleção' })).toBeVisible();
+  });
+
+  it('dismisses a successful database cleanup message after four seconds', async () => {
+    vi.useFakeTimers();
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    renderManager({ resetDatabase: vi.fn().mockResolvedValue(undefined) });
+
+    openDataDialog();
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
+    });
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'O banco de dados local foi limpo e recriado vazio.'
+    );
+
+    act(() => {
+      vi.advanceTimersByTime(4_000);
+    });
+
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 });
 
