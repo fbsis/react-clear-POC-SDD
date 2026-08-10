@@ -17,7 +17,15 @@ export function validateRound(
   }
 
   const fighterIds = Object.keys(input.startingHp);
-  if (fighterIds.length !== 2 || !sameKeys(input.startingHp, input.endingHp)) {
+  if (
+    fighterIds.length !== 2 ||
+    !sameKeys(input.startingHp, input.endingHp) ||
+    fighterIds.some(
+      (fighterId) =>
+        !isPositiveInteger(input.startingHp[fighterId]) ||
+        !isNonNegativeInteger(input.endingHp[fighterId])
+    )
+  ) {
     throw new InvalidBattleSequenceError('Round HP must describe exactly two fighters.');
   }
 
@@ -26,7 +34,7 @@ export function validateRound(
     if (
       event.roundNumber !== input.number ||
       currentHp[event.defenderId] !== event.defenderHpBefore ||
-      currentHp[event.attackerId] === undefined ||
+      !isPositiveInteger(currentHp[event.attackerId]) ||
       (eventIndex > 0 && input.events[eventIndex - 1]?.defeated)
     ) {
       throw new InvalidBattleSequenceError('Round events do not match its HP state.');
@@ -37,6 +45,14 @@ export function validateRound(
   if (fighterIds.some((fighterId) => currentHp[fighterId] !== input.endingHp[fighterId])) {
     throw new InvalidBattleSequenceError('Round ending HP does not match its attacks.');
   }
+}
+
+function isPositiveInteger(value: number | undefined): value is number {
+  return value !== undefined && Number.isInteger(value) && value > 0;
+}
+
+function isNonNegativeInteger(value: number | undefined): value is number {
+  return value !== undefined && Number.isInteger(value) && value >= 0;
 }
 
 function sameKeys(

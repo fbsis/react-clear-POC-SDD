@@ -36,13 +36,30 @@ export function validateBattle(
     ) {
       throw new InvalidBattleSequenceError('Round HP must continue from the previous round.');
     }
-    for (const event of round.events) {
+    if (
+      roundIndex === 0 &&
+      input.fighters.some((fighter) => round.startingHp[fighter.id] !== fighter.stats.hp)
+    ) {
+      throw new InvalidBattleSequenceError('Battle must start with the fighters maximum HP.');
+    }
+    for (const [eventIndex, event] of round.events.entries()) {
+      const expectedAttackerId = input.attackOrder[eventIndex];
+      const expectedDefenderId = input.attackOrder[eventIndex === 0 ? 1 : 0];
+      const attacker = input.fighters.find((fighter) => fighter.id === event.attackerId);
+      const defender = input.fighters.find((fighter) => fighter.id === event.defenderId);
+      const expectedDamage =
+        attacker && defender ? Math.max(attacker.stats.attack - defender.stats.defense, 1) : null;
       if (
         event.sequence !== expectedEventSequence ||
         !fighterIds.includes(event.attackerId) ||
-        !fighterIds.includes(event.defenderId)
+        !fighterIds.includes(event.defenderId) ||
+        event.attackerId !== expectedAttackerId ||
+        event.defenderId !== expectedDefenderId ||
+        event.damage !== expectedDamage
       ) {
-        throw new InvalidBattleSequenceError('Attack events must be global and contiguous.');
+        throw new InvalidBattleSequenceError(
+          'Attack events must follow the fixed order, damage rule and global sequence.'
+        );
       }
       expectedEventSequence += 1;
     }

@@ -3,6 +3,9 @@ import { Monster, MonsterId, MonsterImageRef } from '@domains/monster';
 import { Battle } from './Battle';
 import { InvalidBattleSequenceError } from './errors/InvalidBattleSequenceError';
 import { resolveBattle } from './resolveBattle';
+import { AttackEvent } from './value-objects/AttackEvent';
+import { BattleResult } from './value-objects/BattleResult';
+import { Round } from './value-objects/Round';
 
 describe('Battle', () => {
   it('contains immutable fighter snapshots, contiguous rounds and a final result', () => {
@@ -42,6 +45,42 @@ describe('Battle', () => {
         attackOrder: valid.attackOrder,
         rounds: [secondRound, firstRound],
         result: valid.result
+      })
+    ).toThrow(InvalidBattleSequenceError);
+  });
+
+  it('rejects a battle whose event violates fixed order or damage', () => {
+    const first = monster('first', { attack: 6, defense: 0, speed: 8, hp: 10 });
+    const second = monster('second', { attack: 5, defense: 2, speed: 3, hp: 5 });
+    const valid = resolveBattle(first, second);
+    const invalidEvent = AttackEvent.create({
+      sequence: 0,
+      roundNumber: 1,
+      attackerId: 'first',
+      defenderId: 'second',
+      damage: 5,
+      defenderHpBefore: 5,
+      defenderHpAfter: 0
+    });
+    const invalidRound = Round.create({
+      number: 1,
+      startingHp: { first: 10, second: 5 },
+      events: [invalidEvent],
+      endingHp: { first: 10, second: 0 }
+    });
+    const result = BattleResult.create({
+      winnerId: 'first',
+      loserId: 'second',
+      finalRoundNumber: 1,
+      finalEventSequence: 0
+    });
+
+    expect(() =>
+      Battle.create({
+        fighters: valid.fighters,
+        attackOrder: valid.attackOrder,
+        rounds: [invalidRound],
+        result
       })
     ).toThrow(InvalidBattleSequenceError);
   });

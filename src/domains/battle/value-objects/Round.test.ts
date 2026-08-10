@@ -27,6 +27,17 @@ describe('Round', () => {
       })
     ).toThrow(InvalidBattleSequenceError);
   });
+
+  it('rejects a round in which an attacker starts defeated', () => {
+    expect(() =>
+      Round.create({
+        number: 1,
+        startingHp: { first: 0, second: 7 },
+        events: [attackEvent()],
+        endingHp: { first: 0, second: 3 }
+      })
+    ).toThrow(InvalidBattleSequenceError);
+  });
 });
 
 function attackEvent(): AttackEvent {
