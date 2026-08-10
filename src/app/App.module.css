@@ -36,6 +36,12 @@
   letter-spacing: 0.04em;
 }
 
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .chapter {
   color: var(--color-brass-light);
   font-size: 0.76rem;
@@ -52,4 +58,21 @@
   display: flex;
   justify-content: center;
   margin-top: var(--space-6);
+}
+
+@media (max-width: 32rem) {
+  .topbarInner {
+    gap: var(--space-2);
+  }
+
+  .topbarActions {
+    gap: var(--space-2);
+  }
+
+  .chapter {
+    max-width: 8rem;
+    font-size: 0.65rem;
+    line-height: 1.25;
+    text-align: right;
+  }
 }

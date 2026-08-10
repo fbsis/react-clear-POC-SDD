@@ -1,7 +1,6 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Application } from '@application/Application';
-import type { MonsterDto } from '@application/monster/dtos/MonsterDto';
 import { ApplicationProvider } from '@app/providers/ApplicationProvider';
 import { MonsterCollectionContext } from '@app/contexts/MonsterCollectionContext';
 import type { MonsterCollectionContextValue } from '@app/contexts/MonsterCollectionContextValue';
@@ -34,67 +33,9 @@ describe('MonsterCollection', () => {
     expect(screen.getByRole('article', { name: 'Pyraxis' })).toBeVisible();
     expect(screen.getByText('86')).toBeVisible();
   });
-
-  it('opens and closes local data management as a labelled modal', () => {
-    renderCollection([monsterFixture()]);
-
-    expect(screen.queryByRole('dialog', { name: 'Gerenciar coleção' })).not.toBeInTheDocument();
-    openDataDialog();
-    expect(screen.getByRole('dialog', { name: 'Gerenciar coleção' })).toHaveTextContent(
-      'Escolha entre dispensar a companhia atual ou reiniciar todo o banco deste navegador.'
-    );
-
-    fireEvent.click(screen.getByRole('button', { name: 'Fechar' }));
-    expect(screen.queryByRole('dialog', { name: 'Gerenciar coleção' })).not.toBeInTheDocument();
-  });
-
-  it('confirms and dispatches each cleanup intent separately', async () => {
-    const clearMonsters = vi.fn().mockResolvedValue(undefined);
-    const resetDatabase = vi.fn().mockResolvedValue(undefined);
-    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true);
-    renderCollection([monsterFixture()], { clearMonsters, resetDatabase });
-
-    openDataDialog();
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
-    await waitFor(() => {
-      expect(clearMonsters).toHaveBeenCalledOnce();
-    });
-    expect(resetDatabase).not.toHaveBeenCalled();
-    expect(confirm).toHaveBeenLastCalledWith(expect.stringContaining('monstros convocados'));
-
-    openDataDialog();
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
-    await waitFor(() => {
-      expect(resetDatabase).toHaveBeenCalledOnce();
-    });
-    expect(confirm).toHaveBeenLastCalledWith(
-      expect.stringContaining('todo o banco de dados local')
-    );
-  });
-
-  it('does not clean local data when confirmation is declined', () => {
-    const clearMonsters = vi.fn();
-    const resetDatabase = vi.fn();
-    vi.spyOn(window, 'confirm').mockReturnValue(false);
-    renderCollection([monsterFixture()], { clearMonsters, resetDatabase });
-
-    openDataDialog();
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar monstros convocados' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
-
-    expect(clearMonsters).not.toHaveBeenCalled();
-    expect(resetDatabase).not.toHaveBeenCalled();
-  });
 });
 
-function openDataDialog(): void {
-  fireEvent.click(screen.getByRole('button', { name: 'Gerenciar dados locais' }));
-}
-
-function renderCollection(
-  monsters: MonsterCollectionContextValue['monsters'],
-  overrides: Partial<MonsterCollectionContextValue> = {}
-): void {
+function renderCollection(monsters: MonsterCollectionContextValue['monsters']): void {
   render(
     <ApplicationProvider application={applicationFake()}>
       <MonsterCollectionContext.Provider
@@ -113,26 +54,13 @@ function renderCollection(
           registerMonster: vi.fn(),
           clearMonsters: vi.fn(),
           resetDatabase: vi.fn(),
-          refresh: vi.fn(),
-          ...overrides
+          refresh: vi.fn()
         }}
       >
         <MonsterCollection />
       </MonsterCollectionContext.Provider>
     </ApplicationProvider>
   );
-}
-
-function monsterFixture(): MonsterDto {
-  return {
-    id: 'monster-1',
-    name: 'Pyraxis',
-    attack: 86,
-    defense: 68,
-    speed: 72,
-    hp: 180,
-    image: { kind: 'catalog', reference: 'pyraxis' }
-  };
 }
 
 function applicationFake(): Application {

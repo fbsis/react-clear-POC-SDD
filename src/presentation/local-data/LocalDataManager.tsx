@@ -2,9 +2,10 @@ import { useRef, useState } from 'react';
 import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
 import { Button } from '@presentation/shared/components/Button';
 import { StatusMessage } from '@presentation/shared/components/StatusMessage';
-import styles from './MonsterCollection.module.css';
+import type { LocalDataManagerProps } from './LocalDataManagerProps';
+import styles from './LocalDataManager.module.css';
 
-export function LocalDataManager() {
+export function LocalDataManager({ onDataCleared }: LocalDataManagerProps) {
   const { monsters, status, clearMonsters, resetDatabase } = useMonsterCollection();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [cleanupMessage, setCleanupMessage] = useState<string | null>(null);
@@ -31,6 +32,12 @@ export function LocalDataManager() {
     dialog.removeAttribute('open');
   };
 
+  const finishCleanup = (message: string): void => {
+    setCleanupMessage(message);
+    closeDialog();
+    onDataCleared();
+  };
+
   const confirmCollectionCleanup = async (): Promise<void> => {
     if (
       !window.confirm(
@@ -42,8 +49,7 @@ export function LocalDataManager() {
     setCleanupMessage(null);
     try {
       await clearMonsters();
-      setCleanupMessage('Todos os monstros convocados foram removidos.');
-      closeDialog();
+      finishCleanup('Todos os monstros convocados foram removidos.');
     } catch {
       setCleanupMessage(null);
     }
@@ -60,18 +66,33 @@ export function LocalDataManager() {
     setCleanupMessage(null);
     try {
       await resetDatabase();
-      setCleanupMessage('O banco de dados local foi limpo e recriado vazio.');
-      closeDialog();
+      finishCleanup('O banco de dados local foi limpo e recriado vazio.');
     } catch {
       setCleanupMessage(null);
     }
   };
 
   return (
-    <section className={styles.dataLauncher} aria-label="Gerenciamento de dados locais">
-      {cleanupMessage ? <StatusMessage tone="success">{cleanupMessage}</StatusMessage> : null}
-      <Button type="button" variant="ghost" onClick={openDialog}>
-        Gerenciar dados locais
+    <div className={styles.manager}>
+      {cleanupMessage ? (
+        <div className={styles.feedback}>
+          <StatusMessage tone="success">{cleanupMessage}</StatusMessage>
+        </div>
+      ) : null}
+      <Button
+        type="button"
+        variant="ghost"
+        className={styles.trigger}
+        aria-label="Gerenciar dados locais"
+        title="Gerenciar dados locais"
+        onClick={openDialog}
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <ellipse cx="12" cy="5" rx="7" ry="3" />
+          <path d="M5 5v5c0 1.66 3.13 3 7 3s7-1.34 7-3V5" />
+          <path d="M5 10v5c0 1.66 3.13 3 7 3s7-1.34 7-3v-5" />
+          <path d="M5 15v4c0 1.66 3.13 3 7 3s7-1.34 7-3v-4" />
+        </svg>
       </Button>
 
       <dialog
@@ -117,6 +138,6 @@ export function LocalDataManager() {
           </div>
         </div>
       </dialog>
-    </section>
+    </div>
   );
 }

@@ -3,7 +3,6 @@ import { useMonsterCollection } from '@app/hooks/useMonsterCollection';
 import { ProgressBar } from '@presentation/shared/components/ProgressBar';
 import { StatusMessage } from '@presentation/shared/components/StatusMessage';
 import { useMonsterImageUrl } from '@presentation/shared/images/useMonsterImageUrl';
-import { LocalDataManager } from './LocalDataManager';
 import styles from './MonsterCollection.module.css';
 
 export function MonsterCollection() {
@@ -30,7 +29,6 @@ export function MonsterCollection() {
           <MonsterCard key={monster.id} monster={monster} />
         ))}
       </div>
-      <LocalDataManager />
     </section>
   );
 }

@@ -6,7 +6,12 @@ test('clears the collection or resets the complete local database after confirma
 }) => {
   await page.goto('/');
   await registerUploadedMonster(page, 'Monstro temporário');
+  await registerCatalogMonster(page, 'Rival temporário');
+  await page.getByRole('button', { name: 'Escolher lutadores' }).click();
+  await expect(page.getByRole('heading', { name: 'Escolha seus lutadores' })).toBeVisible();
   const dataManagerButton = page.getByRole('button', { name: 'Gerenciar dados locais' });
+  await expect(dataManagerButton).toHaveAccessibleName('Gerenciar dados locais');
+  await expect(dataManagerButton).toHaveText('');
 
   await dataManagerButton.click();
   await expect(page.getByRole('dialog', { name: 'Gerenciar coleção' })).toBeVisible();
@@ -20,6 +25,7 @@ test('clears the collection or resets the complete local database after confirma
   });
   await dataManagerButton.click();
   await page.getByRole('button', { name: 'Limpar monstros convocados' }).click();
+  await expect(page.getByRole('heading', { name: 'Forje seu monstro' })).toBeVisible();
   await expect(page.getByText(/ainda não há monstros/iu)).toBeVisible();
   await expect(databaseCounts(page)).resolves.toEqual({ monsters: 0, imageAssets: 0 });
 
