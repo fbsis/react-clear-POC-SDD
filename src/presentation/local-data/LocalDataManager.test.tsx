@@ -89,8 +89,9 @@ describe('LocalDataManager', () => {
     renderManager({ resetDatabase: vi.fn().mockResolvedValue(undefined) });
 
     openDataDialog();
-    await act(async () => {
+    await act(() => {
       fireEvent.click(screen.getByRole('button', { name: 'Limpar todo o banco de dados' }));
+      return Promise.resolve();
     });
 
     expect(screen.getByRole('status')).toHaveTextContent(
